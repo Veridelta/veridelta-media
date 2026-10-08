@@ -1,7 +1,7 @@
 {
   "source": "https://github.com/Veridelta/veridelta",
   "release": "v0.33.4",
-  "commit": "c06b8128db2b6f4871dbd582857cc4f1b80401bd",
+  "commit": "c0afe418105501ee8dbb1e0a766942593bb7a1c3",
   "transcripts": [
     {
       "name": "accounts-baseline",
@@ -268,7 +268,7 @@
       "source": "demo/screenshots.py --promo, the HTML report of the run demo/promo/accounts-baseline.tape types",
       "width": 1920,
       "height": 1080,
-      "sha256": "fe4e0321124a457da010f729a3e608a082c6ea891f0d20296af9062fac22fc6b"
+      "sha256": "4b9fe8dac809df7903a7551380ba5b3fa337a4a99785d4d465229fbcc459b0b9"
     }
   ]
 }

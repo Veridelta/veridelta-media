@@ -4,7 +4,7 @@
 
 Every terminal recording and the report screenshot come from Veridelta commit `6375e5b`, whose package is v0.27.1's, rendered with make demo-video and vhs v0.12.1. `public/clips/manifest.json` holds each file's tape and checksum. Each recording plays whole, as its tape typed it.
 
-The narrated cut sets in type the transcripts of Veridelta commit `c06b812`, whose package is v0.33.4's, and shows the HTML report of the run its last tape types. `public/transcripts/manifest.json` holds each file's tape, its steps, and its checksum. Its voice is espeak (en-us), and its subtitles are the voice's lines, word for word.
+The narrated cut sets in type the transcripts of Veridelta commit `c0afe41`, whose package is v0.33.4's, and shows the HTML report of the run its last tape types. `public/transcripts/manifest.json` holds each file's tape, its steps, and its checksum. Its voice is espeak (en-us), and its subtitles are the voice's lines, word for word.
 
 ## promo-30: 30 seconds, 1920 by 1080
 
