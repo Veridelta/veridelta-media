@@ -42,7 +42,7 @@ CI runs the type check, `npm run check`, and `npm run generate` on every pull re
 ## Where the pictures come from
 
 - `public/clips/` holds the terminal recordings and the report screenshot. `scripts/fetch-clips.sh` makes them: it clones Veridelta at the release or commit you name, runs `make demo-video`, and copies the files. A commit after a release works only while its `src/`, `pyproject.toml`, and `uv.lock` match the release's, so every frame is what that release prints. `public/clips/manifest.json` records the commit, the release, and each file's tape and checksum. Fetching needs what `make demo-video` needs: uv, vhs v0.12.1, ttyd, ffmpeg, and Chromium.
-- The quick start comes from the tapes in Veridelta's `demo/promo/`, kept for video alone. They type in a 32 pixel font, a few lines to a clip, so the text stays legible on a phone. No clip is enlarged, since an enlarged terminal blurs.
+- The quick start and the MCP client come from the tapes in Veridelta's `demo/promo/`, kept for video alone. They type in a 32 pixel font, a few lines to a clip, so the text stays legible on a phone. No clip is enlarged, since an enlarged terminal blurs.
 - `public/brand/` holds the logo, copied from Veridelta's `docs/assets/` at commit `6f09910`.
 - `public/fonts/` holds Inter, under the SIL Open Font License 1.1, and DejaVu Sans Mono, under the Bitstream Vera license. Their license texts are beside them. They ship here so a cut renders the same on every machine.
 

@@ -15,25 +15,25 @@ Two exports that should match, with three rows each.
 veridelta run compares them: 1 row added, 1 removed, and 1 changed.
 
 5
-00:00:20,983 --> 00:00:24,933
+00:00:20,983 --> 00:00:24,967
 The exit code, 1, tells CI that the datasets differ.
 
 6
-00:00:24,933 --> 00:00:31,933
+00:00:24,967 --> 00:00:31,967
 veridelta run --html writes a standalone report that opens offline, with changed rows side by side.
 
 7
-00:00:31,933 --> 00:00:37,933
+00:00:31,967 --> 00:00:37,967
 Two tables in Snowflake, Databricks, or BigQuery are compared where they are stored. Only counts and keys come back.
 
 8
-00:00:37,933 --> 00:00:43,933
+00:00:37,967 --> 00:00:44,967
 veridelta mcp serves the same checks as MCP tools, so an agent's host can call them without a shell.
 
 9
-00:00:43,933 --> 00:00:50,600
+00:00:44,967 --> 00:00:51,467
 Here a script calls the tools, as an agent's host does.
 
 10
-00:00:50,600 --> 00:00:54,600
+00:00:51,467 --> 00:00:55,467
 pip install veridelta. The docs are at veridelta.github.io/veridelta.

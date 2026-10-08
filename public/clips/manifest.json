@@ -1,7 +1,7 @@
 {
   "source": "https://github.com/Veridelta/veridelta",
-  "release": "v0.27.0",
-  "commit": "1f89e0587d8f8b4be32604d8f3bf927cb1d54e6d",
+  "release": "v0.27.1",
+  "commit": "6375e5b7f13d4b808b013ff5240f378adbe1658c",
   "renderedWith": "make demo-video and vhs v0.12.1",
   "clips": [
     {
@@ -10,8 +10,8 @@
       "tape": "demo/crosswalk.tape",
       "width": 900,
       "height": 580,
-      "seconds": 12.8,
-      "sha256": "a9cbf76af78079bb6ad9c77724de524eb339262504c9c29593bfc2ddfc937c9e"
+      "seconds": 12.84,
+      "sha256": "6bda104d974a141cf22b26686e71c8b357c4c57fab6285819e57bd508d5f8895"
     },
     {
       "name": "mcp",
@@ -19,8 +19,8 @@
       "tape": "demo/mcp.tape",
       "width": 900,
       "height": 820,
-      "seconds": 12.68,
-      "sha256": "21493f601e235b8821c241646478e597ea1464cf14dfea7a9f998fb16862e245"
+      "seconds": 12.56,
+      "sha256": "4c5dbab603a79c9eac2dcca040f329583a250918d8056633c9b81fea7ba218ec"
     },
     {
       "name": "promo-data",
@@ -29,7 +29,16 @@
       "width": 700,
       "height": 780,
       "seconds": 11.24,
-      "sha256": "fc24ee55a3d34a28d7b1558c50e2ee0bada54ea30cb057405319c4da750680a7"
+      "sha256": "a0a81945418508cc192dc8ca338885ad6c3c6f7b88fd9591c4a4141fc3a36edd"
+    },
+    {
+      "name": "promo-mcp",
+      "file": "promo-mcp.mp4",
+      "tape": "demo/promo/mcp.tape",
+      "width": 900,
+      "height": 1080,
+      "seconds": 13.52,
+      "sha256": "df2b12c0234151b398c2013d21f865ec10793764a2a021c95fcd3d1fdd798c0c"
     },
     {
       "name": "promo-run",
@@ -37,8 +46,8 @@
       "tape": "demo/promo/run.tape",
       "width": 700,
       "height": 1080,
-      "seconds": 10.72,
-      "sha256": "7d60a218647e4d9d010d77f9a27c92f7ec043b59ca21120d616e251abb12f183"
+      "seconds": 10.76,
+      "sha256": "c186086808b11f15c1f1029fae80b547379fe2e4b25cc438dff37923a646e75d"
     },
     {
       "name": "validate",
@@ -46,8 +55,8 @@
       "tape": "demo/validate.tape",
       "width": 900,
       "height": 440,
-      "seconds": 15.84,
-      "sha256": "cc827093a401c8380942cc891993db7b5e4453a05ce477b182b1765217781bc5"
+      "seconds": 15.88,
+      "sha256": "c548ce0a4a147619d98c5cc329b41b5d2d4d7ab56eced649ce21a2d57b88cfce"
     },
     {
       "name": "veridelta",
@@ -56,7 +65,7 @@
       "width": 900,
       "height": 1000,
       "seconds": 24.72,
-      "sha256": "4290508a30f2a918d36b3b3c06c7545309c6acd14a2178f650e4d3f3467205e1"
+      "sha256": "2eee5bfc56a4a4e51f277594b56f1115b50adddeffb28561c5cf70991f9f9295"
     }
   ],
   "images": [
