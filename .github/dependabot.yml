@@ -15,6 +15,11 @@ updates:
           - "react"
           - "react-dom"
           - "@types/react"
+    # The project runs on Node 22, as the README says, so its types stay on 22. A new
+    # Node line means a new major here, made by hand with the CI's Node version.
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: /
