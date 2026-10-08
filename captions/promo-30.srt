@@ -1,23 +1,23 @@
 1
-00:00:00,000 --> 00:00:02,500
+00:00:00,000 --> 00:00:03,000
 Compare two datasets on their primary keys under rules you declare, on a laptop, in CI, or inside a warehouse.
 
 2
-00:00:02,500 --> 00:00:11,000
-Two exports that should match, paired on their primary key, id.
+00:00:03,000 --> 00:00:07,250
+The smallest configuration names a source, a target, and the primary key, id.
 
 3
-00:00:11,000 --> 00:00:15,500
-veridelta validate checks the configuration before it reads a row.
+00:00:07,250 --> 00:00:14,233
+Two exports that should match, with three rows each.
 
 4
-00:00:15,500 --> 00:00:20,500
+00:00:14,233 --> 00:00:20,983
 veridelta run compares them: 1 row added, 1 removed, and 1 changed.
 
 5
-00:00:20,500 --> 00:00:27,167
+00:00:20,983 --> 00:00:24,933
 The exit code, 1, tells CI that the datasets differ.
 
 6
-00:00:27,167 --> 00:00:30,167
+00:00:24,933 --> 00:00:28,933
 pip install veridelta. The docs are at veridelta.github.io/veridelta.

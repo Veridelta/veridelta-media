@@ -43,11 +43,11 @@ https://veridelta.github.io/veridelta/agents/
 
 `promo-30` and `promo-square-30`:
 
-> The Veridelta logo and its summary, then a terminal. A five-line veridelta.yaml names two three-row CSV files, legacy.csv and modern.csv. veridelta validate reports the configuration valid, veridelta run finds 1 row added, 1 removed, and 1 changed, and the exit code is 1. It ends on pip install veridelta and the docs address.
+> The Veridelta logo and its summary, then a terminal in a large font. A five-line veridelta.yaml names two three-row CSV files, legacy.csv and modern.csv. veridelta run finds 1 row added, 1 removed, and 1 changed, and the exit code is 1. It ends on pip install veridelta and the docs address.
 
 `promo-60`:
 
-> The Veridelta logo and its summary, then a terminal. A five-line veridelta.yaml names two three-row CSV files. veridelta validate reports the configuration valid, veridelta run finds 1 row added, 1 removed, and 1 changed, and the exit code is 1. Then the top of an HTML report from a comparison of 120 orders, a card that says two tables in Snowflake, Databricks, or BigQuery are compared where they are stored, and a script that calls the MCP server's tools and prints each answer. It ends on pip install veridelta and the docs address.
+> The Veridelta logo and its summary, then a terminal in a large font. A five-line veridelta.yaml names two three-row CSV files. veridelta run finds 1 row added, 1 removed, and 1 changed, and the exit code is 1. Then the top of an HTML report from a comparison of 120 orders, a card that says two tables in Snowflake, Databricks, or BigQuery are compared where they are stored, and a script that calls the MCP server's tools and prints each answer. It ends on pip install veridelta and the docs address.
 
 The link preview card, `docs/assets/social-card.png` in the Veridelta repository:
 

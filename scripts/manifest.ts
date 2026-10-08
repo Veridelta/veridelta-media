@@ -1,10 +1,11 @@
-// Writes public/clips/manifest.json: the release and commit the clips came from, and each
-// file's size, length, and SHA-256, so a reviewer can trace and check every one.
+// Writes public/clips/manifest.json: the commit the clips came from, the release whose package
+// it holds, and each file's tape, size, length, and SHA-256, so a reviewer can trace and
+// check every one.
 //
 // Usage, from scripts/fetch-clips.sh: tsx scripts/manifest.ts <veridelta checkout> <release>
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const [checkout, release] = process.argv.slice(2);
@@ -27,6 +28,17 @@ const probe = (file: string) => {
   };
 };
 
+// demo/<name>.tape makes <name>.mp4, and demo/promo/<name>.tape, made for video alone,
+// makes promo-<name>.mp4.
+const tapeOf = (name: string) => {
+  const promo = name.match(/^promo-(.+)$/);
+  const tape = promo ? `demo/promo/${promo[1]}.tape` : `demo/${name}.tape`;
+  if (!existsSync(join(checkout, tape))) {
+    throw new Error(`No tape at ${tape} makes ${name}.mp4.`);
+  }
+  return tape;
+};
+
 const files = readdirSync(clips).sort();
 const manifest = {
   source: "https://github.com/Veridelta/veridelta",
@@ -40,7 +52,7 @@ const manifest = {
       return {
         name: name.replace(/\.mp4$/, ""),
         file: name,
-        tape: `demo/${name.replace(/\.mp4$/, ".tape")}`,
+        tape: tapeOf(name.replace(/\.mp4$/, "")),
         width,
         height,
         seconds,
