@@ -43,8 +43,9 @@ const title = (seconds: number): Scene => ({
 });
 
 // The quick start, recorded for video in a large font, in two clips. The caption times
-// follow the tapes: the configuration shows at 1 second and the first file at 4.25; the
-// summary shows at 1.75 seconds and the exit code at 6.75.
+// follow the tapes: the configuration shows at 1 second and the first file by 4.25; the
+// summary shows at 1.75 seconds and the exit code at 6.75. No caption names what is not
+// on screen yet.
 const data: Scene = (() => {
   const seconds = clip("promo-data").seconds;
   return {

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Renders the terminal recordings at one Veridelta release with `make demo-video`, and
+# Renders the terminal recordings at one Veridelta commit with `make demo-video`, and
 # copies them into public/clips/ with the report screenshot from the same checkout. Every
 # terminal frame in the videos comes from here, so each traces to a tape at that commit.
 #
