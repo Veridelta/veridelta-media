@@ -10,7 +10,9 @@
     "check": "tsx scripts/check.ts",
     "generate": "tsx scripts/generate.ts",
     "render": "bash scripts/render.sh",
-    "fetch-clips": "bash scripts/fetch-clips.sh"
+    "fetch-clips": "bash scripts/fetch-clips.sh",
+    "voice": "tsx scripts/voice.ts",
+    "fetch-transcripts": "bash scripts/fetch-transcripts.sh"
   },
   "dependencies": {
     "@remotion/cli": "4.0.534",

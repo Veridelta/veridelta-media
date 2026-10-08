@@ -1,3 +1,8 @@
 node_modules/
 # Renders are reviewed, then published by hand; git keeps their sources, not the videos.
 renders/
+
+# Music under a narrated cut, which its license may not let this repository share.
+public/music/
+# Voice samples to choose from, made by `npm run voice -- --samples`.
+samples/

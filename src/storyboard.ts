@@ -1,6 +1,9 @@
 // Every cut, scene by scene: what it shows, how long, its captions, and the docs page that
 // backs each claim. The compositions, the SRT files, and storyboard.md all come from here.
 import { clip } from "./clips";
+import { runSeconds, type TerminalTiming } from "./terminal";
+import { transcript } from "./transcripts";
+import { estimate, spoken } from "./voice";
 
 export const FPS = 30;
 
@@ -10,12 +13,17 @@ const DOCS = "https://veridelta.github.io/veridelta/";
 export const SENTENCE =
   "Compare two datasets on their primary keys under rules you declare, on a laptop, in CI, or inside a warehouse.";
 
+/** A transcript of one of Veridelta's tapes, set in type, and when its commands start. */
+export type TerminalPicture = { kind: "terminal"; transcript: string; label: string; timing: TerminalTiming };
+
 export type Picture =
   | { kind: "title" }
   | { kind: "clip"; clip: string }
   | { kind: "image"; image: string }
+  | TerminalPicture
+  | { kind: "screenshot"; image: string; label: string }
   | { kind: "card"; heading: string; lines: string[] }
-  | { kind: "install" };
+  | { kind: "install"; repository?: boolean };
 
 /** A caption, timed in seconds from the start of its scene. */
 export type Caption = { from: number; to: number; text: string };
@@ -29,9 +37,22 @@ export type Scene = {
   captions: Caption[];
   /** The docs page that backs every claim the scene makes. */
   backedBy: string;
+  /** In a narrated cut, each line the voice says: its file, and when, from the scene's start. */
+  voice?: { text: string; file?: string; at: number; seconds: number }[];
 };
 
-export type Cut = { id: string; title: string; width: number; height: number; scenes: Scene[] };
+export type Cut = {
+  id: string;
+  title: string;
+  width: number;
+  height: number;
+  scenes: Scene[];
+  /**
+   * A cut with a voice shows each line as a subtitle, and plays music under it when the file is
+   * in public/, which git ignores, with its credit on the last scene.
+   */
+  narrated?: { music: { file: string; credit: string } };
+};
 
 const title = (seconds: number): Scene => ({
   id: "title",
@@ -141,6 +162,201 @@ const install = (seconds: number): Scene => ({
   backedBy: `${DOCS}#install`,
 });
 
+// The two-minute demo, narrated. Each scene is a list of beats: a line the voice says, and
+// what the picture does as the line starts, such as typing a transcript's next command or
+// underlining a line of its output. The voice's measured lengths set every time, so a scene
+// is as long as its lines, and its subtitles are those lines, word for word.
+
+/** One line the voice says, and what the picture does as it starts. */
+export type Beat = {
+  say: string;
+  /** The transcript's next step, whose command starts to type as the line starts. */
+  type?: number;
+  /** Output lines to underline, matched whole, once the line starts and any command has run. */
+  mark?: string[];
+};
+
+/** Seconds before the first line, between two lines, and after the last. */
+const LEAD = 0.6;
+const GAP = 0.45;
+const TAIL = 1;
+/** Seconds a command's output stays on screen before the next line starts. */
+const SETTLE = 0.9;
+
+type Narrated = Omit<Scene, "seconds" | "captions" | "voice" | "picture"> & {
+  picture: Exclude<Picture, TerminalPicture> | Omit<TerminalPicture, "timing">;
+  beats: Beat[];
+  /** Seconds the picture stays after its last line, past the usual pause, to be read. */
+  hold?: number;
+};
+
+const narrate = ({ beats, picture, hold = 0, ...scene }: Narrated): Scene => {
+  const timing: TerminalTiming = { starts: [], marks: [] };
+  const steps = picture.kind === "terminal" ? transcript(picture.transcript).steps : [];
+  const voice: NonNullable<Scene["voice"]> = [];
+  let at = LEAD;
+  for (const beat of beats) {
+    const line = spoken(beat.say);
+    const seconds = line?.seconds ?? estimate(beat.say);
+    let busy = seconds;
+    let ran = at;
+    if (beat.type !== undefined) {
+      if (beat.type !== timing.starts.length || !steps[beat.type]) {
+        throw new Error(`Scene ${scene.id}: "${beat.say}" types step ${beat.type}, but the next is ${timing.starts.length}.`);
+      }
+      timing.starts.push(at);
+      ran = at + runSeconds(steps[beat.type].command);
+      busy = Math.max(busy, ran - at + SETTLE);
+    }
+    timing.marks.push(...(beat.mark ?? []).map((text) => ({ text, at: ran })));
+    voice.push({ text: beat.say, file: line?.file, at, seconds });
+    at += busy + GAP;
+  }
+  const seconds = at - GAP + TAIL + hold;
+  const captions = voice.map(({ text, at: from }, index) => ({
+    text,
+    from: index === 0 ? 0 : from,
+    to: index + 1 < voice.length ? voice[index + 1].at : seconds,
+  }));
+  return {
+    ...scene,
+    picture: picture.kind === "terminal" ? { ...picture, timing } : picture,
+    seconds,
+    captions,
+    voice,
+  };
+};
+
+const demo: Scene[] = [
+  narrate({
+    id: "demo-title",
+    description: "The logo, then PyPI's one-line summary.",
+    picture: { kind: "title" },
+    beats: [
+      { say: "Veridelta compares two datasets on their primary keys." },
+      { say: "It reports every row that differs, under rules you declare." },
+    ],
+    backedBy: DOCS,
+  }),
+  narrate({
+    id: "accounts-data",
+    description: "The first six lines of each CSV file, before and after the rewrite.",
+    picture: { kind: "terminal", transcript: "accounts-data", label: "1 · The two files" },
+    beats: [
+      { say: "Here are 40 accounts, exported before and after a rewrite.", type: 0 },
+      { say: "Did the rewrite keep the data the same?", type: 1 },
+    ],
+    backedBy: `${DOCS}how-to/from-drift-to-rules/`,
+  }),
+  narrate({
+    id: "accounts-run",
+    description: "`veridelta run` on the two files and `--key account_id`: FAILED, 39 changed, 1 removed, and exit code 1.",
+    picture: { kind: "terminal", transcript: "accounts-run", label: "2 · The first run" },
+    beats: [
+      { say: "One command compares them on the account ID, with no configuration file.", type: 0 },
+      { say: "39 rows changed, and 1 row is gone.", mark: ["Changed:       39", "Removed:       1"] },
+      { say: "The exit code is 1, so a CI job would fail.", type: 1, mark: ["exit code: 1"] },
+    ],
+    backedBy: `${DOCS}cli/#exit-codes`,
+  }),
+  narrate({
+    id: "accounts-suggest",
+    description: "A configuration with no rules, then `veridelta suggest`, which proposes three rules with their evidence.",
+    picture: { kind: "terminal", transcript: "accounts-suggest", label: "3 · suggest" },
+    beats: [
+      { say: "This file names the two exports and the key, with no rules yet.", type: 0 },
+      { say: "veridelta suggest tries each kind of rule on the columns that differ.", type: 1 },
+      {
+        say: "It proposes a rule for letter case, rounding, and missing notes, each with its evidence.",
+        mark: [
+          "region: case_insensitive true explains 38 of 39 differing rows",
+          "balance: absolute_tolerance 0.005 explains 13 of 13 differing rows, the largest gap 0.004",
+          'note: null_values ["N/A"] explains 7 of 7 differing rows',
+        ],
+      },
+      { say: "No model is called. Each rule is one you could write by hand." },
+    ],
+    backedBy: `${DOCS}cli/#suggesting-rules`,
+  }),
+  narrate({
+    id: "accounts-crosswalk",
+    description: "`veridelta crosswalk` with the three suggested rules: a value map from each status to its letter, 13 of 13 rows each.",
+    picture: { kind: "terminal", transcript: "accounts-crosswalk", label: "4 · crosswalk" },
+    beats: [
+      { say: "The status codes changed too, from words to letters.", type: 0 },
+      {
+        say: "crosswalk lines up the values and proposes a map, with how many rows agree.",
+        mark: [
+          "  'active' -> 'A': 13 of 13 rows (100.0%)",
+          "  'closed' -> 'C': 13 of 13 rows (100.0%)",
+          "  'paused' -> 'P': 13 of 13 rows (100.0%)",
+        ],
+      },
+    ],
+    backedBy: `${DOCS}rules/#proposing-a-value-map`,
+  }),
+  narrate({
+    id: "accounts-rules",
+    description: "The configuration with all four rules, then its run: 95.0%, 1 removed, 1 changed.",
+    picture: { kind: "terminal", transcript: "accounts-rules", label: "5 · Four rules" },
+    beats: [
+      { say: "The configuration now declares all four rules.", type: 0 },
+      { say: "Two rows still differ.", type: 1, mark: ["Removed:       1", "Changed:       1"] },
+      { say: "Nothing is forgiven unless a rule says so." },
+    ],
+    backedBy: `${DOCS}rules/`,
+  }),
+  narrate({
+    id: "accounts-baseline",
+    description: "A baseline that accepts the removed account, then the run against it: 1 accepted, 1 changed, and exit code 1.",
+    picture: { kind: "terminal", transcript: "accounts-baseline", label: "6 · A baseline" },
+    beats: [
+      { say: "Account 40 was removed on purpose, so a baseline file accepts that change.", type: 0 },
+      { say: "The run accepts it, and still fails on the other row.", type: 1, mark: ["Accepted:      1", "Changed:       1"] },
+      { say: "So CI holds the rewrite until that row is fixed.", type: 2, mark: ["exit code: 1"] },
+    ],
+    backedBy: `${DOCS}cli/#accepting-drift`,
+  }),
+  narrate({
+    id: "accounts-report",
+    description: "The HTML report of the baseline run: account 17, south in the legacy file and east in the rewrite.",
+    picture: { kind: "screenshot", image: "promo-report", label: "7 · The HTML report" },
+    beats: [
+      { say: "The HTML report shows that row side by side." },
+      { say: "Account 17 moved from south to east. That is the real defect." },
+    ],
+    backedBy: `${DOCS}results/#html-report`,
+  }),
+  narrate({
+    id: "status",
+    description: "A card in the logo's colors that says where the project stands.",
+    picture: {
+      kind: "card",
+      heading: "Where it stands",
+      lines: [
+        "Alpha, at version 0.33.",
+        "Tested on generated data, with drift seeded on purpose.",
+        "Not yet run by other users, or in a live cloud warehouse.",
+      ],
+    },
+    beats: [
+      { say: "Veridelta is early, at version 0.33." },
+      { say: "It is tested on generated data, with drift seeded on purpose." },
+      { say: "It has not yet been run by other users, or in a live cloud warehouse." },
+      { say: "Feedback is welcome." },
+    ],
+    backedBy: `${DOCS}#status`,
+  }),
+  narrate({
+    id: "demo-install",
+    description: "The wordmark, the install command, the docs and repository addresses, and the music's credit.",
+    picture: { kind: "install", repository: true },
+    beats: [{ say: "Try it with pip install veridelta." }],
+    hold: 3,
+    backedBy: `${DOCS}#install`,
+  }),
+];
+
 export const cuts: Cut[] = [
   {
     id: "promo-30",
@@ -162,6 +378,14 @@ export const cuts: Cut[] = [
     width: 1080,
     height: 1080,
     scenes: [title(3), data, run, install(4)],
+  },
+  {
+    id: "demo-120",
+    title: "About two minutes, 1920 by 1080, narrated, on CSV files",
+    width: 1920,
+    height: 1080,
+    scenes: demo,
+    narrated: { music: { file: "music/bensound-hipjazz.mp3", credit: "Music: Bensound" } },
   },
 ];
 
