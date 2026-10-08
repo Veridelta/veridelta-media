@@ -114,17 +114,19 @@ const warehouse: Scene = {
   backedBy: `${DOCS}pushdown/`,
 };
 
+// The MCP client, recorded for video in a large font. The calls and answers show at 7
+// seconds, once the script has started the server.
 const mcp: Scene = (() => {
-  const seconds = clip("mcp").seconds;
+  const seconds = clip("promo-mcp").seconds;
   return {
     id: "mcp",
     description:
-      "The MCP client recording, whole: a script calls `validate_config`, `run_comparison`, and `read_discrepancies`, and prints each answer.",
-    picture: { kind: "clip", clip: "mcp" },
+      "The MCP client, recorded whole for video: a script calls `validate_config`, `run_comparison`, and `read_discrepancies`, and prints each answer, one field to a line.",
+    picture: { kind: "clip", clip: "promo-mcp" },
     seconds,
     captions: [
-      { from: 0, to: 6, text: "veridelta mcp serves the same checks as MCP tools, so an agent's host can call them without a shell." },
-      { from: 6, to: seconds, text: "Here a script calls the tools, as an agent's host does." },
+      { from: 0, to: 7, text: "veridelta mcp serves the same checks as MCP tools, so an agent's host can call them without a shell." },
+      { from: 7, to: seconds, text: "Here a script calls the tools, as an agent's host does." },
     ],
     backedBy: `${DOCS}agents/#mcp-server`,
   };

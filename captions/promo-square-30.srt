@@ -15,9 +15,9 @@ Two exports that should match, with three rows each.
 veridelta run compares them: 1 row added, 1 removed, and 1 changed.
 
 5
-00:00:20,983 --> 00:00:24,933
+00:00:20,983 --> 00:00:24,967
 The exit code, 1, tells CI that the datasets differ.
 
 6
-00:00:24,933 --> 00:00:28,933
+00:00:24,967 --> 00:00:28,967
 pip install veridelta. The docs are at veridelta.github.io/veridelta.
