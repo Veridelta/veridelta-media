@@ -1,0 +1,3 @@
+node_modules/
+# Renders are reviewed, then published by hand; git keeps their sources, not the videos.
+renders/

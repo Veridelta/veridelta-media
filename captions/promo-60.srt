@@ -1,0 +1,39 @@
+1
+00:00:00,000 --> 00:00:03,000
+Compare two datasets on their primary keys under rules you declare, on a laptop, in CI, or inside a warehouse.
+
+2
+00:00:03,000 --> 00:00:11,500
+Two exports that should match, paired on their primary key, id.
+
+3
+00:00:11,500 --> 00:00:16,000
+veridelta validate checks the configuration before it reads a row.
+
+4
+00:00:16,000 --> 00:00:21,000
+veridelta run compares them: 1 row added, 1 removed, and 1 changed.
+
+5
+00:00:21,000 --> 00:00:27,667
+The exit code, 1, tells CI that the datasets differ.
+
+6
+00:00:27,667 --> 00:00:34,667
+veridelta run --html writes a standalone report that opens offline, with changed rows side by side.
+
+7
+00:00:34,667 --> 00:00:40,667
+Two tables in Snowflake, Databricks, or BigQuery are compared where they are stored. Only counts and keys come back.
+
+8
+00:00:40,667 --> 00:00:46,667
+veridelta mcp serves the same checks as MCP tools, so an agent's host can call them without a shell.
+
+9
+00:00:46,667 --> 00:00:53,367
+Here a script calls the tools, as an agent's host does.
+
+10
+00:00:53,367 --> 00:00:57,367
+pip install veridelta. The docs are at veridelta.github.io/veridelta.
