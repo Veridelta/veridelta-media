@@ -7,9 +7,12 @@
 //   npm run voice                 Gemini's speech model, with the key in GEMINI_API_KEY
 //   npm run voice -- --draft      espeak-ng, a robotic voice to time a draft with
 //   npm run voice -- --samples    the first scene in each voice of SAMPLES, into samples/
+//   npm run voice -- --samples Orus,Sulafat    the first scene in the voices named
 //
 // Gemini reads a scene's lines in one request, which sounds more even and spends fewer of the
-// free tier's few requests a day; scripts/split-lines.ts then cuts the clip into its lines. A
+// free tier's few requests a day, with a long pause between lines; scripts/split-lines.ts then
+// cuts the clip into its lines. The speech model reads its text word for word, so how to read
+// goes apart from the text, in STYLE. A
 // scene it cannot cut safely is spoken again a line at a time. The key travels only in a request
 // header, on curl's standard input, never in a URL, an argument, a file, or a log. Every clip is
 // trimmed of silence at both ends and set to -16 LUFS, so the lines play at one loudness.
@@ -23,9 +26,16 @@ import { cuts } from "../src/storyboard";
 import { voices, type Engine, type VoiceLine } from "../src/voice";
 
 /** The voice of the final cut, one of Gemini's prebuilt voices. */
-const VOICE = "Charon";
+const VOICE = "Sulafat";
 /** Voices to compare before choosing one: two lower, two higher. */
 const SAMPLES = ["Charon", "Iapetus", "Sulafat", "Kore"];
+/** How the voice reads every line, sent apart from the text so it is never read aloud. */
+const STYLE = `AUDIO PROFILE: The narrator of a short demo video for a command-line data tool.
+THE SCENE: A two-minute walkthrough, watched by engineers and hiring managers.
+DIRECTOR'S NOTES:
+- Style: Energetic and authoritative. Confident, clear, and warm, with a vocal smile, never salesy.
+- Pace: Brisk but unhurried, with crisp consonants.
+- Accent: Neutral American English.`;
 const API = "https://generativelanguage.googleapis.com/v1beta";
 const FOLDER = join("public", "voice");
 
@@ -81,26 +91,48 @@ const model = (() => {
   };
 })();
 
-/** Speak text with Gemini into a WAV file, waiting out a per-minute limit. */
+/** The first audio in a response, wherever the API put it: base64 data and its type. */
+const audioIn = (value: any): { data: string; type: string } | undefined => {
+  if (!value || typeof value !== "object") {
+    return undefined;
+  }
+  const type = value.mime_type ?? value.mimeType;
+  if (typeof value.data === "string" && typeof type === "string" && type.startsWith("audio/")) {
+    return { data: value.data, type };
+  }
+  for (const inner of Object.values(value)) {
+    const found = audioIn(inner);
+    if (found) {
+      return found;
+    }
+  }
+  return undefined;
+};
+
+/** Speak text with Gemini into a WAV file, in the STYLE given apart, waiting out a per-minute limit. */
 const gemini = (text: string, voice: string, wav: string) => {
   const body = JSON.stringify({
-    contents: [{ parts: [{ text }] }],
-    generationConfig: {
-      responseModalities: ["AUDIO"],
-      speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } } },
-    },
+    model: model(),
+    input: [{ type: "text", text, annotations: [{ type: "speech_metadata", style: STYLE }] }],
+    response_format: { type: "audio" },
+    generation_config: { speech_config: [{ voice }] },
   });
   for (let attempt = 1; ; attempt++) {
-    const { status, json } = call(`models/${model()}:generateContent`, body);
+    const { status, json } = call("interactions", body);
     if (status === 200) {
-      const part = json.candidates?.[0]?.content?.parts?.find((entry: any) => entry.inlineData);
-      if (!part) {
+      const audio = audioIn(json);
+      if (!audio) {
         throw new Error(`Gemini returned no audio: ${JSON.stringify(json).slice(0, 300)}`);
       }
-      const rate = /rate=(\d+)/.exec(part.inlineData.mimeType)?.[1] ?? "24000";
-      const pcm = `${wav}.pcm`;
-      writeFileSync(pcm, Buffer.from(part.inlineData.data, "base64"));
-      execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-f", "s16le", "-ar", rate, "-ac", "1", "-i", pcm, wav]);
+      const bytes = Buffer.from(audio.data, "base64");
+      if (bytes.subarray(0, 4).toString() === "RIFF") {
+        writeFileSync(wav, bytes);
+      } else {
+        // Raw 16-bit PCM, mono, at the rate the type names.
+        const rate = /rate=(\d+)/.exec(audio.type)?.[1] ?? "24000";
+        writeFileSync(`${wav}.pcm`, bytes);
+        execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-f", "s16le", "-ar", rate, "-ac", "1", "-i", `${wav}.pcm`, wav]);
+      }
       return;
     }
     const details: any[] = json.error?.details ?? [];
@@ -149,10 +181,11 @@ const finish = (wav: string, mp3: string) => {
 };
 
 /**
- * The prompt for a scene's lines: each line as its own paragraph, and nothing else, since the
- * speech model reads aloud whatever it is given, an instruction on how to read included.
+ * The text for a scene's lines: the lines and a long pause between each two, and nothing else,
+ * since the speech model reads aloud whatever text it is given. The pause tag is the model's own
+ * and is not spoken.
  */
-const prompt = (lines: string[]) => lines.join("\n\n");
+const prompt = (lines: string[]) => lines.join("\n\n<long pause>\n\n");
 
 /** Seconds per character of each line Gemini has spoken in this run, to check the next by. */
 const paces: number[] = [];
@@ -208,7 +241,8 @@ const work = mkdtempSync(join(tmpdir(), "voice-"));
 try {
   if (args.includes("--samples")) {
     mkdirSync("samples", { recursive: true });
-    for (const voice of SAMPLES) {
+    const named = args[args.indexOf("--samples") + 1];
+    for (const voice of named && !named.startsWith("--") ? named.split(",") : SAMPLES) {
       const wav = join(work, `${voice}.wav`);
       gemini(prompt(scenes[0]), voice, wav);
       finish(wav, join("samples", `${voice}.mp3`));
