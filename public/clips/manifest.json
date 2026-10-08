@@ -1,7 +1,7 @@
 {
   "source": "https://github.com/Veridelta/veridelta",
   "release": "v0.27.0",
-  "commit": "0d30071efeb37502c7e853c44e30db218fd9fba0",
+  "commit": "1f89e0587d8f8b4be32604d8f3bf927cb1d54e6d",
   "renderedWith": "make demo-video and vhs v0.12.1",
   "clips": [
     {
@@ -10,8 +10,8 @@
       "tape": "demo/crosswalk.tape",
       "width": 900,
       "height": 580,
-      "seconds": 12.84,
-      "sha256": "f89bde360a7c33ce77940663c1ef9bff6d785a945b8fc1667a8e62b38c643251"
+      "seconds": 12.8,
+      "sha256": "a9cbf76af78079bb6ad9c77724de524eb339262504c9c29593bfc2ddfc937c9e"
     },
     {
       "name": "mcp",
@@ -19,8 +19,8 @@
       "tape": "demo/mcp.tape",
       "width": 900,
       "height": 820,
-      "seconds": 12.44,
-      "sha256": "63f9dff73d9af3b8e0749f9b954e0e4e2d0cb0e1f04716177db8ebfcd0c08e9b"
+      "seconds": 12.68,
+      "sha256": "21493f601e235b8821c241646478e597ea1464cf14dfea7a9f998fb16862e245"
     },
     {
       "name": "promo-data",
@@ -29,7 +29,7 @@
       "width": 700,
       "height": 780,
       "seconds": 11.24,
-      "sha256": "4153fffddfe15f0b310af8129d03ed5418203358fd91d23e6394ef71c0b8beb1"
+      "sha256": "fc24ee55a3d34a28d7b1558c50e2ee0bada54ea30cb057405319c4da750680a7"
     },
     {
       "name": "promo-run",
@@ -38,7 +38,7 @@
       "width": 700,
       "height": 1080,
       "seconds": 10.72,
-      "sha256": "f9173c7fffe748ae530dd36de4488f8c7b4ce36ef8b25fbb7fa009a9ff0f37e5"
+      "sha256": "7d60a218647e4d9d010d77f9a27c92f7ec043b59ca21120d616e251abb12f183"
     },
     {
       "name": "validate",
@@ -46,8 +46,8 @@
       "tape": "demo/validate.tape",
       "width": 900,
       "height": 440,
-      "seconds": 15.88,
-      "sha256": "a24cb9925fb5f7770677e405a4c77e4ad01ac402c7132848fa655df5c37bc480"
+      "seconds": 15.84,
+      "sha256": "cc827093a401c8380942cc891993db7b5e4453a05ce477b182b1765217781bc5"
     },
     {
       "name": "veridelta",
@@ -56,7 +56,7 @@
       "width": 900,
       "height": 1000,
       "seconds": 24.72,
-      "sha256": "8f06d1995e70c19fb4022a6750e1590934464d8a9f9b029a0d9ca7520a87dab8"
+      "sha256": "4290508a30f2a918d36b3b3c06c7545309c6acd14a2178f650e4d3f3467205e1"
     }
   ],
   "images": [

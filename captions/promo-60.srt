@@ -31,9 +31,9 @@ Two tables in Snowflake, Databricks, or BigQuery are compared where they are sto
 veridelta mcp serves the same checks as MCP tools, so an agent's host can call them without a shell.
 
 9
-00:00:43,933 --> 00:00:50,367
+00:00:43,933 --> 00:00:50,600
 Here a script calls the tools, as an agent's host does.
 
 10
-00:00:50,367 --> 00:00:54,367
+00:00:50,600 --> 00:00:54,600
 pip install veridelta. The docs are at veridelta.github.io/veridelta.
