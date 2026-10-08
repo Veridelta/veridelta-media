@@ -26,8 +26,6 @@ import { voices, type Engine, type VoiceLine } from "../src/voice";
 const VOICE = "Charon";
 /** Voices to compare before choosing one: two lower, two higher. */
 const SAMPLES = ["Charon", "Iapetus", "Sulafat", "Kore"];
-/** How the voice reads, said before the lines. The model follows it and does not read it out. */
-const STYLE = "Read these lines for a short product demo, in a calm, clear, friendly voice, with a pause after each line:";
 const API = "https://generativelanguage.googleapis.com/v1beta";
 const FOLDER = join("public", "voice");
 
@@ -150,8 +148,11 @@ const finish = (wav: string, mp3: string) => {
   ]);
 };
 
-/** The prompt for a scene's lines: the style, then each line as its own paragraph. */
-const prompt = (lines: string[]) => [STYLE, ...lines].join("\n\n");
+/**
+ * The prompt for a scene's lines: each line as its own paragraph, and nothing else, since the
+ * speech model reads aloud whatever it is given, an instruction on how to read included.
+ */
+const prompt = (lines: string[]) => lines.join("\n\n");
 
 /** Seconds per character of each line Gemini has spoken in this run, to check the next by. */
 const paces: number[] = [];
@@ -182,7 +183,7 @@ const speakScene = (lines: string[], engine: Engine, voice: string, work: string
       gemini(prompt([line]), voice, each[index]);
       const problem = offPace(each[index], line);
       if (problem) {
-        throw new Error(`${problem}; listen to it, then set GEMINI_TTS_MODEL or change STYLE.`);
+        throw new Error(`${problem}; listen to it, then set GEMINI_TTS_MODEL to another speech model.`);
       }
     });
     return each;

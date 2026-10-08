@@ -7,6 +7,8 @@ import { execFileSync, spawnSync } from "node:child_process";
 /** Pauses quieter than this, and at least this long, count as a pause. */
 const NOISE = "-38dB";
 const SHORTEST = 0.18;
+/** A pause at least this long ends a paragraph; a pause inside a line is shorter. */
+const LONG = 0.8;
 
 type Pause = { start: number; end: number; length: number };
 
@@ -45,6 +47,11 @@ export const cuts = (wav: string, lines: string[]): number[] | string => {
   const shortestChosen = Math.min(...chosen.map((pause) => pause.length));
   if (shortestChosen < 0.25 || (rest.length > 0 && shortestChosen < 1.15 * rest[0].length)) {
     return "the pauses between lines are no longer than the pauses inside them";
+  }
+  // A pause this long inside a line is a paragraph's, so the clip holds more than its lines,
+  // such as an instruction the model read aloud.
+  if (rest.length > 0 && rest[0].length >= LONG) {
+    return "the clip has more long pauses than its lines have gaps";
   }
   const points = chosen.map((pause) => (pause.start + pause.end) / 2).sort((a, b) => a - b);
   const bounds = [0, ...points, duration(wav)];
