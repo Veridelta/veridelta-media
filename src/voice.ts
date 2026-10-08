@@ -3,7 +3,7 @@
 // so the cut still renders, and `npm run check` names it.
 import manifest from "../public/voice/manifest.json";
 
-export type Engine = "google" | "espeak";
+export type Engine = "gemini" | "espeak";
 
 export type VoiceLine = {
   text: string;

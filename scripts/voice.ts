@@ -1,50 +1,123 @@
 // Speaks every line of every narrated cut into public/voice/, and writes its manifest: each
-// line's file, length, and checksum, and the engine and voice that spoke it. A line is spoken
-// again only when its text, engine, or voice changes, so a key is needed only for new lines.
+// line's file, length, and checksum, and the engine and voice that spoke it. A scene is spoken
+// again only when a line's text, the engine, or the voice changes, so the key is needed only
+// for new lines.
 //
 // Usage:
-//   npm run voice                 Google Cloud Text-to-Speech, with the key in GOOGLE_TTS_API_KEY
+//   npm run voice                 Gemini's speech model, with the key in GEMINI_API_KEY
 //   npm run voice -- --draft      espeak-ng, a robotic voice to time a draft with
-//   npm run voice -- --samples    the first two lines in each voice of SAMPLES, into samples/
+//   npm run voice -- --samples    the first scene in each voice of SAMPLES, into samples/
 //
-// The key travels only in a request header, on curl's standard input, never in a URL, an
-// argument, a file, or a log. Every clip is trimmed of silence at both ends and set to -16
-// LUFS, so the lines play at one loudness.
+// Gemini reads a scene's lines in one request, which sounds more even and spends fewer of the
+// free tier's few requests a day; scripts/split-lines.ts then cuts the clip into its lines. A
+// scene it cannot cut safely is spoken again a line at a time. The key travels only in a request
+// header, on curl's standard input, never in a URL, an argument, a file, or a log. Every clip is
+// trimmed of silence at both ends and set to -16 LUFS, so the lines play at one loudness.
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { cuts as cutsOf, cut, duration } from "./split-lines";
 import { cuts } from "../src/storyboard";
 import { voices, type Engine, type VoiceLine } from "../src/voice";
 
-/** The voice of the final cut. */
-const VOICE = "en-US-Chirp3-HD-Charon";
-/** Voices to compare before choosing one. */
-const SAMPLES = ["en-US-Chirp3-HD-Charon", "en-US-Chirp3-HD-Orus", "en-US-Chirp3-HD-Aoede", "en-US-Chirp3-HD-Kore"];
-const ENDPOINT = "https://texttospeech.googleapis.com/v1/text:synthesize";
+/** The voice of the final cut, one of Gemini's prebuilt voices. */
+const VOICE = "Charon";
+/** Voices to compare before choosing one: two lower, two higher. */
+const SAMPLES = ["Charon", "Iapetus", "Sulafat", "Kore"];
+/** How the voice reads, said before the lines. The model follows it and does not read it out. */
+const STYLE = "Read these lines for a short product demo, in a calm, clear, friendly voice, with a pause after each line:";
+const API = "https://generativelanguage.googleapis.com/v1beta";
 const FOLDER = join("public", "voice");
 
 const sha256 = (data: Buffer | string) => createHash("sha256").update(data).digest("hex");
+const sleep = (seconds: number) => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, seconds * 1000);
 
-/** Speak a line with Google's API into a WAV file. */
-const google = (text: string, voice: string, wav: string) => {
-  const key = process.env.GOOGLE_TTS_API_KEY;
-  if (!key) {
-    throw new Error("Set GOOGLE_TTS_API_KEY to a Google Cloud API key that may call Text-to-Speech, or pass --draft.");
+const key = () => {
+  const value = process.env.GEMINI_API_KEY;
+  if (!value) {
+    throw new Error("Set GEMINI_API_KEY to a key from Google AI Studio, or pass --draft.");
   }
+  return value;
+};
+
+/** Call the Gemini API with the key in a header that curl reads from standard input. */
+const call = (path: string, body?: string): { status: number; json: any } => {
+  const args = ["--silent", "--show-error", "--header", "@-", "--write-out", "\n%{http_code}"];
+  if (body) {
+    args.push("--header", "Content-Type: application/json", "--data-binary", body);
+  }
+  const out = execFileSync("curl", [...args, `${API}/${path}`], {
+    input: `x-goog-api-key: ${key()}\n`,
+    maxBuffer: 256 * 1024 * 1024,
+  }).toString();
+  const split = out.lastIndexOf("\n");
+  return { status: Number(out.slice(split + 1)), json: JSON.parse(out.slice(0, split) || "{}") };
+};
+
+/** The speech model to use: GEMINI_TTS_MODEL, or the newest flash model that speaks. */
+const model = (() => {
+  let chosen: string | undefined;
+  return () => {
+    if (chosen) {
+      return chosen;
+    }
+    chosen = process.env.GEMINI_TTS_MODEL;
+    if (!chosen) {
+      const { status, json } = call("models?pageSize=1000");
+      if (status !== 200) {
+        throw new Error(`Gemini answered ${status} when listing models: ${json.error?.message ?? "no message"}`);
+      }
+      const speaking = ((json.models ?? []) as { name: string; supportedGenerationMethods?: string[] }[])
+        .filter((entry) => entry.name.includes("tts") && entry.supportedGenerationMethods?.includes("generateContent"))
+        .map((entry) => entry.name.replace(/^models\//, ""))
+        .sort((a, b) => Number(b.includes("flash")) - Number(a.includes("flash")) || b.localeCompare(a));
+      chosen = speaking[0];
+      if (!chosen) {
+        throw new Error("The key's project lists no speech model. Set GEMINI_TTS_MODEL to one.");
+      }
+    }
+    console.log(`Speaking with ${chosen}.`);
+    return chosen;
+  };
+})();
+
+/** Speak text with Gemini into a WAV file, waiting out a per-minute limit. */
+const gemini = (text: string, voice: string, wav: string) => {
   const body = JSON.stringify({
-    input: { text },
-    voice: { languageCode: voice.slice(0, 5), name: voice },
-    audioConfig: { audioEncoding: "LINEAR16", sampleRateHertz: 48000 },
+    contents: [{ parts: [{ text }] }],
+    generationConfig: {
+      responseModalities: ["AUDIO"],
+      speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } } },
+    },
   });
-  // curl reads the key's header from standard input, so no process listing shows it.
-  const out = execFileSync(
-    "curl",
-    ["--silent", "--show-error", "--fail-with-body", "--header", "@-", "--header", "Content-Type: application/json", "--data-binary", body, ENDPOINT],
-    { input: `X-Goog-Api-Key: ${key}\n`, maxBuffer: 64 * 1024 * 1024 },
-  );
-  writeFileSync(wav, Buffer.from(JSON.parse(out.toString()).audioContent, "base64"));
+  for (let attempt = 1; ; attempt++) {
+    const { status, json } = call(`models/${model()}:generateContent`, body);
+    if (status === 200) {
+      const part = json.candidates?.[0]?.content?.parts?.find((entry: any) => entry.inlineData);
+      if (!part) {
+        throw new Error(`Gemini returned no audio: ${JSON.stringify(json).slice(0, 300)}`);
+      }
+      const rate = /rate=(\d+)/.exec(part.inlineData.mimeType)?.[1] ?? "24000";
+      const pcm = `${wav}.pcm`;
+      writeFileSync(pcm, Buffer.from(part.inlineData.data, "base64"));
+      execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-f", "s16le", "-ar", rate, "-ac", "1", "-i", pcm, wav]);
+      return;
+    }
+    const details: any[] = json.error?.details ?? [];
+    const perDay = JSON.stringify(details).includes("PerDay");
+    const wait = Number(/([\d.]+)s/.exec(details.find((entry) => entry.retryDelay)?.retryDelay ?? "")?.[1] ?? 30);
+    if (status !== 429 || perDay || attempt > 5) {
+      throw new Error(
+        perDay
+          ? "The free tier's requests for today are spent. Every line spoken so far is saved; run this again tomorrow."
+          : `Gemini answered ${status}: ${json.error?.message ?? "no message"}`,
+      );
+    }
+    console.log(`Rate limited; waiting ${wait} seconds.`);
+    sleep(wait + 1);
+  }
 };
 
 /** Speak a line with espeak-ng into a WAV file, for a draft. */
@@ -77,21 +150,57 @@ const finish = (wav: string, mp3: string) => {
   ]);
 };
 
-const seconds = (file: string) =>
-  Number(execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", file]).toString());
+/** The prompt for a scene's lines: the style, then each line as its own paragraph. */
+const prompt = (lines: string[]) => [STYLE, ...lines].join("\n\n");
 
-const speak = (text: string, engine: Engine, voice: string, mp3: string, work: string) => {
-  const wav = join(work, "line.wav");
-  (engine === "google" ? google : espeak)(text, voice, wav);
-  finish(wav, mp3);
+/** Seconds per character of each line Gemini has spoken in this run, to check the next by. */
+const paces: number[] = [];
+
+/** Why a line spoken alone cannot be trusted, such as a read-out style, or undefined. */
+const offPace = (wav: string, line: string) => {
+  if (paces.length === 0) {
+    return undefined;
+  }
+  const median = [...paces].sort((a, b) => a - b)[Math.floor(paces.length / 2)];
+  const pace = duration(wav) / line.length;
+  return pace < 0.6 * median || pace > 1.6 * median ? `"${line}" took ${duration(wav).toFixed(1)} seconds, off the voice's pace` : undefined;
 };
 
-/** Every line the narrated cuts say, in order, once each. */
-const lines = [
-  ...new Set(
-    cuts.filter((cut) => cut.narrated).flatMap((cut) => cut.scenes.flatMap((scene) => (scene.voice ?? []).map(({ text }) => text))),
-  ),
-];
+/** Speak a scene's lines into one WAV per line, in order. */
+const speakScene = (lines: string[], engine: Engine, voice: string, work: string): string[] => {
+  const each = lines.map((_, index) => join(work, `line-${index}.wav`));
+  if (engine === "espeak") {
+    lines.forEach((line, index) => espeak(line, voice, each[index]));
+    return each;
+  }
+  const whole = join(work, "scene.wav");
+  gemini(prompt(lines), voice, whole);
+  const points = lines.length === 1 ? (offPace(whole, lines[0]) ?? []) : cutsOf(whole, lines);
+  if (typeof points === "string") {
+    console.log(`Cannot cut "${lines[0].slice(0, 40)}..." safely (${points}); speaking it a line at a time.`);
+    lines.forEach((line, index) => {
+      gemini(prompt([line]), voice, each[index]);
+      const problem = offPace(each[index], line);
+      if (problem) {
+        throw new Error(`${problem}; listen to it, then set GEMINI_TTS_MODEL or change STYLE.`);
+      }
+    });
+    return each;
+  }
+  const bounds = [0, ...points, duration(whole)];
+  lines.forEach((line, index) => {
+    cut(whole, bounds[index], bounds[index + 1], each[index]);
+    paces.push(duration(each[index]) / line.length);
+  });
+  return each;
+};
+
+/** Every narrated scene's lines, in order. */
+const scenes = cuts
+  .filter((entry) => entry.narrated)
+  .flatMap((entry) => entry.scenes)
+  .map((scene) => (scene.voice ?? []).map(({ text }) => text))
+  .filter((lines) => lines.length > 0);
 
 const args = process.argv.slice(2);
 const work = mkdtempSync(join(tmpdir(), "voice-"));
@@ -99,38 +208,45 @@ try {
   if (args.includes("--samples")) {
     mkdirSync("samples", { recursive: true });
     for (const voice of SAMPLES) {
-      const parts = lines.slice(0, 2).map((text, index) => {
-        const part = join(work, `${voice}-${index}.mp3`);
-        speak(text, "google", voice, part, work);
-        return part;
-      });
-      const list = join(work, "list.txt");
-      writeFileSync(list, parts.map((part) => `file '${part}'`).join("\n"));
-      execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-f", "concat", "-safe", "0", "-i", list, "-c", "copy", join("samples", `${voice}.mp3`)]);
+      const wav = join(work, `${voice}.wav`);
+      gemini(prompt(scenes[0]), voice, wav);
+      finish(wav, join("samples", `${voice}.mp3`));
       console.log(`samples/${voice}.mp3`);
     }
   } else {
-    const engine: Engine = args.includes("--draft") ? "espeak" : "google";
-    const voice = engine === "google" ? VOICE : "en-us";
+    const engine: Engine = args.includes("--draft") ? "espeak" : "gemini";
+    const voice = engine === "gemini" ? VOICE : "en-us";
     mkdirSync(FOLDER, { recursive: true });
-    const kept: VoiceLine[] = lines.map((text) => {
-      const old = voices.lines.find((line) => line.text === text && line.engine === engine && line.voice === voice);
-      if (old && sha256(readFileSync(join(FOLDER, old.file))) === old.sha256) {
-        return old;
+    const kept = new Map<string, VoiceLine>();
+    const save = () =>
+      writeFileSync(
+        join(FOLDER, "manifest.json"),
+        `${JSON.stringify({ lines: scenes.flat().flatMap((text) => kept.get(text) ?? voices.lines.filter((line) => line.text === text)) }, null, 2)}\n`,
+      );
+    for (const lines of scenes) {
+      const old = lines.map((text) => voices.lines.find((line) => line.text === text && line.engine === engine && line.voice === voice));
+      if (old.every((line) => line && sha256(readFileSync(join(FOLDER, line.file))) === line.sha256)) {
+        old.forEach((line) => kept.set(line!.text, line!));
+        continue;
       }
-      const file = `${sha256(`${engine}\n${voice}\n${text}`).slice(0, 16)}.mp3`;
-      speak(text, engine, voice, join(FOLDER, file), work);
-      console.log(`${file}: ${text}`);
-      return { text, file, seconds: seconds(join(FOLDER, file)), engine, voice, sha256: sha256(readFileSync(join(FOLDER, file))) };
-    });
+      const wavs = speakScene(lines, engine, voice, work);
+      lines.forEach((text, index) => {
+        const file = `${sha256(`${engine}\n${voice}\n${text}`).slice(0, 16)}.mp3`;
+        finish(wavs[index], join(FOLDER, file));
+        kept.set(text, { text, file, seconds: duration(join(FOLDER, file)), engine, voice, sha256: sha256(readFileSync(join(FOLDER, file))) });
+        console.log(`${file}: ${text}`);
+      });
+      // Saved after each scene, so a limit reached partway keeps what was spoken.
+      save();
+    }
+    save();
     // A clip no line uses any more goes.
     for (const name of readdirSync(FOLDER)) {
-      if (name.endsWith(".mp3") && !kept.some((line) => line.file === name)) {
+      if (name.endsWith(".mp3") && ![...kept.values()].some((line) => line.file === name)) {
         rmSync(join(FOLDER, name));
       }
     }
-    writeFileSync(join(FOLDER, "manifest.json"), `${JSON.stringify({ lines: kept }, null, 2)}\n`);
-    console.log(`public/voice/manifest.json: ${kept.length} lines, spoken by ${engine} as ${voice}.`);
+    console.log(`public/voice/manifest.json: ${kept.size} lines, spoken by ${engine} as ${voice}.`);
   }
 } finally {
   rmSync(work, { recursive: true, force: true });

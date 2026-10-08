@@ -38,7 +38,7 @@ You need Node 22. `npm ci` installs the exact versions in `package-lock.json`.
 | `npm run typecheck` | Type-checks the project. |
 | `npm run fetch-clips -- v0.27.0` | Renders the recordings at a Veridelta release, or a later commit with the same package, and copies them into `public/clips/`. |
 | `npm run fetch-transcripts -- v0.33.4` | Copies the accounts tapes' transcripts, and the report of their last run, at a Veridelta release or a later commit with the same package, into `public/transcripts/`. |
-| `npm run voice` | Speaks each line of the narrated cuts with Google Cloud Text-to-Speech into `public/voice/`, with the key in `GOOGLE_TTS_API_KEY`. `-- --draft` uses espeak-ng instead, to time a draft, and `-- --samples` writes the first lines in a few voices to `samples/`. |
+| `npm run voice` | Speaks each line of the narrated cuts with Gemini's speech model into `public/voice/`, with a Google AI Studio key in `GEMINI_API_KEY`. It reads a scene in one request and cuts the clip at its pauses, so the free tier's few requests a day go far. `-- --draft` uses espeak-ng instead, to time a draft, and `-- --samples` writes the first scene in a few voices to `samples/`. |
 | `npm run check -- --final` | Also refuses a line the draft voice still speaks, before a cut is published. |
 
 CI runs the type check, `npm run check`, and `npm run generate` on every pull request, fails when the generated files differ from the committed ones, and uploads a half size render of each cut as the `previews` artifact.

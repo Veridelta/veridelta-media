@@ -65,7 +65,7 @@ for (const cut of cuts) {
       const line = voices.lines.find((entry) => entry.text === text);
       if (!line) {
         problems.push(`${where}: the voice has not spoken "${text}"; run npm run voice.`);
-      } else if (final && line.engine !== "google") {
+      } else if (final && line.engine !== "gemini") {
         problems.push(`${where}: "${text}" is still the ${line.engine} draft; run npm run voice with the key.`);
       }
     }
