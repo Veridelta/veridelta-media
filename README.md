@@ -1,12 +1,12 @@
 # Veridelta media
 
-Promotional videos for [Veridelta](https://github.com/Veridelta/veridelta), made with [Remotion](https://www.remotion.dev/). The terminal recordings they show are rendered from tapes in the Veridelta repository, at a pinned release, so every terminal frame is output the CLI printed. [Veridelta's decision record](https://github.com/Veridelta/veridelta/blob/main/decisions/promotional-videos-in-their-own-repository.md) says why the videos live here.
+Promotional videos for [Veridelta](https://github.com/Veridelta/veridelta), made with [Remotion](https://www.remotion.dev/). The terminal recordings they show are rendered from tapes in the Veridelta repository, at a pinned commit that runs a release, so every terminal frame is output the CLI printed. [Veridelta's decision record](https://github.com/Veridelta/veridelta/blob/main/decisions/promotional-videos-in-their-own-repository.md) says why the videos live here.
 
 ## The cuts
 
 | Cut | Size | Length | Scenes |
 | :--- | :--- | :--- | :--- |
-| `promo-30` | 1920 by 1080 | About 30 seconds | The logo and summary, the quick start recording, how to install |
+| `promo-30` | 1920 by 1080 | About 30 seconds | The logo and summary, the quick start's files and run, how to install |
 | `promo-60` | 1920 by 1080 | Under 60 seconds | Those, plus the HTML report, comparison inside the warehouse, and the MCP server |
 | `promo-square-30` | 1080 by 1080 | About 30 seconds | As `promo-30`, for feeds that crop wide video |
 
@@ -33,7 +33,7 @@ You need Node 22. `npm ci` installs the exact versions in `package-lock.json`.
 | `npm run generate` | Writes `captions/*.srt` and `storyboard.md` from `src/storyboard.ts`. Run it after changing a scene. |
 | `npm run check` | Checks each clip against its checksum, each scene's docs page and caption times, and each post's length. |
 | `npm run typecheck` | Type-checks the project. |
-| `npm run fetch-clips -- v0.27.0` | Renders the recordings at a Veridelta release and copies them into `public/clips/`. |
+| `npm run fetch-clips -- v0.27.0` | Renders the recordings at a Veridelta release, or a later commit with the same package, and copies them into `public/clips/`. |
 
 CI runs the type check, `npm run check`, and `npm run generate` on every pull request, fails when the generated files differ from the committed ones, and uploads a half size render of each cut as the `previews` artifact.
 
@@ -41,7 +41,8 @@ CI runs the type check, `npm run check`, and `npm run generate` on every pull re
 
 ## Where the pictures come from
 
-- `public/clips/` holds the terminal recordings and the report screenshot. `scripts/fetch-clips.sh` makes them: it clones Veridelta at the release you name, runs `make demo-video`, and copies the files. `public/clips/manifest.json` records the release, its commit, and each file's checksum. Fetching needs what `make demo-video` needs: uv, vhs v0.12.1, ttyd, ffmpeg, and Chromium.
+- `public/clips/` holds the terminal recordings and the report screenshot. `scripts/fetch-clips.sh` makes them: it clones Veridelta at the release or commit you name, runs `make demo-video`, and copies the files. A commit after a release works only while its `src/`, `pyproject.toml`, and `uv.lock` match the release's, so every frame is what that release prints. `public/clips/manifest.json` records the commit, the release, and each file's tape and checksum. Fetching needs what `make demo-video` needs: uv, vhs v0.12.1, ttyd, ffmpeg, and Chromium.
+- The quick start comes from the tapes in Veridelta's `demo/promo/`, kept for video alone. They type in a 32 pixel font, a few lines to a clip, so the text stays legible on a phone. No clip is enlarged, since an enlarged terminal blurs.
 - `public/brand/` holds the logo, copied from Veridelta's `docs/assets/` at commit `6f09910`.
 - `public/fonts/` holds Inter, under the SIL Open Font License 1.1, and DejaVu Sans Mono, under the Bitstream Vera license. Their license texts are beside them. They ship here so a cut renders the same on every machine.
 

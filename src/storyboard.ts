@@ -42,21 +42,35 @@ const title = (seconds: number): Scene => ({
   backedBy: DOCS,
 });
 
-// The quick start recording, whole. The caption times follow the tape: the files show by
-// 8 seconds, `validate` answers by 12, the summary by 17, and the exit code by 22.
-const quickStart: Scene = (() => {
-  const seconds = clip("veridelta").seconds;
+// The quick start, recorded for video in a large font, in two clips. The caption times
+// follow the tapes: the configuration shows at 1 second and the first file at 4.25; the
+// summary shows at 1.75 seconds and the exit code at 6.75.
+const data: Scene = (() => {
+  const seconds = clip("promo-data").seconds;
   return {
-    id: "quick-start",
+    id: "data",
     description:
-      "The quick start recording, whole: a five-line configuration, two three-row CSV files, `veridelta validate`, `veridelta run`, and the exit code.",
-    picture: { kind: "clip", clip: "veridelta" },
+      "The quick start's files, recorded whole for video: a five-line configuration and two three-row CSV files.",
+    picture: { kind: "clip", clip: "promo-data" },
     seconds,
     captions: [
-      { from: 0, to: 8.5, text: "Two exports that should match, paired on their primary key, id." },
-      { from: 8.5, to: 13, text: "veridelta validate checks the configuration before it reads a row." },
-      { from: 13, to: 18, text: "veridelta run compares them: 1 row added, 1 removed, and 1 changed." },
-      { from: 18, to: seconds, text: "The exit code, 1, tells CI that the datasets differ." },
+      { from: 0, to: 4.25, text: "The smallest configuration names a source, a target, and the primary key, id." },
+      { from: 4.25, to: seconds, text: "Two exports that should match, with three rows each." },
+    ],
+    backedBy: `${DOCS}configuration/`,
+  };
+})();
+
+const run: Scene = (() => {
+  const seconds = clip("promo-run").seconds;
+  return {
+    id: "run",
+    description: "The quick start's run, recorded whole for video: `veridelta run -q`, its summary, and the exit code.",
+    picture: { kind: "clip", clip: "promo-run" },
+    seconds,
+    captions: [
+      { from: 0, to: 6.75, text: "veridelta run compares them: 1 row added, 1 removed, and 1 changed." },
+      { from: 6.75, to: seconds, text: "The exit code, 1, tells CI that the datasets differ." },
     ],
     backedBy: `${DOCS}cli/#exit-codes`,
   };
@@ -130,21 +144,21 @@ export const cuts: Cut[] = [
     title: "30 seconds, 1920 by 1080",
     width: 1920,
     height: 1080,
-    scenes: [title(2.5), quickStart, install(3)],
+    scenes: [title(3), data, run, install(4)],
   },
   {
     id: "promo-60",
     title: "60 seconds, 1920 by 1080",
     width: 1920,
     height: 1080,
-    scenes: [title(3), quickStart, report, warehouse, mcp, install(4)],
+    scenes: [title(3), data, run, report, warehouse, mcp, install(4)],
   },
   {
     id: "promo-square-30",
     title: "30 seconds, 1080 by 1080, for social feeds",
     width: 1080,
     height: 1080,
-    scenes: [title(2.5), quickStart, install(3)],
+    scenes: [title(3), data, run, install(4)],
   },
 ];
 

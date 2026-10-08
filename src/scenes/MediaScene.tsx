@@ -6,8 +6,9 @@ import type { Scene } from "../storyboard";
 import { colors } from "../theme";
 import { Captions } from "./Captions";
 
+// Shrinks the picture to fit its box, but never enlarges it, since an enlarged terminal blurs.
 const fit = (width: number, height: number, maxWidth: number, maxHeight: number) => {
-  const scale = Math.min(maxWidth / width, maxHeight / height);
+  const scale = Math.min(maxWidth / width, maxHeight / height, 1);
   return { width: Math.round(width * scale), height: Math.round(height * scale) };
 };
 
@@ -17,13 +18,14 @@ export const MediaScene = ({ scene, square }: { scene: Scene; square: boolean })
     throw new Error(`Scene ${scene.id} has no clip or image.`);
   }
   const media = picture.kind === "clip" ? clip(picture.clip) : image(picture.image);
+  const commit = manifest.commit.slice(0, 7);
   const origin =
     picture.kind === "clip"
-      ? `Recorded from ${clip(picture.clip).tape} at Veridelta ${manifest.release}`
-      : `Screenshot ${image(picture.image).source} at Veridelta ${manifest.release}`;
+      ? `Recorded from ${clip(picture.clip).tape} at commit ${commit}, running Veridelta ${manifest.release}`
+      : `Screenshot ${image(picture.image).source} at commit ${commit}, from Veridelta ${manifest.release}`;
   const box = square
-    ? fit(media.width, media.height, 960, 640)
-    : fit(media.width, media.height, picture.kind === "clip" ? 980 : 1060, 946);
+    ? fit(media.width, media.height, 984, 820)
+    : fit(media.width, media.height, picture.kind === "clip" ? 980 : 1060, 980);
   const frame = {
     ...box,
     flexShrink: 0,
@@ -39,8 +41,8 @@ export const MediaScene = ({ scene, square }: { scene: Scene; square: boolean })
         flexDirection: square ? "column" : "row",
         alignItems: "center",
         justifyContent: "center",
-        gap: square ? 36 : 80,
-        padding: square ? "48px 60px 74px" : "60px 90px 74px",
+        gap: square ? 28 : 80,
+        padding: square ? "36px 48px 40px" : "40px 90px 60px",
       }}
     >
       {picture.kind === "clip" ? (
@@ -48,8 +50,8 @@ export const MediaScene = ({ scene, square }: { scene: Scene; square: boolean })
       ) : (
         <Img src={src} style={{ ...frame, objectFit: "cover", objectPosition: "top left" }} />
       )}
-      <div style={{ display: "flex", flexDirection: "column", gap: 28, flex: 1 }}>
-        <Captions captions={scene.captions} size={square ? 40 : picture.kind === "clip" ? 54 : 46} />
+      <div style={{ display: "flex", flexDirection: "column", gap: square ? 20 : 28, flex: 1 }}>
+        <Captions captions={scene.captions} size={square ? 38 : picture.kind === "clip" ? 54 : 46} />
         <div style={{ fontSize: square ? 20 : 24, color: colors.slate }}>{origin}</div>
       </div>
     </AbsoluteFill>

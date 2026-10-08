@@ -1,7 +1,7 @@
 {
   "source": "https://github.com/Veridelta/veridelta",
   "release": "v0.27.0",
-  "commit": "e91c240359a6c7bb91973eb0a7b9047c36aba2e2",
+  "commit": "0d30071efeb37502c7e853c44e30db218fd9fba0",
   "renderedWith": "make demo-video and vhs v0.12.1",
   "clips": [
     {
@@ -10,8 +10,8 @@
       "tape": "demo/crosswalk.tape",
       "width": 900,
       "height": 580,
-      "seconds": 12.8,
-      "sha256": "ea71acbe9f87373047d4af81fd50134dc27388a43fe86687d57e1f5685f5c44c"
+      "seconds": 12.84,
+      "sha256": "f89bde360a7c33ce77940663c1ef9bff6d785a945b8fc1667a8e62b38c643251"
     },
     {
       "name": "mcp",
@@ -19,8 +19,26 @@
       "tape": "demo/mcp.tape",
       "width": 900,
       "height": 820,
-      "seconds": 12.72,
-      "sha256": "b48f66143c1691bb5c8f946287a3d49ecf635318a2ca8addf850cfcd502d9714"
+      "seconds": 12.44,
+      "sha256": "63f9dff73d9af3b8e0749f9b954e0e4e2d0cb0e1f04716177db8ebfcd0c08e9b"
+    },
+    {
+      "name": "promo-data",
+      "file": "promo-data.mp4",
+      "tape": "demo/promo/data.tape",
+      "width": 700,
+      "height": 780,
+      "seconds": 11.24,
+      "sha256": "4153fffddfe15f0b310af8129d03ed5418203358fd91d23e6394ef71c0b8beb1"
+    },
+    {
+      "name": "promo-run",
+      "file": "promo-run.mp4",
+      "tape": "demo/promo/run.tape",
+      "width": 700,
+      "height": 1080,
+      "seconds": 10.72,
+      "sha256": "f9173c7fffe748ae530dd36de4488f8c7b4ce36ef8b25fbb7fa009a9ff0f37e5"
     },
     {
       "name": "validate",
@@ -28,8 +46,8 @@
       "tape": "demo/validate.tape",
       "width": 900,
       "height": 440,
-      "seconds": 15.84,
-      "sha256": "b86b026f0931adf68b593a491049d7705c1086e087e032a9e66904baead42ea7"
+      "seconds": 15.88,
+      "sha256": "a24cb9925fb5f7770677e405a4c77e4ad01ac402c7132848fa655df5c37bc480"
     },
     {
       "name": "veridelta",
@@ -37,8 +55,8 @@
       "tape": "demo/veridelta.tape",
       "width": 900,
       "height": 1000,
-      "seconds": 24.68,
-      "sha256": "2ec64adece611b2da2c746bd21ae43ef16f872b73c93d46f642e5fc788d07226"
+      "seconds": 24.72,
+      "sha256": "8f06d1995e70c19fb4022a6750e1590934464d8a9f9b029a0d9ca7520a87dab8"
     }
   ],
   "images": [
