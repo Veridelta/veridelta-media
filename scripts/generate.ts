@@ -44,7 +44,7 @@ const lines = [
   "",
   "`npm run generate` writes this file from `src/storyboard.ts`. Change that file, not this one.",
   "",
-  `Every terminal recording and the report screenshot come from Veridelta ${manifest.release}, commit \`${manifest.commit.slice(0, 7)}\`, rendered with ${manifest.renderedWith}. \`public/clips/manifest.json\` holds each file's checksum. Each recording plays whole, as its tape typed it.`,
+  `Every terminal recording and the report screenshot come from Veridelta commit \`${manifest.commit.slice(0, 7)}\`, whose package is ${manifest.release}'s, rendered with ${manifest.renderedWith}. \`public/clips/manifest.json\` holds each file's tape and checksum. Each recording plays whole, as its tape typed it.`,
   "",
 ];
 for (const cut of cuts) {
