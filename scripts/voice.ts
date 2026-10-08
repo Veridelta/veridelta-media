@@ -26,7 +26,7 @@ import { cuts } from "../src/storyboard";
 import { voices, type Engine, type VoiceLine } from "../src/voice";
 
 /** The voice of the final cut, one of Gemini's prebuilt voices. */
-const VOICE = "Sulafat";
+const VOICE = "Orus";
 /** Voices to compare before choosing one: two lower, two higher. */
 const SAMPLES = ["Charon", "Iapetus", "Sulafat", "Kore"];
 /** How the voice reads every line, sent apart from the text so it is never read aloud. */
@@ -136,7 +136,7 @@ const gemini = (text: string, voice: string, wav: string) => {
       return;
     }
     const details: any[] = json.error?.details ?? [];
-    const perDay = JSON.stringify(details).includes("PerDay");
+    const perDay = JSON.stringify(details).includes("PerDay") || /per day/i.test(json.error?.message ?? "");
     const wait = Number(/([\d.]+)s/.exec(details.find((entry) => entry.retryDelay)?.retryDelay ?? "")?.[1] ?? 30);
     if (status !== 429 || perDay || attempt > 5) {
       throw new Error(

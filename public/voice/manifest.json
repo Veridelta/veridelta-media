@@ -2,155 +2,155 @@
   "lines": [
     {
       "text": "Veridelta compares two datasets on their primary keys.",
-      "file": "4b51fb40fa1254b3.mp3",
-      "seconds": 3.384,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "a440c97874706e9f78d3b0ce45663eb9f49598e98a0a37f2cd6a8b30a91ca50e"
+      "file": "9e4f540ed79b57a3.mp3",
+      "seconds": 3.216,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "e04e7e45938f0423e0118e9b5cd4931ff15b45b1bb7edfabebdb678bdfae54b7"
     },
     {
       "text": "It reports every row that differs, under rules you declare.",
-      "file": "9e34529cb6166fe2.mp3",
-      "seconds": 3.456,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "73db1ab1289fc6ab21c093b4d65437b18539f6a1f6cac1874ec44e17f587f00c"
+      "file": "bd80db3f9358ff06.mp3",
+      "seconds": 3.12,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "00a4dc172fa7752fd78ec8e4869e68d7ef50a02ff04ccf98c7cfa548e04cac4f"
     },
     {
       "text": "Here are 40 accounts, exported before and after a rewrite.",
-      "file": "e95eddd7f631d942.mp3",
-      "seconds": 3.816,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "a926d699bd497cb095fabf54a2f37743dbcbd460a1352959d169348587a0b0c6"
+      "file": "ae49dae04fd00f03.mp3",
+      "seconds": 4.008,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "e709dbd555dbf2f77c55c8f569ac5e775a3e97ba54d8074bd8e8e21242894557"
     },
     {
       "text": "Did the rewrite keep the data the same?",
-      "file": "f1418d9665373b51.mp3",
-      "seconds": 2.136,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "c65db2428e8af48cdaaaa48e8d3d621df55f67d20395dc5d38749bdd94b83d3d"
+      "file": "9b8426579884ee4b.mp3",
+      "seconds": 1.728,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "257c650fe3a6fc7ee9668e94b5cc0180fc7397e1fdc8ed77ebec2a446d7ed152"
     },
     {
       "text": "One command compares them on the account ID, with no configuration file.",
-      "file": "64022b5d32e56802.mp3",
-      "seconds": 4.68,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "7263af01bbb9cae3717f98181160f43430e20fd9f4281d92842d551903666a28"
+      "file": "2555590d9dca50ce.mp3",
+      "seconds": 3.864,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "021837888f3499f566743912a4b5debdffcaa9f024cb0ea90b97d1999ad87bd4"
     },
     {
       "text": "39 rows changed, and 1 row is gone.",
-      "file": "14f36311ada6135a.mp3",
-      "seconds": 3,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "7a709ece94896fb04190a6d3d5ce59789086784f2fe28a8a4bd96d1c0a171e72"
+      "file": "742f3b3a859642bb.mp3",
+      "seconds": 2.832,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "e8c8c7f4e84603e0f5d8550fd06f4985d442ca8bfebed2f8748be8577b4f0742"
     },
     {
       "text": "The exit code is 1, so a CI job would fail.",
-      "file": "879df8ad61e4da17.mp3",
-      "seconds": 3.288,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "0dee6d12de11ab940754233c13b33ac6c6b1e1f2211b0aded0e2e5d784734e64"
+      "file": "c50e9003d6085613.mp3",
+      "seconds": 2.76,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "e4cbbe02e9e547772747b7c81e09ed7ab2969a08e88856f30e6ae5d58033d039"
     },
     {
       "text": "This file names the two exports and the key, with no rules yet.",
-      "file": "6ed174e6ec248ea6.mp3",
-      "seconds": 4.008,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "aa9575378b850b3e81074a02cac8fca75b85d7dbc54a7f4a94bf3b49ff35d2e6"
+      "file": "0d7a911126ec9037.mp3",
+      "seconds": 3.624,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "90170b116800ed7ca5800a3ba37d073491a26535c4761983cf6b4d0207e57c08"
     },
     {
       "text": "veridelta suggest tries each kind of rule on the columns that differ.",
-      "file": "2abfd10b3a9f1569.mp3",
-      "seconds": 3.96,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "a248c104171f635af895ca0ea8aadf0542167ecccaecee48b1e958691c0d9349"
+      "file": "f00d7ee3a6ae092e.mp3",
+      "seconds": 4.008,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "492b4f585ce2f0cbfd340844704a012b436f625a309646b14a4756430e864c81"
     },
     {
       "text": "It proposes a rule for letter case, rounding, and missing notes, each with its evidence.",
-      "file": "9f25f9c5da61f045.mp3",
-      "seconds": 5.472,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "25124377194d2f89337e887966d655a34c1fbf2508bc9c5417bcddf27523027f"
+      "file": "8de5f393d04de085.mp3",
+      "seconds": 5.088,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "e7e7ad8bfe77cd9a30268957fde14f4f36fcdb867b8bc12f278a452c8fd356ba"
     },
     {
       "text": "No model is called. Each rule is one you could write by hand.",
-      "file": "fa4cb2711c828621.mp3",
-      "seconds": 3.744,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "e41af7d2c96cc420bc9ecc017328a5ede61f0cd66460f5b43fd98026a9177084"
+      "file": "c80a17cbf26ea128.mp3",
+      "seconds": 3.072,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "a0ada805b36749eb671037689e6edec07360cf4438cb0792b427f5fcae6d4b51"
     },
     {
       "text": "The status codes changed too, from words to letters.",
-      "file": "376244c369a4c9e2.mp3",
-      "seconds": 3.384,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "9397cf5285dd11441dc1e81681ae50a77a1a6d55e525cb8459613d296303cc56"
+      "file": "e3d6575f6a888501.mp3",
+      "seconds": 3.12,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "f42de775bbb208ede75bb567bcdf14d08d83fae3002421e88e6dd98375609a99"
     },
     {
       "text": "crosswalk lines up the values and proposes a map, with how many rows agree.",
-      "file": "a1e4d12c3edbab00.mp3",
-      "seconds": 4.656,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "199b0dcecd3ccd9ee5923b2eaca0335eb3ef5c4404175f09590bd2bab0074ed0"
+      "file": "d6099ee35e4db2ec.mp3",
+      "seconds": 4.344,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "e836d7ac35aaa9046d45727e8b2b6a11f2e2c0e1dd4bfcf05e7daa9f1226cfcd"
     },
     {
       "text": "The configuration now declares all four rules.",
-      "file": "329c340ba4ba9e51.mp3",
-      "seconds": 2.784,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "706be9ff5715a13388e8d5c357eabffff5f503c8210f79a498c49f43cc69b9f4"
+      "file": "b7578e811109f77f.mp3",
+      "seconds": 2.496,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "c549483eceee2163e578ed558f80676f6e8eb49082c754b39d6bd30b08d87c45"
     },
     {
       "text": "Two rows still differ.",
-      "file": "26217d1cb85c48ad.mp3",
-      "seconds": 1.248,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "2f3040b7fa18b0ebe656a83cd569fbcccae2de27d3506c34778331bec03ae717"
+      "file": "d09917924530fb05.mp3",
+      "seconds": 0.96,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "801d70eb353b25342ccdbc3bc9540674650556c11595ba27570c44e534f96835"
     },
     {
       "text": "Nothing is forgiven unless a rule says so.",
-      "file": "081df29197698633.mp3",
-      "seconds": 2.52,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "6da39c08ea14b7f8eab114b6fe28f5a80eae5b11ae6abfe0226540c81df15166"
+      "file": "5559c959a4527db7.mp3",
+      "seconds": 2.28,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "e30c6ab1aaf31cd6550571d42c32a8a5b35dd26ba34af68923658fade55fa938"
     },
     {
       "text": "Account 40 was removed on purpose, so a baseline file accepts that change.",
-      "file": "cb2d18d6a06ea720.mp3",
-      "seconds": 4.968,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "a731f30dbafee76c43d999609ee28f7bc96ab8b6f5930ef189b32a13fc200473"
+      "file": "577b37b98fdbdb14.mp3",
+      "seconds": 4.464,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "a14a3c7ffb1cdc83e979da3642965e677e3264929a0963c180db9c2114a2788c"
     },
     {
       "text": "The run accepts it, and still fails on the other row.",
-      "file": "8c33d14f917136d6.mp3",
-      "seconds": 3.168,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "4d9d711f1b9ee15127dac77fef69a7db686c563a2f9d3e754e0fa2d1090db958"
+      "file": "f963269b8116e9b2.mp3",
+      "seconds": 3.072,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "f221984bf96a3da8318b8648ff81eddca434b90cb6e76c8b8d5235b14ea56b11"
     },
     {
       "text": "So CI holds the rewrite until that row is fixed.",
-      "file": "a46166709d130508.mp3",
-      "seconds": 3.024,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "e7da72c6ae4824b6f1934d353b9a7bc30376a7f4f5192f135998f2ad18285465"
+      "file": "32db0f4ace249d21.mp3",
+      "seconds": 2.832,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "829fb1a7e5106e1c38d2cc2b946820c308bddfeed7d2f0d31037325075a47e3e"
     },
     {
       "text": "The HTML report shows that row side by side.",
