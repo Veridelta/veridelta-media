@@ -3,6 +3,8 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { manifest } from "../src/clips";
 import { FPS, cutFrames, cuts, timeline } from "../src/storyboard";
+import { transcripts } from "../src/transcripts";
+import { voices } from "../src/voice";
 
 /** SRT's time stamp, such as 00:00:08,500. */
 const srtTime = (seconds: number) => {
@@ -45,6 +47,8 @@ const lines = [
   "`npm run generate` writes this file from `src/storyboard.ts`. Change that file, not this one.",
   "",
   `Every terminal recording and the report screenshot come from Veridelta commit \`${manifest.commit.slice(0, 7)}\`, whose package is ${manifest.release}'s, rendered with ${manifest.renderedWith}. \`public/clips/manifest.json\` holds each file's tape and checksum. Each recording plays whole, as its tape typed it.`,
+  "",
+  `The narrated cut sets in type the transcripts of Veridelta commit \`${transcripts.commit.slice(0, 7)}\`, whose package is ${transcripts.release}'s, and shows the HTML report of the run its last tape types. \`public/transcripts/manifest.json\` holds each file's tape, its steps, and its checksum. Its voice is ${[...new Set(voices.lines.map((line) => `${line.engine} (${line.voice})`))].join(" and ") || "not spoken yet"}, and its subtitles are the voice's lines, word for word.`,
   "",
 ];
 for (const cut of cuts) {

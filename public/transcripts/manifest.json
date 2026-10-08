@@ -1,0 +1,274 @@
+{
+  "source": "https://github.com/Veridelta/veridelta",
+  "release": "v0.33.4",
+  "commit": "c06b8128db2b6f4871dbd582857cc4f1b80401bd",
+  "transcripts": [
+    {
+      "name": "accounts-baseline",
+      "file": "accounts-baseline.txt",
+      "tape": "demo/promo/accounts-baseline.tape",
+      "sha256": "f11853d115a2d24e69cc1e2ebdf4fc3d0de453cbc6f628c18a05f943162a8a77",
+      "steps": [
+        {
+          "command": "cat accepted.json",
+          "output": [
+            "{",
+            "  \"primary_keys\": [",
+            "    \"account_id\"",
+            "  ],",
+            "  \"added\": [],",
+            "  \"removed\": [",
+            "    {",
+            "      \"account_id\": 40",
+            "    }",
+            "  ],",
+            "  \"changed\": []",
+            "}"
+          ]
+        },
+        {
+          "command": "veridelta run -c accounts_rules.yaml --baseline accepted.json",
+          "output": [
+            "Loading configuration from accounts_rules.yaml...",
+            "Comparing...",
+            "",
+            "Veridelta Execution Summary",
+            "===========================",
+            "Status:        FAILED",
+            "Match Rate:    97.5%",
+            "Source Rows:   40",
+            "Target Rows:   39",
+            "Volume Shift:  -1 row",
+            "",
+            "Row-Level Discrepancies:",
+            "---------------------------",
+            "Added:         0",
+            "Removed:       0",
+            "Changed:       1",
+            "Total Issues:  1",
+            "Accepted:      1",
+            "",
+            "Top Column-Level Drifts:",
+            "---------------------------",
+            "- region: 1 mismatch",
+            ""
+          ]
+        },
+        {
+          "command": "echo \"exit code: $?\"",
+          "output": [
+            "exit code: 1"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "accounts-crosswalk",
+      "file": "accounts-crosswalk.txt",
+      "tape": "demo/promo/accounts-crosswalk.tape",
+      "sha256": "e628182ae0d9e486c454e832dbe25aa014614ba7db43633f9d3740387be09ee2",
+      "steps": [
+        {
+          "command": "veridelta crosswalk -c accounts_suggested.yaml",
+          "output": [
+            "Loading configuration from accounts_suggested.yaml...",
+            "Lining up source and target values...",
+            "status: 3 new value_map entries",
+            "  'active' -> 'A': 13 of 13 rows (100.0%)",
+            "  'closed' -> 'C': 13 of 13 rows (100.0%)",
+            "  'paused' -> 'P': 13 of 13 rows (100.0%)",
+            "rules:",
+            "- column_names:",
+            "  - status",
+            "  value_map:",
+            "    active: A",
+            "    closed: C",
+            "    paused: P"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "accounts-data",
+      "file": "accounts-data.txt",
+      "tape": "demo/promo/accounts-data.tape",
+      "sha256": "3b08d1f372634d4003c6a607ae5afc30433ff1c039cb06fb594736ef1d56d287",
+      "steps": [
+        {
+          "command": "head -n 6 accounts_legacy.csv",
+          "output": [
+            "account_id,region,status,balance,note",
+            "1,south,paused,112.5,renewal 2027",
+            "2,east,closed,125.0,renewal 2028",
+            "3,west,active,137.5,renewal 2026",
+            "4,north,paused,150.0,renewal 2027",
+            "5,south,closed,162.5,"
+          ]
+        },
+        {
+          "command": "head -n 6 accounts_rewrite.csv",
+          "output": [
+            "account_id,region,status,balance,note",
+            "1,SOUTH,P,112.5,renewal 2027",
+            "2,EAST,C,125.0,renewal 2028",
+            "3,WEST,A,137.504,renewal 2026",
+            "4,NORTH,P,150.0,renewal 2027",
+            "5,SOUTH,C,162.5,N/A"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "accounts-rules",
+      "file": "accounts-rules.txt",
+      "tape": "demo/promo/accounts-rules.tape",
+      "sha256": "08347fb7640749ad6d2c53e14f97ce38b9289ebae7e443be421e3c77c0ae37be",
+      "steps": [
+        {
+          "command": "cat accounts_rules.yaml",
+          "output": [
+            "source:",
+            "  path: accounts_legacy.csv",
+            "target:",
+            "  path: accounts_rewrite.csv",
+            "primary_keys: [account_id]",
+            "rules:",
+            "  - column_names: [region]",
+            "    case_insensitive: true",
+            "  - column_names: [balance]",
+            "    absolute_tolerance: 0.005",
+            "  - column_names: [note]",
+            "    null_values: [\"N/A\"]",
+            "  - column_names: [status]",
+            "    value_map:",
+            "      active: A",
+            "      closed: C",
+            "      paused: P"
+          ]
+        },
+        {
+          "command": "veridelta run -c accounts_rules.yaml",
+          "output": [
+            "Loading configuration from accounts_rules.yaml...",
+            "Comparing...",
+            "",
+            "Veridelta Execution Summary",
+            "===========================",
+            "Status:        FAILED",
+            "Match Rate:    95.0%",
+            "Source Rows:   40",
+            "Target Rows:   39",
+            "Volume Shift:  -1 row",
+            "",
+            "Row-Level Discrepancies:",
+            "---------------------------",
+            "Added:         0",
+            "Removed:       1",
+            "Changed:       1",
+            "Total Issues:  2",
+            "",
+            "Top Column-Level Drifts:",
+            "---------------------------",
+            "- region: 1 mismatch",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "name": "accounts-run",
+      "file": "accounts-run.txt",
+      "tape": "demo/promo/accounts-run.tape",
+      "sha256": "ae82d8eac37a90547fe81fd0daea66fb8ad32ae28fca37c0b9fbffd0d272f81e",
+      "steps": [
+        {
+          "command": "veridelta run accounts_legacy.csv accounts_rewrite.csv --key account_id",
+          "output": [
+            "Comparing...",
+            "",
+            "Veridelta Execution Summary",
+            "===========================",
+            "Status:        FAILED",
+            "Match Rate:    0.0%",
+            "Source Rows:   40",
+            "Target Rows:   39",
+            "Volume Shift:  -1 row",
+            "",
+            "Row-Level Discrepancies:",
+            "---------------------------",
+            "Added:         0",
+            "Removed:       1",
+            "Changed:       39",
+            "Total Issues:  40",
+            "",
+            "Top Column-Level Drifts:",
+            "---------------------------",
+            "- region: 39 mismatches",
+            "- status: 39 mismatches",
+            "- balance: 13 mismatches",
+            "- note: 7 mismatches",
+            ""
+          ]
+        },
+        {
+          "command": "echo \"exit code: $?\"",
+          "output": [
+            "exit code: 1"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "accounts-suggest",
+      "file": "accounts-suggest.txt",
+      "tape": "demo/promo/accounts-suggest.tape",
+      "sha256": "b909c72681168429a4ae25b75f834fa94980c3a8754f5fa9784b7fc53d48e671",
+      "steps": [
+        {
+          "command": "cat accounts.yaml",
+          "output": [
+            "source:",
+            "  path: accounts_legacy.csv",
+            "target:",
+            "  path: accounts_rewrite.csv",
+            "primary_keys: [account_id]"
+          ]
+        },
+        {
+          "command": "veridelta suggest -c accounts.yaml",
+          "output": [
+            "Loading configuration from accounts.yaml...",
+            "Comparing, and trying each rule...",
+            "region: case_insensitive true explains 38 of 39 differing rows",
+            "  for example account_id=1; account_id=2; account_id=3",
+            "balance: absolute_tolerance 0.005 explains 13 of 13 differing rows, the largest gap 0.004",
+            "  for example account_id=3; account_id=6; account_id=9",
+            "note: null_values [\"N/A\"] explains 7 of 7 differing rows",
+            "  for example account_id=5; account_id=10; account_id=15",
+            "rules:",
+            "- column_names:",
+            "  - region",
+            "  case_insensitive: true",
+            "- column_names:",
+            "  - balance",
+            "  absolute_tolerance: 0.005",
+            "- column_names:",
+            "  - note",
+            "  null_values:",
+            "  - N/A"
+          ]
+        }
+      ]
+    }
+  ],
+  "images": [
+    {
+      "name": "promo-report",
+      "file": "promo-report.png",
+      "source": "demo/screenshots.py --promo, the HTML report of the run demo/promo/accounts-baseline.tape types",
+      "width": 1920,
+      "height": 1080,
+      "sha256": "fe4e0321124a457da010f729a3e608a082c6ea891f0d20296af9062fac22fc6b"
+    }
+  ]
+}

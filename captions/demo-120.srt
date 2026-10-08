@@ -1,0 +1,103 @@
+1
+00:00:00,000 --> 00:00:04,434
+Veridelta compares two datasets on their primary keys.
+
+2
+00:00:04,434 --> 00:00:08,867
+It reports every row that differs, under rules you declare.
+
+3
+00:00:08,867 --> 00:00:13,733
+Here are 40 accounts, exported before and after a rewrite.
+
+4
+00:00:13,733 --> 00:00:16,900
+Did the rewrite keep the data the same?
+
+5
+00:00:16,900 --> 00:00:22,630
+One command compares them on the account ID, with no configuration file.
+
+6
+00:00:22,630 --> 00:00:26,080
+39 rows changed, and 1 row is gone.
+
+7
+00:00:26,080 --> 00:00:30,367
+The exit code is 1, so a CI job would fail.
+
+8
+00:00:30,367 --> 00:00:35,425
+This file names the two exports and the key, with no rules yet.
+
+9
+00:00:35,425 --> 00:00:39,835
+veridelta suggest tries each kind of rule on the columns that differ.
+
+10
+00:00:39,835 --> 00:00:45,757
+It proposes a rule for letter case, rounding, and missing notes, each with its evidence.
+
+11
+00:00:45,757 --> 00:00:50,500
+No model is called. Each rule is one you could write by hand.
+
+12
+00:00:50,500 --> 00:00:54,934
+The status codes changed too, from words to letters.
+
+13
+00:00:54,934 --> 00:01:00,567
+crosswalk lines up the values and proposes a map, with how many rows agree.
+
+14
+00:01:00,567 --> 00:01:04,401
+The configuration now declares all four rules.
+
+15
+00:01:04,401 --> 00:01:07,226
+Two rows still differ.
+
+16
+00:01:07,226 --> 00:01:10,733
+Nothing is forgiven unless a rule says so.
+
+17
+00:01:10,733 --> 00:01:16,751
+Account 40 was removed on purpose, so a baseline file accepts that change.
+
+18
+00:01:16,751 --> 00:01:20,369
+The run accepts it, and still fails on the other row.
+
+19
+00:01:20,369 --> 00:01:24,367
+So CI holds the rewrite until that row is fixed.
+
+20
+00:01:24,367 --> 00:01:28,537
+The HTML report shows that row side by side.
+
+21
+00:01:28,537 --> 00:01:33,733
+Account 17 moved from south to east. That is the real defect.
+
+22
+00:01:33,733 --> 00:01:37,951
+Veridelta is early, at version 0.33.
+
+23
+00:01:37,951 --> 00:01:42,169
+It is tested on generated data, with drift seeded on purpose.
+
+24
+00:01:42,169 --> 00:01:46,675
+It has not yet been run by other users, or in a live cloud warehouse.
+
+25
+00:01:46,675 --> 00:01:48,933
+Feedback is welcome.
+
+26
+00:01:48,933 --> 00:01:55,567
+Try it with pip install veridelta.
