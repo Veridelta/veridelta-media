@@ -8,7 +8,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 # The end card, once everything on it has settled.
-POSTER_AT=21.0
+POSTER_AT=29.5
 
 (cd composition && npx --yes hyperframes@0.8.143 render --quality high --output ../brag.raw.mp4)
 ffmpeg -hide_banner -loglevel error -y -ss "$POSTER_AT" -i brag.raw.mp4 -frames:v 1 -q:v 2 brag.jpg
@@ -21,7 +21,7 @@ loudnorm="loudnorm=I=-16:TP=-1.5:LRA=11:measured_I=$(field input_i):measured_TP=
 
 ffmpeg -hide_banner -loglevel error -y -i brag.raw.mp4 -i brag.jpg \
   -filter_complex "[0:v][1:v]overlay=0:0:enable='eq(n,0)'[v];[0:a]afade=t=in:d=0.05,$loudnorm,aresample=192000,alimiter=limit=0.8:attack=1:release=60:level=false,aresample=48000[a]" \
-  -map "[v]" -map "[a]" -c:v libx264 -crf 18 -preset slow -pix_fmt yuv420p \
+  -map "[v]" -map "[a]" -c:v libx264 -crf 20 -preset slow -pix_fmt yuv420p \
   -c:a aac -b:a 160k -movflags +faststart brag.mp4
 rm brag.raw.mp4
 

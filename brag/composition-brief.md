@@ -9,7 +9,7 @@ Create a short launch video for Veridelta that makes its problem plain in the fi
 - Composition directory: `brag/composition/`
 - Rendered video: `brag/brag.mp4`, which git ignores
 - Format: landscape, 1920 by 1080, 30 fps
-- Duration: 21.5 seconds
+- Duration: 30 seconds
 
 ## Source material
 
@@ -21,9 +21,11 @@ Create a short launch video for Veridelta that makes its problem plain in the fi
 - Copy that must appear word for word:
   - `0.0%`, "40 rows. 40 issues."
   - "Most of it is noise."
+  - "veridelta suggest finds three, each with its evidence.", the command and its six evidence lines, and "No model is called."
   - the `rules:` block of `accounts_rules.yaml`
   - "Nothing is forgiven unless a rule says so."
   - "What is left is real." and "CI fails the pull request on it."
+  - "Fix the export, and it passes.", `100.0%`, PASSED, `exit code 0`, and "The baseline accepts one removal, made on purpose."
   - "Compare two datasets on their primary keys under rules you declare."
   - `pip install veridelta`, `veridelta.github.io/veridelta`
 
@@ -31,9 +33,10 @@ Create a short launch video for Veridelta that makes its problem plain in the fi
 
 - Tone preset: `default`.
 - Creative direction: an engineer's demo, cut with punch. Plain words, real output, no hype.
-- Interpretation: fast entrances and firm holds. Orange marks what is wrong; blue marks a rule.
+- Interpretation: fast entrances and firm holds. Orange marks what is wrong; blue marks the answer.
 - Angle: a rewrite looks 0.0% like the old export, because it spells the same data another way. Veridelta declares that noise as rules, and the one real change fails CI.
 - Hook: the two file names, then a huge `0.0%` match rate.
+- Payoff: the fixed export at `100.0%` in blue, the mirror of the hook.
 - Outro: the logo, the summary, and the install command.
 - Avoid:
   - generic SaaS language, and any claim the claim table in `brag-plan.md` does not trace;
@@ -55,18 +58,20 @@ Create a short launch video for Veridelta that makes its problem plain in the fi
 
 1. The alarm, 0 to 3.05 seconds: the file names, `0.0%` match rate, "40 rows. 40 issues."
 2. The noise, 3.05 to 7.45: the headline, then four value pairs on consecutive beats.
-3. The rules, 7.45 to 11.85: the logo, the rules block, the headline on the strong cue, each rule lit with its label.
-4. What is left, 11.85 to 16.2: the headline, the comment on the strong cue, the outline, the second line.
-5. Veridelta, 16.2 to 21.5: the logo on the strong cue, the summary, the install command, the address.
+3. Suggest, 7.45 to 12.35: the logo, the evidence card, the headline on the strong cue, the three counts underlined, "No model is called."
+4. The rules, 12.35 to 16.2: the rules block, the headline on the strong cue, each rule lit with its label.
+5. What is left, 16.2 to 20.55: the headline, the comment on the strong cue, the outline, the second line.
+6. It passes, 20.55 to 24.85: the headline, `100.0%`, the exit code on the strong cue, the baseline line.
+7. Veridelta, 24.85 to 30: the logo on the strong cue, the summary, the install command, the address.
 
 ## Audio
 
 - Role: a warm bed with sparse accents.
 - Arc: steady from the first frame, out over the last 1.5 seconds.
 - Music: `assets/music/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3` at 0.32.
-- Music cue guidance: brag's preset `happy-beats-business-moves-vol-12-by-ende-dot-app.music-cues.json`, 109.96 BPM. Lock the rules headline to 8.74, the comment to 13.11, and the logo to 17.47. The four value pairs take 4.39, 4.91, 5.34, and 6.00.
-- Audio-reactive: subtle. The glow behind the content breathes with the bed's level, from `assets/audio-levels.js`, made by Hyperframes' `extract-audio-data.py` from the first 21.5 seconds of the track.
-- SFX: `impactSoft_medium_001` under the `0.0%`, `card-slide-1` on the first and last value pair, `impactSoft_medium_002` on the rules headline, `impactSoft_medium_003` on the comment, `impactBell_heavy_000` on the logo, and `bong_001` on the install command. All are Kenney's, under CC0, from brag's `assets/sfx/`.
+- Music cue guidance: brag's preset `happy-beats-business-moves-vol-12-by-ende-dot-app.music-cues.json`, 109.96 BPM. Lock the suggest headline to 8.74, the rules headline to 13.11, the comment to 17.47, the exit code to 22.37, the logo to 25.65, the install command to 26.74, and the address to 27.3. The four value pairs take 4.39, 4.91, 5.34, and 6.00.
+- Audio-reactive: subtle. The glow behind the content breathes with the bed's level, from `assets/audio-levels.js`, made by Hyperframes' `extract-audio-data.py` from the first 30 seconds of the track.
+- SFX: `impactSoft_medium_001` under the `0.0%` and the rules headline, `card-slide-1` on the first and last value pair, `impactSoft_medium_002` on the suggest headline and the `100.0%`, `impactSoft_medium_003` on the comment, `bong_001` on the exit code and the install command, and `impactBell_heavy_000` on the logo. All are Kenney's, under CC0, from brag's `assets/sfx/`.
 
 ## Hyperframes instructions
 
