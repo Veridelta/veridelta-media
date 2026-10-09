@@ -1,0 +1,34 @@
+name: Action Example
+
+# Runs the Veridelta GitHub Action on the accounts files in example/. The pull request
+# that adds this file stays open so its comment shows what a reviewer sees.
+on:
+  pull_request:
+    paths:
+      - "example/**"
+      - ".github/workflows/action-example.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    name: Compare the Accounts
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Compare the Legacy and Rewrite Exports
+        uses: Veridelta/veridelta@df97892fc560d7ba3a58106f14d69111cdd00a28 # v0.35.0
+        with:
+          config: veridelta.yaml
+          working-directory: example
+          baseline: accepted.json
+          markdown-max-rows: "5"
