@@ -21,7 +21,15 @@ export type Picture =
   | { kind: "clip"; clip: string }
   | { kind: "image"; image: string }
   | TerminalPicture
-  | { kind: "screenshot"; image: string; label: string }
+  | {
+      kind: "screenshot";
+      image: string;
+      label: string;
+      /** The frame's width in pixels, when narrower than the full width suits a tall image. */
+      width?: number;
+      /** Seconds from the scene's start when the picture scrolls to its bottom, in place of a slow push. */
+      scrollAt?: number;
+    }
   | { kind: "card"; heading: string; lines: string[] }
   | { kind: "install"; repository?: boolean };
 
@@ -174,12 +182,14 @@ export type Beat = {
   type?: number;
   /** Output lines to underline, matched whole, once the line starts and any command has run. */
   mark?: string[];
+  /** A screenshot taller than its frame scrolls to its bottom as the line starts. */
+  scroll?: boolean;
 };
 
 /** Seconds before the first line, between two lines, and after the last. */
 const LEAD = 0.6;
 const GAP = 0.45;
-const TAIL = 1;
+const TAIL = 0.8;
 /** Seconds a command's output stays on screen before the next line starts. */
 const SETTLE = 0.9;
 
@@ -194,8 +204,15 @@ const narrate = ({ beats, picture, hold = 0, ...scene }: Narrated): Scene => {
   const timing: TerminalTiming = { starts: [], marks: [] };
   const steps = picture.kind === "terminal" ? transcript(picture.transcript).steps : [];
   const voice: NonNullable<Scene["voice"]> = [];
+  let scrollAt: number | undefined;
   let at = LEAD;
   for (const beat of beats) {
+    if (beat.scroll) {
+      if (picture.kind !== "screenshot") {
+        throw new Error(`Scene ${scene.id}: "${beat.say}" scrolls, but only a screenshot scrolls.`);
+      }
+      scrollAt = at;
+    }
     const line = spoken(beat.say);
     const seconds = line?.seconds ?? estimate(beat.say);
     let busy = seconds;
@@ -220,7 +237,12 @@ const narrate = ({ beats, picture, hold = 0, ...scene }: Narrated): Scene => {
   }));
   return {
     ...scene,
-    picture: picture.kind === "terminal" ? { ...picture, timing } : picture,
+    picture:
+      picture.kind === "terminal"
+        ? { ...picture, timing }
+        : picture.kind === "screenshot" && scrollAt !== undefined
+          ? { ...picture, scrollAt }
+          : picture,
     seconds,
     captions,
     voice,
@@ -229,22 +251,12 @@ const narrate = ({ beats, picture, hold = 0, ...scene }: Narrated): Scene => {
 
 const demo: Scene[] = [
   narrate({
-    id: "demo-title",
-    description: "The logo, then PyPI's one-line summary.",
-    picture: { kind: "title" },
-    beats: [
-      { say: "Veridelta compares two datasets on their primary keys." },
-      { say: "It reports every row that differs, under rules you declare." },
-    ],
-    backedBy: DOCS,
-  }),
-  narrate({
     id: "accounts-data",
-    description: "The first six lines of each CSV file, before and after the rewrite.",
-    picture: { kind: "terminal", transcript: "accounts-data", label: "1 · The two files" },
+    description: "The first six lines of each CSV file, from the legacy job and its rewrite.",
+    picture: { kind: "terminal", transcript: "accounts-data", label: "1 · Two exports" },
     beats: [
-      { say: "Here are 40 accounts, exported before and after a rewrite.", type: 0 },
-      { say: "Did the rewrite keep the data the same?", type: 1 },
+      { say: "Sam is replacing a legacy job that exports 40 accounts.", type: 0 },
+      { say: "Before switching, Sam has to show that the new export matches the old one.", type: 1 },
     ],
     backedBy: `${DOCS}how-to/from-drift-to-rules/`,
   }),
@@ -253,79 +265,121 @@ const demo: Scene[] = [
     description: "`veridelta run` on the two files and `--key account_id`: FAILED, 39 changed, 1 removed, and exit code 1.",
     picture: { kind: "terminal", transcript: "accounts-run", label: "2 · The first run" },
     beats: [
-      { say: "One command compares them on the account ID, with no configuration file.", type: 0 },
-      { say: "39 rows changed, and 1 row is gone.", mark: ["Changed:       39", "Removed:       1"] },
-      { say: "The exit code is 1, so a CI job would fail.", type: 1, mark: ["exit code: 1"] },
+      { say: "Veridelta pairs the rows by account ID and compares each column.", type: 0 },
+      { say: "39 rows differ, and one account is missing.", mark: ["Changed:       39", "Removed:       1"] },
+      { say: "In CI, exit code 1 fails the check. But is any of this a real error?", type: 1, mark: ["exit code: 1"] },
     ],
     backedBy: `${DOCS}cli/#exit-codes`,
+  }),
+  narrate({
+    id: "how-it-decides",
+    description: "A card in the logo's colors with the three steps of a comparison.",
+    picture: {
+      kind: "card",
+      heading: "How Veridelta decides",
+      lines: [
+        "1. Pair the rows by their primary key.",
+        "2. Clean each column by the rules you declare.",
+        "3. Compare, and report every difference no rule explains.",
+      ],
+    },
+    beats: [
+      { say: "Rules say which differences are expected, column by column." },
+      { say: "Veridelta cleans each side by those rules, then reports whatever they do not explain." },
+    ],
+    backedBy: `${DOCS}rules/#transform-order`,
   }),
   narrate({
     id: "accounts-suggest",
     description: "A configuration with no rules, then `veridelta suggest`, which proposes three rules with their evidence.",
     picture: { kind: "terminal", transcript: "accounts-suggest", label: "3 · suggest" },
     beats: [
-      { say: "This file names the two exports and the key, with no rules yet.", type: 0 },
+      { say: "Sam does not have to guess the rules.", type: 0 },
       { say: "veridelta suggest tries each kind of rule on the columns that differ.", type: 1 },
       {
-        say: "It proposes a rule for letter case, rounding, and missing notes, each with its evidence.",
+        say: "It proposes three, each with the rows it explains, and calls no model.",
         mark: [
           "region: case_insensitive true explains 38 of 39 differing rows",
           "balance: absolute_tolerance 0.005 explains 13 of 13 differing rows, the largest gap 0.004",
           'note: null_values ["N/A"] explains 7 of 7 differing rows',
         ],
       },
-      { say: "No model is called. Each rule is one you could write by hand." },
     ],
     backedBy: `${DOCS}cli/#suggesting-rules`,
   }),
   narrate({
-    id: "accounts-crosswalk",
-    description: "`veridelta crosswalk` with the three suggested rules: a value map from each status to its letter, 13 of 13 rows each.",
-    picture: { kind: "terminal", transcript: "accounts-crosswalk", label: "4 · crosswalk" },
-    beats: [
-      { say: "The status codes changed too, from words to letters.", type: 0 },
-      {
-        say: "crosswalk lines up the values and proposes a map, with how many rows agree.",
-        mark: [
-          "  'active' -> 'A': 13 of 13 rows (100.0%)",
-          "  'closed' -> 'C': 13 of 13 rows (100.0%)",
-          "  'paused' -> 'P': 13 of 13 rows (100.0%)",
-        ],
-      },
-    ],
-    backedBy: `${DOCS}rules/#proposing-a-value-map`,
-  }),
-  narrate({
     id: "accounts-rules",
     description: "The configuration with all four rules, then its run: 95.0%, 1 removed, 1 changed.",
-    picture: { kind: "terminal", transcript: "accounts-rules", label: "5 · Four rules" },
+    picture: { kind: "terminal", transcript: "accounts-rules", label: "4 · Four rules" },
     beats: [
-      { say: "The configuration now declares all four rules.", type: 0 },
-      { say: "Two rows still differ.", type: 1, mark: ["Removed:       1", "Changed:       1"] },
-      { say: "Nothing is forgiven unless a rule says so." },
+      { say: "Sam adds a map from the old status words to the new letters. The rules live in one file.", type: 0 },
+      { say: "Now only two rows differ.", type: 1, mark: ["Removed:       1", "Changed:       1"] },
     ],
     backedBy: `${DOCS}rules/`,
   }),
   narrate({
+    id: "rule-limits",
+    description: "A card in the logo's colors with what rules can and cannot do.",
+    picture: {
+      kind: "card",
+      heading: "What rules can and cannot do",
+      lines: [
+        "They can forgive rounding, case, spacing, empty markers, renamed codes, text patterns, dates, and types.",
+        "They cannot do arithmetic, such as rounding to a multiple of 7.",
+        "They cannot compare two columns. Rows pair only by their key.",
+      ],
+    },
+    beats: [
+      { say: "Rules forgive rounding, case, empty markers, renamed codes, dates, and types." },
+      { say: "They cannot do arithmetic, like rounding to a multiple of seven, or compare two columns." },
+    ],
+    backedBy: `${DOCS}rules/#what-rules-cannot-do`,
+  }),
+  narrate({
     id: "accounts-baseline",
     description: "A baseline that accepts the removed account, then the run against it: 1 accepted, 1 changed, and exit code 1.",
-    picture: { kind: "terminal", transcript: "accounts-baseline", label: "6 · A baseline" },
+    picture: { kind: "terminal", transcript: "accounts-baseline", label: "5 · A baseline" },
     beats: [
-      { say: "Account 40 was removed on purpose, so a baseline file accepts that change.", type: 0 },
-      { say: "The run accepts it, and still fails on the other row.", type: 1, mark: ["Accepted:      1", "Changed:       1"] },
-      { say: "So CI holds the rewrite until that row is fixed.", type: 2, mark: ["exit code: 1"] },
+      { say: "Account 40 was closed on purpose, so a baseline file accepts it.", type: 0 },
+      { say: "The run accepts it, and one row still differs.", type: 1, mark: ["Accepted:      1", "Changed:       1"] },
+      { say: "So the exit code is still 1.", type: 2, mark: ["exit code: 1"] },
     ],
     backedBy: `${DOCS}cli/#accepting-drift`,
   }),
   narrate({
     id: "accounts-report",
     description: "The HTML report of the baseline run: account 17, south in the legacy file and east in the rewrite.",
-    picture: { kind: "screenshot", image: "promo-report", label: "7 · The HTML report" },
+    picture: { kind: "screenshot", image: "promo-report", label: "6 · The HTML report" },
     beats: [
-      { say: "The HTML report shows that row side by side." },
-      { say: "Account 17 moved from south to east. That is the real defect." },
+      { say: "The report shows that row side by side. Account 17 moved from south to east." },
+      { say: "That is the real error, out of 40 differences." },
     ],
     backedBy: `${DOCS}results/#html-report`,
+  }),
+  narrate({
+    id: "where-it-runs",
+    description:
+      "The GitHub Action's comment on a pull request that compares the same files with the same rules and baseline: FAILED, 1 accepted, and account 17's region, south to east.",
+    picture: { kind: "screenshot", image: "action-comment", label: "7 · The pull request", width: 1400 },
+    beats: [
+      { say: "On every pull request, the GitHub Action runs the same check, with the same rules and baseline." },
+      { say: "It comments the result, and its check fails until account 17 is fixed.", scroll: true },
+    ],
+    backedBy: `${DOCS}ci/`,
+  }),
+  narrate({
+    id: "elsewhere",
+    description: "A card in the logo's colors with the other places a comparison runs.",
+    picture: {
+      kind: "card",
+      heading: "Elsewhere",
+      lines: [
+        "Agents call the same checks as MCP tools.",
+        "Tables in Snowflake, Databricks, or BigQuery are compared where they are stored.",
+      ],
+    },
+    beats: [{ say: "Agents can call the same checks through MCP, and warehouse tables are compared where they are stored." }],
+    backedBy: DOCS,
   }),
   narrate({
     id: "status",
@@ -333,16 +387,10 @@ const demo: Scene[] = [
     picture: {
       kind: "card",
       heading: "Where it stands",
-      lines: [
-        "Alpha, at version 0.33.",
-        "Tested on generated data, with drift seeded on purpose.",
-        "Not yet run by other users, or in a live cloud warehouse.",
-      ],
+      lines: ["Alpha, tested on generated data, with drift seeded on purpose.", "Not yet run by other users, or in a live cloud warehouse."],
     },
     beats: [
-      { say: "Veridelta is early, at version 0.33." },
-      { say: "It is tested on generated data, with drift seeded on purpose." },
-      { say: "It has not yet been run by other users, or in a live cloud warehouse." },
+      { say: "Veridelta is early, and tested on generated data." },
       { say: "Feedback is welcome." },
     ],
     backedBy: `${DOCS}#status`,
@@ -352,7 +400,7 @@ const demo: Scene[] = [
     description: "The wordmark, the install command, the docs and repository addresses, and the music's credit.",
     picture: { kind: "install", repository: true },
     beats: [{ say: "Try it with pip install veridelta." }],
-    hold: 3,
+    hold: 2.5,
     backedBy: `${DOCS}#install`,
   }),
 ];

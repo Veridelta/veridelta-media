@@ -48,7 +48,7 @@ const lines = [
   "",
   `Every terminal recording and the report screenshot come from Veridelta commit \`${manifest.commit.slice(0, 7)}\`, whose package is ${manifest.release}'s, rendered with ${manifest.renderedWith}. \`public/clips/manifest.json\` holds each file's tape and checksum. Each recording plays whole, as its tape typed it.`,
   "",
-  `The narrated cut sets in type the transcripts of Veridelta commit \`${transcripts.commit.slice(0, 7)}\`, whose package is ${transcripts.release}'s, and shows the HTML report of the run its last tape types. \`public/transcripts/manifest.json\` holds each file's tape, its steps, and its checksum. Its voice is ${[...new Set(voices.lines.map((line) => `${line.engine} (${line.voice})`))].join(" and ") || "not spoken yet"}, and its subtitles are the voice's lines, word for word.`,
+  `The narrated cut sets in type the transcripts of Veridelta commit \`${transcripts.commit.slice(0, 7)}\`, whose package is ${transcripts.release}'s, and shows the HTML report of the run its last tape types and the CI guide's screenshot of the GitHub Action's pull request comment. \`public/transcripts/manifest.json\` holds each file's tape, its steps, and its checksum. Its voice is ${[...new Set(voices.lines.map((line) => `${line.engine} (${line.voice})`))].join(" and ") || "not spoken yet"}, and its subtitles are the voice's lines, word for word.`,
   "",
 ];
 for (const cut of cuts) {

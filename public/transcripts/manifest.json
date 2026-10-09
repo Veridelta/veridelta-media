@@ -1,7 +1,7 @@
 {
   "source": "https://github.com/Veridelta/veridelta",
-  "release": "v0.33.4",
-  "commit": "c0afe418105501ee8dbb1e0a766942593bb7a1c3",
+  "release": "v0.35.0",
+  "commit": "ee04c6d906225e4abcf208a45a2f638895c7090d",
   "transcripts": [
     {
       "name": "accounts-baseline",
@@ -263,12 +263,22 @@
   ],
   "images": [
     {
+      "name": "action-comment",
+      "file": "action-comment.png",
+      "source": "docs/assets/action-comment-light.png, the GitHub Action's comment on Veridelta/veridelta-media#13",
+      "caption": "Screenshot of the GitHub Action's comment on Veridelta/veridelta-media#13, from docs/ci.md",
+      "width": 1632,
+      "height": 1380,
+      "sha256": "29fc0486536f620d257718bc45214dbf1333a1bfe421bf73714d8ad72743b706"
+    },
+    {
       "name": "promo-report",
       "file": "promo-report.png",
       "source": "demo/screenshots.py --promo, the HTML report of the run demo/promo/accounts-baseline.tape types",
+      "caption": "Screenshot of the HTML report of the run in demo/promo/accounts-baseline.tape",
       "width": 1920,
       "height": 1080,
-      "sha256": "4b9fe8dac809df7903a7551380ba5b3fa337a4a99785d4d465229fbcc459b0b9"
+      "sha256": "70932f0c142b6b111ffa9a03fa4c4459a3095ca112e6e965c8e918847fcaa39d"
     }
   ]
 }
