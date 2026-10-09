@@ -1,6 +1,6 @@
-# The 21-second demo
+# The 30-second demo
 
-A short video for people who have not heard of Veridelta. It shows the problem first, a rewrite that matches its old export 0.0%, and then Veridelta's answer, in 21.5 seconds with music and no voice. The three-minute narrated cut, `demo-120`, stays as the walkthrough for those who want the whole story.
+A short video for people who have not heard of Veridelta. It shows the problem first, a rewrite that matches its old export 0.0%, then Veridelta's answer, and the fixed export passing at 100.0%, in 30 seconds with music and no voice. The three-minute narrated cut, `demo-120`, stays as the walkthrough for those who want the whole story.
 
 It was made with [brag](https://github.com/latent-spaces/brag), an agent skill for short launch videos, at commit `8531ccb`, with brag's full workflow, which builds the video with [Hyperframes](https://hyperframes.heygen.com/) 0.8.143. The Remotion cuts in `src/` do not use it.
 
@@ -10,7 +10,7 @@ It was made with [brag](https://github.com/latent-spaces/brag), an agent skill f
 | :--- | :--- |
 | [brag-plan.md](brag-plan.md) | The angle, the storyboard, the audio, and a table of every line on screen with its source |
 | [composition-brief.md](composition-brief.md) | What brag handed to Hyperframes |
-| `composition/index.html` | The video: five scenes on one GSAP timeline |
+| `composition/index.html` | The video: seven scenes on one GSAP timeline |
 | `composition/assets/` | The fonts, the logo, the CI guide's screenshot, the music, the sound effects, and the music's level for each frame |
 | [finish.sh](finish.sh) | Renders the video and finishes it |
 | [poster.html](poster.html) | The still the organization page links to the video with |
@@ -27,24 +27,24 @@ cd .. && ./finish.sh
 
 `check` runs Hyperframes' lint, a runtime pass, a layout pass, and a WCAG contrast pass on every line of text. `finish.sh` renders `brag.mp4`, then does what brag's last step asks:
 
-- it takes the end card at 21 seconds as `brag.jpg`, and puts it in place of frame 0, so a player's thumbnail is the end card;
+- it takes the end card at 29.5 seconds as `brag.jpg`, and puts it in place of frame 0, so a player's thumbnail is the end card;
 - it sets the mix to -16 LUFS with its true peak under -1.5 dBFS, as the walkthrough's is;
 - it captures `poster.html`, the end card with a play button, to `../posters/demo-poster.png`.
 
-Git ignores `brag.mp4` and `brag.jpg`, as it ignores `renders/`. The video is about 6.5 MB, under the 10 MB a GitHub description plays inline.
+Git ignores `brag.mp4` and `brag.jpg`, as it ignores `renders/`. The video is about 7 MB, under the 10 MB a GitHub description plays inline.
 
 ## The rules
 
 The rules in the [README](../README.md#the-rules) hold here too:
 
 - Every number on screen comes from the accounts demo in Veridelta's `demo/promo/`, at commit `ebe1dff`, which runs release 0.35.1. The bottom of every scene says so.
-- The rules file shows the `rules:` block that `accounts-rules.txt` prints, unchanged.
+- The suggest card shows the command and the evidence lines that `accounts-suggest.txt` prints, unchanged and in order, and the rules file shows the `rules:` block that `accounts-rules.txt` prints, unchanged.
 - The pull request comment is the CI guide's screenshot, `docs/assets/action-comment-light.png`, cropped to its heading and its changed values.
 - Every other line is the project's own words or traces to a transcript. [brag-plan.md](brag-plan.md#claims-and-their-sources) lists each one with its source.
 
 To change a line, change its row in that table first, then `composition/index.html`.
 
-`composition/assets/audio-levels.js` holds the music's level for each frame, which the glow behind each scene follows. Hyperframes' `extract-audio-data.py`, from its `hyperframes-creative` skill, measured it on the first 21.5 seconds of the track. Measure it again only if the music changes.
+`composition/assets/audio-levels.js` holds the music's level for each frame, which the glow behind each scene follows. Hyperframes' `extract-audio-data.py`, from its `hyperframes-creative` skill, measured it on the first 30 seconds of the track. Measure it again only if the music changes.
 
 ## Credits and licenses
 
