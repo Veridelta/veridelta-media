@@ -41,7 +41,15 @@ export const SceneView = ({
         {picture.kind === "terminal" && (
           <TerminalScene name={picture.transcript} label={picture.label} timing={picture.timing} />
         )}
-        {picture.kind === "screenshot" && <ReportScene name={picture.image} label={picture.label} frames={frames} />}
+        {picture.kind === "screenshot" && (
+          <ReportScene
+            name={picture.image}
+            label={picture.label}
+            frames={frames}
+            width={picture.width}
+            scrollAt={picture.scrollAt}
+          />
+        )}
         {picture.kind === "card" && <CardScene heading={picture.heading} lines={picture.lines} square={square} />}
         {picture.kind === "install" && (
           <InstallScene square={square} repository={picture.repository} credit={credit} />

@@ -1,99 +1,99 @@
 1
-00:00:00,000 --> 00:00:04,746
+00:00:00,000 --> 00:00:04,602
 Sam is replacing a legacy job that exports 40 accounts.
 
 2
-00:00:04,746 --> 00:00:10,033
+00:00:04,602 --> 00:00:09,233
 Before switching, Sam has to show that the new export matches the old one.
 
 3
-00:00:10,033 --> 00:00:15,067
+00:00:09,233 --> 00:00:14,171
 Veridelta pairs the rows by account ID and compares each column.
 
 4
-00:00:15,067 --> 00:00:18,541
+00:00:14,171 --> 00:00:17,597
 39 rows differ, and one account is missing.
 
 5
-00:00:18,541 --> 00:00:24,167
+00:00:17,597 --> 00:00:23,933
 In CI, exit code 1 fails the check. But is any of this a real error?
 
 6
-00:00:24,167 --> 00:00:29,033
+00:00:23,933 --> 00:00:28,127
 Rules say which differences are expected, column by column.
 
 7
-00:00:29,033 --> 00:00:35,300
+00:00:28,127 --> 00:00:33,600
 Veridelta cleans each side by those rules, then reports whatever they do not explain.
 
 8
-00:00:35,300 --> 00:00:38,390
+00:00:33,600 --> 00:00:36,930
 Sam does not have to guess the rules.
 
 9
-00:00:38,390 --> 00:00:42,800
+00:00:36,930 --> 00:00:41,748
 veridelta suggest tries each kind of rule on the columns that differ.
 
 10
-00:00:42,800 --> 00:00:48,267
+00:00:41,748 --> 00:00:46,533
 It proposes three, each with the rows it explains, and calls no model.
 
 11
-00:00:48,267 --> 00:00:54,717
+00:00:46,533 --> 00:00:52,551
 Sam adds a map from the old status words to the new letters. The rules live in one file.
 
 12
-00:00:54,717 --> 00:00:58,067
+00:00:52,551 --> 00:00:55,700
 Now only two rows differ.
 
 13
-00:00:58,067 --> 00:01:05,045
+00:00:55,700 --> 00:01:02,606
 Rules forgive rounding, case, empty markers, renamed codes, dates, and types.
 
 14
-00:01:05,045 --> 00:01:11,300
+00:01:02,606 --> 00:01:08,200
 They cannot do arithmetic, like rounding to a multiple of seven, or compare two columns.
 
 15
-00:01:11,300 --> 00:01:16,814
+00:01:08,200 --> 00:01:13,114
 Account 40 was closed on purpose, so a baseline file accepts it.
 
 16
-00:01:16,814 --> 00:01:20,420
+00:01:13,114 --> 00:01:16,720
 The run accepts it, and one row still differs.
 
 17
-00:01:20,420 --> 00:01:24,433
-So CI holds the rewrite until that row is fixed.
+00:01:16,720 --> 00:01:19,367
+So the exit code is still 1.
 
 18
-00:01:24,433 --> 00:01:30,691
+00:01:19,367 --> 00:01:25,553
 The report shows that row side by side. Account 17 moved from south to east.
 
 19
-00:01:30,691 --> 00:01:34,267
+00:01:25,553 --> 00:01:29,067
 That is the real error, out of 40 differences.
 
 20
-00:01:34,267 --> 00:01:38,509
-Sam runs Veridelta in the terminal while writing the rules.
+00:01:29,067 --> 00:01:35,517
+On every pull request, the GitHub Action runs the same check, with the same rules and baseline.
 
 21
-00:01:38,509 --> 00:01:45,067
-Then the GitHub Action runs the same check on every pull request, and comments the result.
+00:01:35,517 --> 00:01:40,533
+It comments the result, and its check fails until account 17 is fixed.
 
 22
-00:01:45,067 --> 00:01:52,533
+00:01:40,533 --> 00:01:46,833
 Agents can call the same checks through MCP, and warehouse tables are compared where they are stored.
 
 23
-00:01:52,533 --> 00:01:56,679
+00:01:46,833 --> 00:01:51,195
 Veridelta is early, and tested on generated data.
 
 24
-00:01:56,679 --> 00:01:58,933
+00:01:51,195 --> 00:01:53,100
 Feedback is welcome.
 
 25
-00:01:58,933 --> 00:02:05,567
+00:01:53,100 --> 00:01:58,967
 Try it with pip install veridelta.

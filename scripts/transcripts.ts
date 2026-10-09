@@ -15,6 +15,17 @@ if (!checkout || !release) {
 }
 
 const folder = join("public", "transcripts");
+/** Where each image comes from in the checkout, and what the line under it says it is. */
+const IMAGES: Record<string, { source: string; caption: string }> = {
+  "promo-report.png": {
+    source: "demo/screenshots.py --promo, the HTML report of the run demo/promo/accounts-baseline.tape types",
+    caption: "Screenshot of the HTML report of the run in demo/promo/accounts-baseline.tape",
+  },
+  "action-comment.png": {
+    source: "docs/assets/action-comment-light.png, the GitHub Action's comment on Veridelta/veridelta-media#13",
+    caption: "Screenshot of the GitHub Action's comment on Veridelta/veridelta-media#13, from docs/ci.md",
+  },
+};
 const sha256 = (file: string) => createHash("sha256").update(readFileSync(file)).digest("hex");
 const files = readdirSync(folder).sort();
 
@@ -46,10 +57,14 @@ const manifest = {
         join(folder, name),
       ]);
       const { width, height } = JSON.parse(out.toString()).streams[0];
+      const known = IMAGES[name];
+      if (!known) {
+        throw new Error(`scripts/transcripts.ts names no source for ${name}.`);
+      }
       return {
         name: name.replace(/\.png$/, ""),
         file: name,
-        source: "demo/screenshots.py --promo, the HTML report of the run demo/promo/accounts-baseline.tape types",
+        ...known,
         width: width as number,
         height: height as number,
         sha256: sha256(join(folder, name)),

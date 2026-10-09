@@ -21,7 +21,15 @@ export type Picture =
   | { kind: "clip"; clip: string }
   | { kind: "image"; image: string }
   | TerminalPicture
-  | { kind: "screenshot"; image: string; label: string }
+  | {
+      kind: "screenshot";
+      image: string;
+      label: string;
+      /** The frame's width in pixels, when narrower than the full width suits a tall image. */
+      width?: number;
+      /** Seconds from the scene's start when the picture scrolls to its bottom, in place of a slow push. */
+      scrollAt?: number;
+    }
   | { kind: "card"; heading: string; lines: string[] }
   | { kind: "install"; repository?: boolean };
 
@@ -174,12 +182,14 @@ export type Beat = {
   type?: number;
   /** Output lines to underline, matched whole, once the line starts and any command has run. */
   mark?: string[];
+  /** A screenshot taller than its frame scrolls to its bottom as the line starts. */
+  scroll?: boolean;
 };
 
 /** Seconds before the first line, between two lines, and after the last. */
 const LEAD = 0.6;
 const GAP = 0.45;
-const TAIL = 1;
+const TAIL = 0.8;
 /** Seconds a command's output stays on screen before the next line starts. */
 const SETTLE = 0.9;
 
@@ -194,8 +204,15 @@ const narrate = ({ beats, picture, hold = 0, ...scene }: Narrated): Scene => {
   const timing: TerminalTiming = { starts: [], marks: [] };
   const steps = picture.kind === "terminal" ? transcript(picture.transcript).steps : [];
   const voice: NonNullable<Scene["voice"]> = [];
+  let scrollAt: number | undefined;
   let at = LEAD;
   for (const beat of beats) {
+    if (beat.scroll) {
+      if (picture.kind !== "screenshot") {
+        throw new Error(`Scene ${scene.id}: "${beat.say}" scrolls, but only a screenshot scrolls.`);
+      }
+      scrollAt = at;
+    }
     const line = spoken(beat.say);
     const seconds = line?.seconds ?? estimate(beat.say);
     let busy = seconds;
@@ -220,7 +237,12 @@ const narrate = ({ beats, picture, hold = 0, ...scene }: Narrated): Scene => {
   }));
   return {
     ...scene,
-    picture: picture.kind === "terminal" ? { ...picture, timing } : picture,
+    picture:
+      picture.kind === "terminal"
+        ? { ...picture, timing }
+        : picture.kind === "screenshot" && scrollAt !== undefined
+          ? { ...picture, scrollAt }
+          : picture,
     seconds,
     captions,
     voice,
@@ -320,7 +342,7 @@ const demo: Scene[] = [
     beats: [
       { say: "Account 40 was closed on purpose, so a baseline file accepts it.", type: 0 },
       { say: "The run accepts it, and one row still differs.", type: 1, mark: ["Accepted:      1", "Changed:       1"] },
-      { say: "So CI holds the rewrite until that row is fixed.", type: 2, mark: ["exit code: 1"] },
+      { say: "So the exit code is still 1.", type: 2, mark: ["exit code: 1"] },
     ],
     backedBy: `${DOCS}cli/#accepting-drift`,
   }),
@@ -336,15 +358,12 @@ const demo: Scene[] = [
   }),
   narrate({
     id: "where-it-runs",
-    description: "Draft placeholder: the GitHub Action's comment on a real pull request, once that pull request exists.",
-    picture: {
-      kind: "card",
-      heading: "On every pull request",
-      lines: ["The GitHub Action runs the same check, with the same rules and baseline, and comments the result."],
-    },
+    description:
+      "The GitHub Action's comment on a pull request that compares the same files with the same rules and baseline: FAILED, 1 accepted, and account 17's region, south to east.",
+    picture: { kind: "screenshot", image: "action-comment", label: "7 · The pull request", width: 1400 },
     beats: [
-      { say: "Sam runs Veridelta in the terminal while writing the rules." },
-      { say: "Then the GitHub Action runs the same check on every pull request, and comments the result." },
+      { say: "On every pull request, the GitHub Action runs the same check, with the same rules and baseline." },
+      { say: "It comments the result, and its check fails until account 17 is fixed.", scroll: true },
     ],
     backedBy: `${DOCS}ci/`,
   }),
@@ -381,7 +400,7 @@ const demo: Scene[] = [
     description: "The wordmark, the install command, the docs and repository addresses, and the music's credit.",
     picture: { kind: "install", repository: true },
     beats: [{ say: "Try it with pip install veridelta." }],
-    hold: 3,
+    hold: 2.5,
     backedBy: `${DOCS}#install`,
   }),
 ];

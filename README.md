@@ -9,7 +9,7 @@ Promotional videos for [Veridelta](https://github.com/Veridelta/veridelta), made
 | `promo-30` | 1920 by 1080 | About 30 seconds | The logo and summary, the quick start's files and run, how to install |
 | `promo-60` | 1920 by 1080 | Under 60 seconds | Those, plus the HTML report, comparison inside the warehouse, and the MCP server |
 | `promo-square-30` | 1080 by 1080 | About 30 seconds | As `promo-30`, for feeds that crop wide video |
-| `demo-120` | 1920 by 1080 | About two minutes | A narrated walk through the "From drift to rules" guide on two CSV files: the first run, `suggest`, `crosswalk`, the rules, a baseline, the report, and where the project stands |
+| `demo-120` | 1920 by 1080 | About two minutes | A narrated story on two CSV files: Sam checks a rewrite of a legacy export with the first run, how Veridelta decides, `suggest`, the rules and their limits, a baseline, the report, and the GitHub Action's comment on a pull request, then where else it runs and where the project stands |
 
 The Veridelta organization page shows [posters/demo-120-poster.png](posters/demo-120-poster.png), a frame of `demo-120` with a play button, and links it to the video.
 
@@ -40,7 +40,7 @@ You need Node 22. `npm ci` installs the exact versions in `package-lock.json`.
 | `npm run check` | Checks each clip against its checksum, each scene's docs page and caption times, and each post's length. |
 | `npm run typecheck` | Type-checks the project. |
 | `npm run fetch-clips -- v0.27.0` | Renders the recordings at a Veridelta release, or a later commit with the same package, and copies them into `public/clips/`. |
-| `npm run fetch-transcripts -- v0.33.4` | Copies the accounts tapes' transcripts, and the report of their last run, at a Veridelta release or a later commit with the same package, into `public/transcripts/`. |
+| `npm run fetch-transcripts -- ee04c6d` | Copies the accounts tapes' transcripts, the report of their last run, and the CI guide's screenshot of the Action's pull request comment, at a Veridelta release or a later commit with the same package, into `public/transcripts/`. |
 | `npm run voice` | Speaks each line of the narrated cuts with Gemini's speech model into `public/voice/`, with a Google AI Studio key in `GEMINI_API_KEY`. It reads a scene in one request and cuts the clip at its pauses, so the free tier's few requests a day go far. `-- --draft` uses espeak-ng instead, to time a draft, and `-- --samples` writes the first scene in a few voices to `samples/`. |
 | `npm run check -- --final` | Also refuses a line the draft voice still speaks, before a cut is published. |
 
