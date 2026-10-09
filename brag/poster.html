@@ -1,0 +1,68 @@
+<!doctype html>
+<!-- The still the Veridelta organization page shows to link to the video: its poster frame, the
+     end card, with a play button over the faint symbol, where no text sits. finish.sh captures
+     it to ../posters/demo-poster.png, as src/Poster.tsx does for the walkthrough. -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      @font-face {
+        font-family: "Inter";
+        font-weight: 600;
+        src: url("composition/assets/fonts/Inter-SemiBold.otf") format("opentype");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 400;
+        src: url("composition/assets/fonts/Inter-Regular.otf") format("opentype");
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #f5f7fa url("brag.jpg") 0 0 / 1920px 1080px no-repeat;
+        font-family: "Inter", sans-serif;
+      }
+      #button {
+        position: absolute;
+        left: 1441px;
+        top: 456px;
+        width: 208px;
+        height: 208px;
+        border-radius: 50%;
+        background: #de5807;
+        box-shadow: 0 14px 36px rgba(13, 47, 90, 0.35);
+      }
+      #label {
+        position: absolute;
+        left: 1145px;
+        width: 800px;
+        top: 694px;
+        text-align: center;
+      }
+      #watch {
+        font-size: 46px;
+        font-weight: 600;
+        color: #0d2f5a;
+      }
+      #length {
+        font-size: 34px;
+        color: #4a5d75;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="button">
+      <svg viewBox="0 0 100 100" width="208" height="208">
+        <polygon points="40,28 40,72 76,50" fill="#ffffff" />
+      </svg>
+    </div>
+    <div id="label">
+      <div id="watch">Watch the demo</div>
+      <div id="length">21 seconds</div>
+    </div>
+  </body>
+</html>

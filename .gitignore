@@ -1,6 +1,9 @@
 node_modules/
 # Renders are reviewed, then published by hand; git keeps their sources, not the videos.
 renders/
+brag/brag.mp4
+brag/brag.raw.mp4
+brag/brag.jpg
 
 # Music under a narrated cut, which its license may not let this repository share.
 public/music/

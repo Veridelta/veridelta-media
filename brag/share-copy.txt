@@ -1,0 +1,3 @@
+A rewritten export matched the old one 0.0%. Most of it was noise: case, codes, rounding, blanks. Declare those as rules in Veridelta, and what is left is real. Here, account 17's region, and CI fails the pull request on it.
+
+https://veridelta.github.io/veridelta/
