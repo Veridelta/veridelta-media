@@ -1,103 +1,99 @@
 1
-00:00:00,000 --> 00:00:04,266
-Veridelta compares two datasets on their primary keys.
+00:00:00,000 --> 00:00:04,746
+Sam is replacing a legacy job that exports 40 accounts.
 
 2
-00:00:04,266 --> 00:00:08,367
-It reports every row that differs, under rules you declare.
+00:00:04,746 --> 00:00:10,033
+Before switching, Sam has to show that the new export matches the old one.
 
 3
-00:00:08,367 --> 00:00:13,425
-Here are 40 accounts, exported before and after a rewrite.
+00:00:10,033 --> 00:00:15,067
+Veridelta pairs the rows by account ID and compares each column.
 
 4
-00:00:13,425 --> 00:00:16,600
-Did the rewrite keep the data the same?
+00:00:15,067 --> 00:00:18,541
+39 rows differ, and one account is missing.
 
 5
-00:00:16,600 --> 00:00:21,514
-One command compares them on the account ID, with no configuration file.
+00:00:18,541 --> 00:00:24,167
+In CI, exit code 1 fails the check. But is any of this a real error?
 
 6
-00:00:21,514 --> 00:00:24,796
-39 rows changed, and 1 row is gone.
+00:00:24,167 --> 00:00:29,033
+Rules say which differences are expected, column by column.
 
 7
-00:00:24,796 --> 00:00:28,533
-The exit code is 1, so a CI job would fail.
+00:00:29,033 --> 00:00:35,300
+Veridelta cleans each side by those rules, then reports whatever they do not explain.
 
 8
-00:00:28,533 --> 00:00:33,207
-This file names the two exports and the key, with no rules yet.
+00:00:35,300 --> 00:00:38,390
+Sam does not have to guess the rules.
 
 9
-00:00:33,207 --> 00:00:37,665
+00:00:38,390 --> 00:00:42,800
 veridelta suggest tries each kind of rule on the columns that differ.
 
 10
-00:00:37,665 --> 00:00:43,203
-It proposes a rule for letter case, rounding, and missing notes, each with its evidence.
+00:00:42,800 --> 00:00:48,267
+It proposes three, each with the rows it explains, and calls no model.
 
 11
-00:00:43,203 --> 00:00:47,267
-No model is called. Each rule is one you could write by hand.
+00:00:48,267 --> 00:00:54,717
+Sam adds a map from the old status words to the new letters. The rules live in one file.
 
 12
-00:00:47,267 --> 00:00:51,437
-The status codes changed too, from words to letters.
+00:00:54,717 --> 00:00:58,067
+Now only two rows differ.
 
 13
-00:00:51,437 --> 00:00:56,767
-crosswalk lines up the values and proposes a map, with how many rows agree.
+00:00:58,067 --> 00:01:05,045
+Rules forgive rounding, case, empty markers, renamed codes, dates, and types.
 
 14
-00:00:56,767 --> 00:01:00,313
-The configuration now declares all four rules.
+00:01:05,045 --> 00:01:11,300
+They cannot do arithmetic, like rounding to a multiple of seven, or compare two columns.
 
 15
-00:01:00,313 --> 00:01:03,138
-Two rows still differ.
+00:01:11,300 --> 00:01:16,814
+Account 40 was closed on purpose, so a baseline file accepts it.
 
 16
-00:01:03,138 --> 00:01:06,400
-Nothing is forgiven unless a rule says so.
+00:01:16,814 --> 00:01:20,420
+The run accepts it, and one row still differs.
 
 17
-00:01:06,400 --> 00:01:11,914
-Account 40 was removed on purpose, so a baseline file accepts that change.
-
-18
-00:01:11,914 --> 00:01:15,520
-The run accepts it, and still fails on the other row.
-
-19
-00:01:15,520 --> 00:01:19,333
+00:01:20,420 --> 00:01:24,433
 So CI holds the rewrite until that row is fixed.
 
+18
+00:01:24,433 --> 00:01:30,691
+The report shows that row side by side. Account 17 moved from south to east.
+
+19
+00:01:30,691 --> 00:01:34,267
+That is the real error, out of 40 differences.
+
 20
-00:01:19,333 --> 00:01:23,311
-The HTML report shows that row side by side.
+00:01:34,267 --> 00:01:38,509
+Sam runs Veridelta in the terminal while writing the rules.
 
 21
-00:01:23,311 --> 00:01:28,600
-Account 17 moved from south to east. That is the real defect.
+00:01:38,509 --> 00:01:45,067
+Then the GitHub Action runs the same check on every pull request, and comments the result.
 
 22
-00:01:28,600 --> 00:01:33,010
-Veridelta is early, at version 0.33.
+00:01:45,067 --> 00:01:52,533
+Agents can call the same checks through MCP, and warehouse tables are compared where they are stored.
 
 23
-00:01:33,010 --> 00:01:36,964
-It is tested on generated data, with drift seeded on purpose.
+00:01:52,533 --> 00:01:56,679
+Veridelta is early, and tested on generated data.
 
 24
-00:01:36,964 --> 00:01:41,230
-It has not yet been run by other users, or in a live cloud warehouse.
-
-25
-00:01:41,230 --> 00:01:43,067
+00:01:56,679 --> 00:01:58,933
 Feedback is welcome.
 
-26
-00:01:43,067 --> 00:01:50,133
+25
+00:01:58,933 --> 00:02:05,567
 Try it with pip install veridelta.
