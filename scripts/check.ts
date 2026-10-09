@@ -28,10 +28,18 @@ for (const entry of [...transcripts.transcripts, ...transcripts.images]) {
     problems.push(`public/transcripts/${entry.file} does not match its checksum; run scripts/fetch-transcripts.sh again.`);
   }
 }
+// The transcripts a cut sets in its terminal, which must fit its width. The demo in brag/ sets
+// its own transcripts at its own width, and Hyperframes' check finds a line that overflows it.
+const typeset = new Set(
+  cuts.flatMap((cut) => cut.scenes.flatMap((scene) => (scene.picture.kind === "terminal" ? [scene.picture.transcript] : []))),
+);
 for (const entry of transcripts.transcripts) {
   const steps = parseTranscript(readFileSync(join("public", "transcripts", entry.file), "utf8"));
   if (!isDeepStrictEqual(steps, entry.steps)) {
     problems.push(`public/transcripts/manifest.json holds other steps than ${entry.file}.`);
+  }
+  if (!typeset.has(entry.name)) {
+    continue;
   }
   for (const line of steps.flatMap((step) => [PROMPT + step.command, ...step.output])) {
     if (line.length > COLUMNS) {
