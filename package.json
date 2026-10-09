@@ -13,6 +13,7 @@
     "posters": "bash scripts/posters.sh",
     "fetch-clips": "bash scripts/fetch-clips.sh",
     "voice": "tsx scripts/voice.ts",
+    "brag-timing": "tsx scripts/brag-timing.ts",
     "fetch-transcripts": "bash scripts/fetch-transcripts.sh"
   },
   "dependencies": {

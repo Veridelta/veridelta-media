@@ -1,0 +1,83 @@
+1
+00:00:00,600 --> 00:00:03,984
+Maya is moving her weather station pipeline from IDL to Python.
+
+2
+00:00:04,184 --> 00:00:06,968
+The new output has to match the old. One to one.
+
+3
+00:00:07,868 --> 00:00:11,204
+She runs both and compares. Every single row differs.
+
+4
+00:00:12,104 --> 00:00:15,416
+IDL works in 32-bit floats. Python works in 64.
+
+5
+00:00:15,616 --> 00:00:17,368
+So the same humidity comes out two ways.
+
+6
+00:00:17,568 --> 00:00:21,408
+IDL wrote minus 999 for a missing reading. Python writes nothing.
+
+7
+00:00:21,608 --> 00:00:25,976
+She renamed temp to temperature_c, so a match by name quietly leaves it out.
+
+8
+00:00:26,176 --> 00:00:31,600
+And she fixed a real IDL bug. Station S3 had the wrong elevation, so its pressure changed on purpose.
+
+9
+00:00:32,500 --> 00:00:35,236
+Somewhere in all of that, the port has a bug of its own.
+
+10
+00:00:35,436 --> 00:00:38,028
+Which differences are fixes, and which are corruption?
+
+11
+00:00:40,028 --> 00:00:43,700
+Veridelta compares two datasets on their keys, under rules you declare.
+
+12
+00:00:43,900 --> 00:00:45,868
+Nothing is forgiven unless a rule says so.
+
+13
+00:00:47,168 --> 00:00:51,632
+Maya declares the rename. Then veridelta suggest reads the data and proposes the rest.
+
+14
+00:00:51,832 --> 00:00:57,712
+One rule for humidity: a tiny tolerance, and minus 999 as missing. It explains all 124 rows.
+
+15
+00:00:57,912 --> 00:00:58,848
+No model is called.
+
+16
+00:01:00,148 --> 00:01:04,396
+The pressure fix was on purpose, so a baseline accepts those 31 rows. Only those.
+
+17
+00:01:05,296 --> 00:01:08,848
+What's left is the real bug. Four cold readings lost their minus sign.
+
+18
+00:01:09,048 --> 00:01:10,344
+They were in the first rows all along.
+
+19
+00:01:10,544 --> 00:01:13,160
+The run fails, and in CI, so does the pull request.
+
+20
+00:01:14,360 --> 00:01:17,024
+She fixes the port. It passes. One to one.
+
+21
+00:01:17,924 --> 00:01:21,044
+Veridelta. Compare two datasets under rules you declare.

@@ -1,6 +1,6 @@
 # Brag plan: Veridelta
 
-Written by `/brag --full --format landscape --duration 20`, with [brag](https://github.com/latent-spaces/brag) at commit `8531ccb`, from Veridelta at commit `ebe1dff` (release 0.35.1). The voice is off, as brag's default. The first cut came to 21.5 seconds. The maintainer found it short, so a second cut adds two scenes, how `suggest` finds the rules and the fixed export passing, for 30 seconds. That is past brag's 15 to 25 seconds, for those two parts of the story.
+Written by `/brag --full --format landscape --voice`, with [brag](https://github.com/latent-spaces/brag) at commit `8531ccb`, from Veridelta at commit `b8669bc`, which runs release 0.35.1. It replaces the 30-second cut, which git history keeps. The maintainer's group found the three-minute walkthrough too slow and the 30-second cut too fast, and said people did not understand the problem. So this cut tells a story: the problem first, until the viewer feels it, then Veridelta as the answer. It runs 85 seconds, past brag's 15 to 25, to tell that story. The voice is Gemini's in place of brag's Kokoro, as the maintainer asked.
 
 ## What is this app?
 
@@ -8,154 +8,123 @@ A command line tool that compares two datasets on their primary keys under rules
 
 ## The angle
 
-The problem first. A team rewrites a pipeline and compares its output with the old one. A plain comparison calls every row different, because the rewrite spells the same data another way: upper case regions, one letter status codes, a rounding difference, and "N/A" for a blank. The real change hides in that noise. Veridelta lets you declare the noise as rules, so only the real change is left, and CI fails the pull request on it.
+The maintainer's own story. A scientific dataset moved from IDL to Python and had to match one to one. But how do you keep parity while you fix bugs? Every difference asks a question:
 
-Every number comes from the accounts demo in Veridelta's `demo/promo/`, the same 40 accounts the full walkthrough uses.
+- Is it a fix, or corruption?
+- IDL and Python do floating point differently. Should that count?
+- A column was renamed. How do you map it?
 
-## Hook (first 2 to 3 seconds)
+Maya, an atmospheric scientist, tells it with a made-up weather station dataset, written for the video in Veridelta's `demo/stations.py` so every number is real. Veridelta answers each question with a rule, and only the real bug is left.
 
-The two file names, then a giant `0.0%` match rate, then "40 rows. 40 issues." The viewer sees the alarm before the product's name.
+## Hook (first 7 seconds)
+
+"Maya is moving her weather station pipeline from IDL to Python. The new output has to match the old. One to one." On screen, IDL to Python, the first rows of both files, and "Must match, 1:1". The new bug is already there: four minus signs are missing. The story comes back to them at the end.
 
 ## Key moments
 
-- Four real differences arrive one by one, each with a one word label: case, codes, rounding, blanks.
-- `veridelta suggest` finds three of the rules from the data, each with its evidence, and calls no model.
-- The rules file that declares them, with the project's own line: "Nothing is forgiven unless a rule says so."
-- The GitHub Action's real comment on a pull request: FAILED, account 17, region `'south'` to `'east'`.
-- The fixed export passes at `100.0%`, the mirror of the `0.0%` it opened on.
+- The first run: `0.0%`, 124 rows, 124 changed.
+- The questions: float noise, a fill value, a renamed column, and a fix made on purpose, each with its own value pair and question.
+- The pain: 124 changed rows, a bug among them, and "Fix or corruption?", held in a hush.
+- Veridelta, on the music's drop: two datasets, their keys, your rules. "Nothing is forgiven unless a rule says so."
+- `suggest` proposes the humidity rule with its evidence: 124 of 124. "No model is called."
+- A baseline accepts the 31 rows of the pressure fix, and only those.
+- What is left: the four lost minus signs, in the rows from the first scene. The run fails.
+- The fixed port passes at `100.0%`, the mirror of the `0.0%`.
 
 ## Outro
 
 The logo, the PyPI summary, `pip install veridelta`, and the docs address.
 
-## User flow worth showing
-
-Run the comparison and see a 0.0% match rate. Let `suggest` find the rules, and declare them. Run it in CI, which fails the pull request on the one real change. Fix the export, and it passes.
-
 ## Tone
 
 - Preset: `default`.
-- Creative direction: an engineer's demo, cut with punch. Plain words, real output, no hype.
-- Interpretation: seven quick scenes on a light canvas in the logo's colors. Fast entrances, firm holds, orange for what is wrong, and blue for the answer.
+- Creative direction: a short, fast story with real output. Tension in the problem, relief at the end. Plain words, no hype.
+- Interpretation: ten scenes on a light canvas in the logo's colors. Push slides between them, orange for what is wrong, blue for the answer, and a caption band with every spoken line.
 
 ## Format: landscape, 1920 by 1080, 30 fps
 
-## Duration: 30 seconds
+## Duration: 85 seconds
 
 ## Visual identity (from the project)
 
 - Background: `#f5f7fa`, the media repository's `mist` tinted toward the navy.
 - Text: navy `#0d2f5a`.
-- Accent: orange `#de5807`, for the alarm and the differences; blue `#2054b2`, for a rule.
+- Accent: orange `#de5807`, for the alarm and the differences; blue `#2054b2`, for a rule and the answer.
 - Display and body font: Inter, as the media repository ships it.
 - Data font: DejaVu Sans Mono.
-- Strongest visual element: the symbol's two colors, orange into blue, as the docs header draws them, and the pull request comment.
+- Strongest visual element: the first rows of both files, which hold the bug from the first scene, and the `0.0%` and `100.0%` mirror.
 
-## Share copy (draft)
+## Share copy
 
-A rewrite of a pipeline looked 0.0% like the old one. Four rules later, one real change was left, and CI caught it.
+Porting a weather pipeline from IDL to Python, every row differed. Float noise, a fill value, a renamed column, a fix made on purpose, and one new bug. Veridelta sorts them under rules you declare, and only the new bug fails the run.
+
+## Voice
+
+- Engine: Gemini's speech model, the voice Orus, in one take, as `scripts/voice.ts` speaks a narrated cut.
+- Style: brisk, like a good trailer, confident and engaged, with tension in the problem and relief at the end.
+- Pace: each line's inner pauses capped at 0.28 seconds, played at 1.04 times its speed, at the same pitch.
+- Lines: the 21 in `narration.json`, 67.9 seconds of voice in all.
 
 ## Audio direction
 
-- Role: a warm bed with sparse accents.
-- Music: `happy-beats-business-moves-vol-12-by-ende-dot-app.mp3`, steady and clean, by Sascha Ende, under CC BY 4.0.
-- Music treatment: in from the first frame at 0.32, out over the last 1.5 seconds.
-- Music cue guidance: the cue JSON in brag's `assets/music/cues/` gives 109.96 BPM and strong cues at 8.74, 13.11, 17.47, 22.37, 25.65, 26.74, and 27.3 seconds. The suggest headline, the rules headline, the pull request comment, the exit code, the logo, the install command, and the address lock to them. The four differences, the three counts, and the four rules take consecutive beats.
-- Audio-reactive treatment: subtle. The glow behind each scene breathes with the bed's level. No waveforms.
-- SFX posture: sparse. A soft thud for the alarm, a card slide for the first and last difference, soft thuds for suggest, the rules, the comment, and the pass, a light tap for the exit code, and one bell for the logo.
-- Restraint rule: nothing louder than the bed for more than a moment, and nothing on every beat.
+- Role: a bed under the voice, with sparse accents.
+- Music: `happy-beats-business-moves-vol-1-by-ende-dot-app.mp3`, 120.19 BPM, the most energetic of brag's tracks, by Sascha Ende, under CC BY 4.0.
+- Music treatment: under the voice at 0.18, about 16 dB below it. It plays from 8.74 seconds into the track, so its drop at 48.02 lands as Veridelta enters. It hushes to 0.02 on "Which differences are fixes, and which are corruption?", lifts to 0.4 on the drop until the next line, and rises to 0.5 on the end card before it fades out.
+- Audio-reactive treatment: subtle. The glow behind each scene breathes with the music's level. No waveforms.
+- SFX posture: sparse. A soft thud under `0.0%`, a card slide for each question, a thud on "corruption", one bell on the drop, a thud on 124 of 124, a light tap on the baseline, a thud on the failure, a thud and a tap on the pass, and a thud on the end card.
+- Restraint rule: the voice leads. Nothing louder than the bed for more than a moment.
 
 ## Storyboard
 
-### Scene 1: the alarm, 3.05 seconds
+Each scene's times come from the voice: `npm run brag-timing` writes them to `composition/assets/timing.js`.
 
-The two file names, `accounts_legacy.csv` and `accounts_rewrite.csv`, sit at the top. The match rate, `0.0%`, slams in huge in orange, under its label and a FAILED badge. Then "40 rows. 40 issues."
-
-- Sequential: the label, the number, the line.
-- Audio intent: a thud under the number.
-- Transition: a push to scene 2.
-
-### Scene 2: the noise, 4.4 seconds
-
-"Most of it is noise." Four rows arrive on consecutive beats, each a value from the old file, an arrow, and the rewrite's value, with its label:
-
-| Label | Old | Rewrite |
-| :--- | :--- | :--- |
-| Case | `west` | `WEST` |
-| Codes | `active` | `A` |
-| Rounding | `137.5` | `137.504` |
-| Blanks | (empty) | `N/A` |
-
-- Sequential: four rows, then all four hold for 1.6 seconds.
-- Audio intent: a card slide on the first and the last row.
-- Transition: a push to scene 3.
-
-### Scene 3: suggest, 4.9 seconds
-
-The logo at the top left. "veridelta suggest finds three, each with its evidence." Below it, the command and its six lines of evidence, unchanged, and the counts 38 of 39, 13 of 13, and 7 of 7 underlined one after another. Then "No model is called."
-
-- Sequential: the three counts, on consecutive beats.
-- Audio intent: a soft thud as the headline lands on the strong cue.
-- Transition: a push to scene 4.
-
-### Scene 4: the rules, 3.85 seconds
-
-"Nothing is forgiven unless a rule says so." On the right, the `rules:` block of `accounts_rules.yaml`, its four rules lit one after another, each with its label from scene 2.
-
-- Sequential: the four rules, on consecutive beats.
-- Audio intent: a soft thud as the headline lands on the strong cue.
-- Transition: a push to scene 5.
-
-### Scene 5: what is left, 4.35 seconds
-
-"What is left is real." The Action's comment arrives on the strong cue: its heading, "Veridelta: FAILED", and its changed values table, account 17's region from `'south'` to `'east'`, outlined in orange. Then "CI fails the pull request on it."
-
-- Sequential: the headline, the comment, the outline and the second line.
-- Audio intent: a soft thud as the comment lands.
-- Transition: a push to scene 6.
-
-### Scene 6: it passes, 4.3 seconds
-
-"Fix the export, and it passes." The match rate, `100.0%`, slams in huge in blue, under its label and a PASSED badge, where the alarm had `0.0%` in orange. Then `exit code 0`, and "The baseline accepts one removal, made on purpose."
-
-- Sequential: the headline, the number, the exit code and the line.
-- Audio intent: a soft thud under the number, a light tap for the exit code.
-- Transition: a blur crossfade to scene 7, the wind down.
-
-### Scene 7: Veridelta, 5.15 seconds
-
-The symbol and the wordmark. The summary: "Compare two datasets on their primary keys under rules you declare." Then `pip install veridelta` on the strong cue, and `veridelta.github.io/veridelta`.
-
-- Audio intent: one bell as the logo lands, then the music fades out.
-
-**Music mood:** steady and upbeat, under the alarm and through to the logo.
-
-**Audio summary:** one clean bed from start to end, with quiet accents where the story turns.
+| Scene | Seconds | Narration | On screen |
+| :--- | :--- | :--- | :--- |
+| Hook | 0 to 7.1 | "Maya is moving her weather station pipeline from IDL to Python. The new output has to match the old. One to one." | "Maya's weather station pipeline", IDL to Python, the first rows of both files, "Must match, 1:1", and "A demo dataset: four made-up stations, January 2025." |
+| Run | 7.1 to 11.4 | "She runs both and compares. Every single row differs." | The command, match rate FAILED, `0.0%`, "124 rows. 124 changed.", and the top column drifts |
+| Questions | 11.4 to 31.8 | "IDL works in 32-bit floats. Python works in 64. So the same humidity comes out two ways. IDL wrote minus 999 for a missing reading. Python writes nothing. She renamed temp to temperature_c, so a match by name quietly leaves it out. And she fixed a real IDL bug. Station S3 had the wrong elevation, so its pressure changed on purpose." | "Why does every row differ?" Four rows, each an IDL value, an arrow, the Python value, and a question: `91.900002` to `91.9`, "Does it count?"; `-999.000000` to a blank, "Same reading?"; `temp` to `temperature_c`, "Never compared"; `998.6` to `1010.7`, "On purpose" |
+| Pain | 31.8 to 39.3 | "Somewhere in all of that, the port has a bug of its own. Which differences are fixes, and which are corruption?" | "124 changed rows: four stations, 31 days each", a cell for each, a scan across them, then "Fix or corruption?" held in a hush |
+| Veridelta | 39.3 to 46.4 | "Veridelta compares two datasets on their keys, under rules you declare. Nothing is forgiven unless a rule says so." | The logo on the drop, "Two datasets", "Their keys", "Your rules", then the line |
+| Suggest | 46.4 to 59.4 | "Maya declares the rename. Then veridelta suggest reads the data and proposes the rest. One rule for humidity: a tiny tolerance, and minus 999 as missing. It explains all 124 rows. No model is called." | "One rule declared. The rest proposed, with evidence." `stations.yaml` with its rename lit, then the suggest output with the tolerance, the fill value, and 124 of 124 underlined as they are said. Then "No model is called." |
+| Baseline | 59.4 to 64.6 | "The pressure fix was on purpose, so a baseline accepts those 31 rows. Only those." | The head of `stations_accepted.json` with S3 and `pressure_hpa` lit, "A fix made on purpose", `31`, "rows accepted: S3's pressure, and only that", and `Accepted: 31` |
+| Left | 64.6 to 73.6 | "What's left is the real bug. Four cold readings lost their minus sign. They were in the first rows all along. The run fails, and in CI, so does the pull request." | "What's left is real." The first rows again, the four temperatures ringed, then the run's status, its 4 changes, `temperature_c: 4 mismatches`, exit code 1, and FAILED |
+| Pass | 73.6 to 77.2 | "She fixes the port. It passes. One to one." | The command, match rate PASSED, `100.0%`, `exit code 0`, "Accepted: 31, the pressure fix made on purpose." |
+| End | 77.2 to 85.2 | "Veridelta. Compare two datasets under rules you declare." | The logo, "Compare two datasets on their primary keys under rules you declare.", `pip install veridelta`, `veridelta.github.io/veridelta` |
 
 ## Claims and their sources
 
-Every line on screen, and where it comes from. The transcripts are Veridelta's `demo/promo/*.txt` at commit `ebe1dff`, which the media repository copies to `public/transcripts/`.
+Every spoken line and every line on screen, and where it comes from. The transcripts are Veridelta's `demo/promo/stations-*.txt` at commit `b8669bc`, which the media repository copies to `public/transcripts/`. The data files are Veridelta's `demo/stations_*.csv` at that commit, which `demo/stations.py` writes.
 
-| On screen | Source |
+| Claim | Source |
 | :--- | :--- |
-| `accounts_legacy.csv`, `accounts_rewrite.csv` | `accounts-run.txt`, the command it types |
-| `0.0%`, match rate | `accounts-run.txt`: `Match Rate: 0.0%` |
-| FAILED | `accounts-run.txt`: `Status: FAILED` |
-| "40 rows. 40 issues." | `accounts-run.txt`: `Source Rows: 40`, `Total Issues: 40` |
-| "Most of it is noise." | `accounts-rules.txt`: the four rules leave 2 of the 40 issues |
-| `west` to `WEST`, `active` to `A`, `137.5` to `137.504`, a blank to `N/A` | `accounts-data.txt`, accounts 3 and 5 |
-| Case, codes, rounding, blanks | the four rules: `case_insensitive`, `value_map`, `absolute_tolerance`, `null_values` |
-| "veridelta suggest finds three, each with its evidence." | `accounts-suggest.txt`: three rules; `docs/cli.md`: suggest "suggests rules that would explain the differences it finds, each with its evidence" |
-| `> veridelta suggest -c accounts.yaml` and its six evidence lines | `accounts-suggest.txt`, unchanged and in the tape's order |
-| "No model is called." | `docs/cli.md`, word for word |
-| The rules block | `accounts-rules.txt`, `cat accounts_rules.yaml`, unchanged |
+| Maya, her weather station pipeline, IDL to Python | The story's frame. The data is made up, as the hook says: `demo/stations.py`, "Four made-up stations report one reading a day for January 2025." |
+| "A demo dataset: four made-up stations, January 2025." | `demo/stations.py`, its docstring |
+| The first rows of both files | `stations-data.txt`, unchanged |
+| "She runs both and compares. Every single row differs.", `0.0%`, FAILED, "124 rows. 124 changed." | `stations-run.txt`: `Status: FAILED`, `Match Rate: 0.0%`, `Source Rows: 124`, `Changed: 124` |
+| The top column drifts | `stations-run.txt`, unchanged |
+| "IDL works in 32-bit floats." | NV5's IDL Data Types page: "By default, floating-point numbers without the "d" type specifier will be type FLOAT (32 bits)" |
+| "Python works in 64.", "IDL 32-bit, Python 64-bit" | Python's docs, Floating Point Arithmetic: almost all platforms map Python floats to IEEE 754 double precision |
+| "So the same humidity comes out two ways.", `91.900002` to `91.9` | `stations-data.txt`, the first row of each file |
+| "IDL wrote minus 999 for a missing reading. Python writes nothing.", `-999.000000` to a blank | `stations-data.txt`, the second row of each file |
+| "She renamed temp to temperature_c", `temp` to `temperature_c` | `stations-data.txt`, the headers |
+| "so a match by name quietly leaves it out.", "Never compared" | `docs/configuration.md`, schema mode: under the default `intersection`, "Columns on one side only are left out."; `stations-run.txt` lists no drift in either column |
+| "And she fixed a real IDL bug. Station S3 had the wrong elevation, so its pressure changed on purpose." | `demo/stations.py`: "IDL used the wrong elevation for station S3, so its pressure there reads 12.1 hPa low. The port fixes that on purpose." |
+| `998.6` to `1010.7`, "S3's pressure, 31 rows" | `stations_idl.csv` and `stations_python.csv`, S3 on 2025-01-01; `stations-run.txt`: `pressure_hpa: 31 mismatches` |
+| "Somewhere in all of that, the port has a bug of its own." | `demo/stations.py`: "The port has a bug of its own: four of S1's readings below zero lost their minus sign." |
+| "124 changed rows: four stations, 31 days each" | `stations-run.txt`: `Changed: 124`; `demo/stations.py`: four stations, January 2025 |
+| "Veridelta compares two datasets on their keys, under rules you declare.", "Two datasets", "Their keys", "Your rules" | Veridelta's README, its first sentence: "Veridelta compares two datasets on their primary keys and reports every row that differs under the rules you declare." |
 | "Nothing is forgiven unless a rule says so." | Veridelta's README, its first paragraph, word for word |
-| "What is left is real." | `accounts-baseline.txt`: one change, in `region`, and the removal the baseline accepts |
-| The comment, FAILED, 17, `'south'`, `'east'` | `docs/assets/action-comment-light.png`, the CI guide's screenshot, cropped |
-| "CI fails the pull request on it." | `docs/ci.md`: the action fails the job on drift |
-| "Fix the export, and it passes." | `accounts-fixed.txt`: `veridelta run -c accounts_fixed.yaml`, on the export with account 17 fixed |
-| `100.0%`, match rate, PASSED, `exit code 0` | `accounts-fixed.txt`: `Match Rate: 100.0%`, `Status: PASSED (Perfect Match)`, `exit code: 0` |
-| "The baseline accepts one removal, made on purpose." | `accounts-baseline.txt`: `accepted.json` lists account 40 as removed; `accounts-fixed.txt`: `Accepted: 1` |
-| "Compare two datasets on their primary keys under rules you declare." | `pyproject.toml`'s description, its first clause |
+| "Maya declares the rename.", `stations.yaml` | `stations-suggest.txt`, `cat stations.yaml`, unchanged; `docs/rules.md`, renaming columns |
+| "Then veridelta suggest reads the data and proposes the rest." and its output | `stations-suggest.txt`, unchanged; `docs/cli.md`: suggest "runs the comparison, then suggests rules that would explain the differences it finds, each with its evidence" |
+| "One rule for humidity: a tiny tolerance, and minus 999 as missing. It explains all 124 rows." | `stations-suggest.txt`: `humidity: relative_tolerance 5e-08, null_values [-999.0] explains 124 of 124 differing rows` |
+| "No model is called." | `docs/cli.md`, word for word |
+| "The pressure fix was on purpose, so a baseline accepts those 31 rows. Only those.", `31`, "S3's pressure, and only that" | `stations-baseline.txt`: `Accepted: 31`; Veridelta's `tests/unit/test_demo_tape.py` holds `stations_accepted.json` to S3's 31 rows and `pressure_hpa` alone; `docs/cli.md`, accepting drift |
+| The head of `stations_accepted.json`, `Accepted: 31` | `stations-baseline.txt`, unchanged |
+| "What's left is the real bug. Four cold readings lost their minus sign. They were in the first rows all along." | `stations-data.txt`: `-3.5`, `-5.0`, `-5.9`, `-6.0` against `3.5`, `5.0`, `5.9`, `6.0`; `stations-baseline.txt`: `temperature_c: 4 mismatches` |
+| "The run fails", the run's lines, FAILED, exit code 1 | `stations-baseline.txt`, unchanged: `Status: FAILED`, `Changed: 4`, `exit code: 1` |
+| "and in CI, so does the pull request." | `docs/ci.md`: the GitHub Action runs on a pull request and fails the job on drift |
+| "She fixes the port. It passes. One to one.", `100.0%`, PASSED, `exit code 0` | `stations-fixed.txt`: `Status: PASSED (Perfect Match)`, `Match Rate: 100.0%`, `exit code: 0`, on `stations_python_fixed.csv` |
+| "Accepted: 31, the pressure fix made on purpose." | `stations-fixed.txt`: `Accepted: 31` |
+| "Compare two datasets on their primary keys under rules you declare.", "Veridelta. Compare two datasets under rules you declare." | `pyproject.toml`'s description, its first clause |
 | `pip install veridelta`, `veridelta.github.io/veridelta` | Veridelta's README |
-| "Veridelta 0.35.1, the accounts demo in demo/promo at commit ebe1dff", under every scene | `public/transcripts/manifest.json`: release `v0.35.1`, commit `ebe1dff` |
+| "Veridelta 0.35.1, the weather station demo in demo/promo at commit b8669bc", on every scene but the end card | `public/transcripts/manifest.json`: release `v0.35.1`, commit `b8669bc` |

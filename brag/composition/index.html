@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1920, height=1080" />
-    <title>Veridelta in 30 seconds</title>
+    <title>Veridelta in 90 seconds</title>
     <script
       src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"
       integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2"
       crossorigin="anonymous"
     ></script>
     <script src="assets/audio-levels.js"></script>
+    <script src="assets/timing.js"></script>
     <style>
       @font-face {
         font-family: "Inter";
@@ -42,7 +43,9 @@
         --navy: #0d2f5a;
         --orange: #de5807;
         --orange-deep: #b24606;
+        --orange-soft: #f39a5c;
         --blue: #2054b2;
+        --blue-soft: #8fb1f0;
         --canvas: #f5f7fa;
         --rule: #d6dde5;
         --slate: #4a5d75;
@@ -117,9 +120,9 @@
       }
       #source {
         position: absolute;
-        left: 140px;
-        bottom: 48px;
-        font-size: 22px;
+        right: 140px;
+        top: 34px;
+        font-size: 20px;
         color: var(--slate);
       }
 
@@ -130,190 +133,63 @@
         height: 1080px;
         overflow: hidden;
       }
-      #s2,
-      #sg,
-      #s3,
-      #s4,
-      #sp,
-      #s5 {
+      .scene + .scene {
         opacity: 0;
       }
 
-      /* Scene 1: the alarm. */
-      #s1 {
-        display: flex;
-        flex-direction: column;
-        padding: 120px 140px 0;
-      }
-      #s1-files {
-        display: flex;
-        align-items: center;
-        gap: 24px;
-      }
-      .file {
-        font-size: 34px;
-        padding: 14px 24px;
-        border: 3px solid var(--rule);
-        border-radius: 12px;
-        background: #ffffff;
-        color: var(--navy);
-      }
-      #s1-vs {
-        font-size: 32px;
-        color: var(--slate);
-      }
-      #s1-head {
-        display: flex;
-        align-items: center;
-        gap: 28px;
-        margin-top: 84px;
-      }
-      #s1-label {
-        font-size: 60px;
-        font-weight: 600;
-      }
-      #s1-failed {
-        font-size: 40px;
-        font-weight: 700;
-        letter-spacing: 2px;
-        color: #ffffff;
-        background: var(--orange-deep);
-        padding: 8px 22px;
-        border-radius: 10px;
-      }
-      #s1-rate {
-        display: block;
-        width: 1100px;
-        font-size: 400px;
-        font-weight: 700;
-        line-height: 1;
-        letter-spacing: -16px;
-        color: var(--orange);
-        transform-origin: 0% 60%;
-      }
-      #s1-count {
-        font-size: 80px;
-        font-weight: 600;
-        margin-top: 8px;
-      }
-
-      /* Scene 2: the noise. */
-      #s2 {
-        padding: 120px 140px 0;
-      }
-      #s2-head {
-        font-size: 108px;
-        font-weight: 700;
-        letter-spacing: -2px;
-      }
-      #s2-table {
-        margin-top: 56px;
-        display: grid;
-        grid-template-columns: 300px 420px 120px 460px;
-        align-items: center;
-        width: 1300px;
-      }
-      .s2-col {
-        font-size: 26px;
-        color: var(--slate);
-        padding-bottom: 14px;
-      }
-      .s2-row {
-        display: contents;
-      }
-      .s2-cell {
-        height: 132px;
-        display: flex;
-        align-items: center;
-        border-top: 3px solid var(--rule);
-      }
-      .s2-label {
-        font-size: 52px;
-        font-weight: 600;
-      }
-      .s2-old {
-        font-size: 64px;
-        color: var(--slate);
-      }
-      .s2-arrow {
-        font-size: 56px;
-        color: var(--slate);
-      }
-      .s2-new {
-        font-size: 64px;
-        font-weight: 700;
-        color: var(--orange);
-      }
-      .s2-new span,
-      .s2-old span {
-        display: inline-block;
-      }
-      .blank {
-        display: inline-block;
-        width: 150px;
-        height: 70px;
-        border: 4px dashed var(--slate);
-        border-radius: 10px;
-      }
-
-      /* The suggest scene: the logo, then suggest's evidence, unchanged. */
-      #sg-logo {
+      /* A terminal card: the command or file it shows on top, then its lines, unchanged. */
+      .term {
         position: absolute;
-        left: 140px;
-        top: 110px;
-        display: flex;
-        align-items: center;
-        gap: 22px;
-      }
-      #sg-logo .symbol {
-        width: 112px;
-        height: 104px;
-        background: url("assets/images/veridelta-symbol.png") center / contain no-repeat;
-      }
-      #sg-logo .wordmark {
-        width: 336px;
-        height: 70px;
-        background: url("assets/images/veridelta-wordmark.png") center / contain no-repeat;
-      }
-      #sg-head {
-        position: absolute;
-        left: 140px;
-        top: 250px;
-        width: 1640px;
-        font-size: 76px;
-        font-weight: 700;
-        line-height: 1.12;
-        letter-spacing: -1.5px;
-      }
-      #sg-head .mono {
-        font-size: 0.92em;
-        letter-spacing: -2px;
-        word-spacing: -14px;
-      }
-      #sg-card {
-        position: absolute;
-        left: 140px;
-        top: 470px;
-        width: 1640px;
-        border-radius: 22px;
+        border-radius: 18px;
         background: var(--navy);
-        box-shadow: 0 30px 80px rgba(13, 47, 90, 0.28);
+        box-shadow: 0 30px 80px rgba(13, 47, 90, 0.26);
         overflow: hidden;
       }
-      #sg-title {
-        font-size: 28px;
+      .term-title {
+        font-size: 22px;
         color: var(--code-dim);
-        padding: 20px 40px;
+        padding: 16px 28px;
         border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+        white-space: pre;
       }
-      #sg-lines {
-        padding: 18px 0 22px;
+      .term-body {
+        position: relative;
+        padding: 14px 0 16px;
       }
-      #sg-lines .line {
-        font-size: 28px;
+      .tl {
+        position: relative;
+        z-index: 1;
+        padding: 0 28px;
+        color: var(--code);
+        white-space: pre;
       }
-      #sg-lines .dim {
+      .tl.wrap {
+        white-space: pre-wrap;
+      }
+      .tl.dim {
         color: var(--code-dim);
+      }
+      .band {
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        z-index: 0;
+        border-radius: 8px;
+        background: rgba(32, 84, 178, 0.75);
+        transform-origin: 0% 50%;
+      }
+      .tag {
+        position: absolute;
+        z-index: 2;
+        right: 22px;
+        font-family: "Inter", sans-serif;
+        font-size: 26px;
+        font-weight: 700;
+        line-height: 1;
+        color: var(--navy);
+        background: #ffffff;
+        padding: 7px 14px;
+        border-radius: 8px;
       }
       .ev {
         position: relative;
@@ -323,207 +199,293 @@
         position: absolute;
         left: 0;
         right: 0;
-        bottom: 2px;
+        bottom: 0;
         height: 5px;
         border-radius: 3px;
-        background: #f39a5c;
+        background: var(--orange-soft);
         transform-origin: 0% 50%;
       }
-      #sg-model {
-        position: absolute;
-        left: 140px;
-        top: 890px;
-        font-size: 54px;
-        font-weight: 600;
-      }
-
-      /* Scene 3: the rules. */
-      #s3-head {
-        position: absolute;
-        left: 140px;
-        top: 330px;
-        width: 780px;
-        font-size: 92px;
-        font-weight: 700;
-        line-height: 1.12;
-        letter-spacing: -2px;
-      }
-      #s3-card {
-        position: absolute;
-        left: 1000px;
-        top: 150px;
-        width: 800px;
-        border-radius: 22px;
-        background: var(--navy);
-        box-shadow: 0 30px 80px rgba(13, 47, 90, 0.28);
-        overflow: hidden;
-      }
-      #s3-title {
-        font-size: 26px;
-        color: var(--code-dim);
-        padding: 22px 40px;
-        border-bottom: 2px solid rgba(255, 255, 255, 0.12);
-      }
-      #s3-code {
-        position: relative;
-        padding: 22px 0 26px;
-      }
-      .line {
-        position: relative;
-        z-index: 1;
-        height: 46px;
-        line-height: 46px;
-        padding-left: 40px;
-        font-size: 31px;
-        color: var(--code);
-        white-space: pre;
-      }
-      .band {
-        position: absolute;
-        left: 16px;
-        width: 768px;
-        z-index: 0;
-        border-radius: 10px;
-        background: rgba(32, 84, 178, 0.75);
-        transform-origin: 0% 50%;
-      }
-      .tag {
-        position: absolute;
-        z-index: 2;
-        right: 28px;
-        font-family: "Inter", sans-serif;
-        font-size: 30px;
-        font-weight: 700;
-        line-height: 1;
-        color: var(--navy);
-        background: #ffffff;
-        padding: 8px 16px;
-        border-radius: 8px;
-      }
-
-      /* Scene 4: what is left. */
-      #s4-head {
-        position: absolute;
-        left: 140px;
-        top: 250px;
-        width: 600px;
-        font-size: 100px;
-        font-weight: 700;
-        line-height: 1.08;
-        letter-spacing: -2px;
-      }
-      #s4-sub {
-        position: absolute;
-        left: 140px;
-        top: 540px;
-        width: 680px;
-        font-size: 56px;
-        font-weight: 600;
-        line-height: 1.2;
-      }
-      #s4-card {
-        position: absolute;
-        left: 880px;
-        top: 260px;
-        width: 924px;
-        background: #ffffff;
-        border: 2px solid #d0d7de;
-        border-radius: 16px;
-        box-shadow: 0 30px 80px rgba(13, 47, 90, 0.22);
-        overflow: hidden;
-      }
-      .crop {
-        position: relative;
-        width: 920px;
-        overflow: hidden;
-      }
-      /* The CI guide's screenshot of the comment, 1632 by 1380, at 920 / 780 of its size: its
-         heading, then its changed values table. */
-      .crop {
-        background-image: url("assets/images/action-comment-light.png");
-        background-repeat: no-repeat;
-        background-size: 1925px auto;
-      }
-      #crop-head {
-        height: 201px;
-        background-position: 0 0;
-        border-bottom: 2px solid #d0d7de;
-      }
-      #crop-values {
-        height: 283px;
-        background-position: 0 -1286px;
-      }
-      #outline {
-        position: absolute;
-        left: 34px;
-        top: 171px;
-        width: 848px;
-        height: 96px;
-        border: 6px solid var(--orange);
-        border-radius: 12px;
-      }
-
-      /* The pass scene: the mirror of the alarm. */
-      #sp {
-        display: flex;
-        flex-direction: column;
-        padding: 110px 140px 0;
-      }
-      #sp-head {
-        font-size: 92px;
-        font-weight: 700;
-        letter-spacing: -2px;
-      }
-      #sp-row {
-        display: flex;
-        align-items: center;
-        gap: 28px;
-        margin-top: 36px;
-      }
-      #sp-label {
-        font-size: 60px;
-        font-weight: 600;
-      }
-      #sp-passed {
-        font-size: 40px;
+      .badge {
+        display: inline-block;
         font-weight: 700;
         letter-spacing: 2px;
         color: #ffffff;
-        background: var(--blue);
         padding: 8px 22px;
         border-radius: 10px;
       }
-      #sp-rate {
-        display: block;
-        width: 1500px;
-        font-size: 360px;
+      .badge.orange {
+        background: var(--orange-deep);
+      }
+      .badge.blue {
+        background: var(--blue);
+      }
+
+      /* The hook: the pipeline, and the first rows of both files. */
+      #hook-kicker {
+        position: absolute;
+        left: 140px;
+        top: 104px;
+        font-size: 40px;
+        font-weight: 600;
+        color: var(--slate);
+      }
+      #hook-title {
+        position: absolute;
+        left: 134px;
+        top: 160px;
+        font-size: 150px;
         font-weight: 700;
         line-height: 1;
-        letter-spacing: -14px;
-        color: var(--blue);
-        transform-origin: 0% 60%;
+        letter-spacing: -5px;
       }
-      #sp-foot {
-        display: flex;
-        align-items: center;
-        gap: 36px;
-        margin-top: 18px;
+      #hook-title span {
+        display: inline-block;
       }
-      #sp-exit {
-        font-size: 44px;
+      #hook-idl {
+        color: var(--slate);
+      }
+      #hook-arrow {
+        color: var(--orange);
+        margin: 0 36px;
+      }
+      #hook-match {
+        position: absolute;
+        right: 140px;
+        top: 196px;
+        font-size: 60px;
         font-weight: 700;
         color: #ffffff;
         background: var(--navy);
-        padding: 12px 26px;
-        border-radius: 12px;
+        padding: 16px 32px;
+        border-radius: 16px;
       }
-      #sp-note {
-        font-size: 38px;
+      .files .term {
+        top: 0;
+        left: 0;
+        width: 790px;
+      }
+      .files .term:nth-child(2) {
+        left: 850px;
+      }
+      .files .tl {
+        font-size: 23px;
+        line-height: 40px;
+      }
+      #hook-files {
+        position: absolute;
+        left: 140px;
+        top: 400px;
+        width: 1640px;
+        height: 300px;
+      }
+      #hook-note {
+        position: absolute;
+        left: 140px;
+        top: 728px;
+        font-size: 30px;
         color: var(--slate);
       }
 
-      /* Scene 5: Veridelta. */
-      #s5-ghost {
+      /* The first run. */
+      #run-cmd {
+        left: 140px;
+        top: 104px;
+        width: 1640px;
+      }
+      #run-cmd .tl {
+        font-size: 26px;
+        line-height: 64px;
+      }
+      #run-head {
+        position: absolute;
+        left: 140px;
+        top: 236px;
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
+      #run-label {
+        font-size: 60px;
+        font-weight: 600;
+      }
+      #run-failed {
+        font-size: 40px;
+      }
+      #run-rate {
+        position: absolute;
+        left: 128px;
+        top: 316px;
+        font-size: 380px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -16px;
+        color: var(--orange);
+        transform-origin: 0% 60%;
+      }
+      #run-count {
+        position: absolute;
+        left: 140px;
+        top: 712px;
+        font-size: 72px;
+        font-weight: 600;
+      }
+      #run-drift {
+        left: 1180px;
+        top: 420px;
+        width: 600px;
+      }
+      #run-drift .tl {
+        font-size: 28px;
+        line-height: 48px;
+      }
+
+      /* The questions: one row for each kind of difference. */
+      #q-head {
+        position: absolute;
+        left: 140px;
+        top: 100px;
+        font-size: 84px;
+        font-weight: 700;
+        letter-spacing: -2px;
+      }
+      #q-table {
+        position: absolute;
+        left: 140px;
+        top: 232px;
+        width: 1640px;
+        display: grid;
+        grid-template-columns: 330px 390px 80px 470px 370px;
+        align-items: center;
+      }
+      .q-col {
+        font-size: 24px;
+        color: var(--slate);
+        padding-bottom: 12px;
+      }
+      .q-row {
+        display: contents;
+      }
+      .q-cell {
+        height: 128px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-top: 3px solid var(--rule);
+      }
+      .q-label {
+        font-size: 46px;
+        font-weight: 600;
+        line-height: 1.1;
+      }
+      .q-label small {
+        display: block;
+        margin-top: 6px;
+        font-size: 24px;
+        font-weight: 400;
+        color: var(--slate);
+      }
+      .q-old {
+        font-size: 54px;
+        color: var(--slate);
+      }
+      .q-arrow {
+        font-size: 52px;
+        color: var(--slate);
+      }
+      .q-new {
+        font-size: 54px;
+        font-weight: 700;
+        color: var(--orange);
+      }
+      .q-new span,
+      .q-old span {
+        display: inline-block;
+        align-self: flex-start;
+      }
+      .q-ask {
+        align-items: flex-end;
+      }
+      .chip {
+        display: inline-block;
+        font-size: 34px;
+        font-weight: 700;
+        color: #ffffff;
+        padding: 10px 22px;
+        border-radius: 12px;
+        background: var(--orange-deep);
+      }
+      .chip.blue {
+        background: var(--blue);
+      }
+      .blank {
+        display: inline-block;
+        width: 150px;
+        height: 64px;
+        border: 4px dashed var(--orange);
+        border-radius: 10px;
+      }
+
+      /* The pain: every changed row, and the question. */
+      #pain-label {
+        position: absolute;
+        left: 140px;
+        top: 120px;
+        font-size: 40px;
+        font-weight: 600;
+        color: var(--slate);
+      }
+      #pain-grid {
+        position: absolute;
+        left: 140px;
+        top: 196px;
+        width: 1640px;
+      }
+      .pg-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 62px;
+      }
+      .pg-name {
+        width: 82px;
+        font-size: 30px;
+        font-weight: 700;
+      }
+      .cell {
+        display: block;
+        width: 42px;
+        height: 50px;
+        border-radius: 6px;
+        background: var(--orange);
+      }
+      #pain-scan {
+        position: absolute;
+        left: 200px;
+        top: 186px;
+        width: 30px;
+        height: 268px;
+        border-radius: 15px;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.95) 50%, rgba(255, 255, 255, 0) 100%);
+        opacity: 0;
+      }
+      #pain-head {
+        position: absolute;
+        left: 134px;
+        top: 520px;
+        font-size: 160px;
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: -5px;
+      }
+      #pain-head span {
+        display: inline-block;
+      }
+      #pain-or {
+        color: var(--orange);
+      }
+
+      /* Veridelta. */
+      .ghost {
         position: absolute;
         right: 40px;
         top: 300px;
@@ -532,36 +494,265 @@
         background: url("assets/images/veridelta-symbol.png") center / contain no-repeat;
         opacity: 0.12;
       }
-      #s5-body {
-        position: absolute;
-        left: 140px;
-        top: 170px;
-        width: 1400px;
-      }
-      #s5-logo {
+      .logo {
         display: flex;
         align-items: center;
         gap: 30px;
       }
-      #s5-logo .symbol {
-        display: block;
+      .logo .symbol {
+        width: 178px;
         height: 165px;
+        background: url("assets/images/veridelta-symbol.png") center / contain no-repeat;
       }
-      #s5-logo .wordmark {
-        display: block;
+      .logo .wordmark {
+        width: 384px;
         height: 80px;
+        background: url("assets/images/veridelta-wordmark.png") center / contain no-repeat;
       }
-      #s5-summary {
-        margin-top: 64px;
-        width: 1050px;
+      #vd-body {
+        position: absolute;
+        left: 140px;
+        top: 150px;
+        width: 1500px;
+      }
+      #vd-chips {
+        display: flex;
+        gap: 24px;
+        margin-top: 70px;
+      }
+      #vd-chips span {
+        font-size: 54px;
+        font-weight: 600;
+        padding: 16px 32px;
+        border: 4px solid var(--navy);
+        border-radius: 16px;
+        background: #ffffff;
+      }
+      #vd-chips span:last-child {
+        color: #ffffff;
+        background: var(--blue);
+        border-color: var(--blue);
+      }
+      #vd-rule {
+        margin-top: 70px;
         font-size: 72px;
+        font-weight: 700;
+        letter-spacing: -1.5px;
+      }
+
+      /* Suggest. */
+      #sg-head {
+        position: absolute;
+        left: 140px;
+        top: 100px;
+        font-size: 60px;
+        font-weight: 700;
+        letter-spacing: -1px;
+      }
+      #sg-yaml {
+        left: 140px;
+        top: 214px;
+        width: 620px;
+      }
+      #sg-yaml .tl {
+        font-size: 26px;
+        line-height: 42px;
+      }
+      #sg-model {
+        position: absolute;
+        left: 140px;
+        top: 680px;
+        font-size: 54px;
+        font-weight: 600;
+      }
+      #sg-out {
+        left: 800px;
+        top: 214px;
+        width: 980px;
+      }
+      #sg-out .tl {
+        font-size: 24px;
+        line-height: 37px;
+      }
+
+      /* The baseline. */
+      #bl-json {
+        left: 140px;
+        top: 104px;
+        width: 560px;
+      }
+      #bl-json .tl {
+        font-size: 22px;
+        line-height: 33px;
+      }
+      #bl-head {
+        position: absolute;
+        left: 800px;
+        top: 120px;
+        font-size: 72px;
+        font-weight: 700;
+        letter-spacing: -1.5px;
+      }
+      #bl-num {
+        position: absolute;
+        left: 790px;
+        top: 214px;
+        font-size: 280px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -10px;
+        color: var(--blue);
+      }
+      #bl-label {
+        position: absolute;
+        left: 1170px;
+        top: 300px;
+        width: 620px;
+        font-size: 54px;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+      #bl-run {
+        left: 800px;
+        top: 560px;
+        width: 980px;
+      }
+      #bl-run .term-title {
+        font-size: 21px;
+      }
+      #bl-run .tl {
+        font-size: 30px;
+        line-height: 52px;
+      }
+
+      /* What is left. */
+      #lf-head {
+        position: absolute;
+        left: 140px;
+        top: 100px;
+        font-size: 84px;
+        font-weight: 700;
+        letter-spacing: -2px;
+      }
+      #lf-files {
+        position: absolute;
+        left: 140px;
+        top: 222px;
+        width: 1640px;
+        height: 300px;
+      }
+      .sign {
+        position: relative;
+        display: inline-block;
+      }
+      .sign i {
+        position: absolute;
+        left: -8px;
+        right: -8px;
+        top: 2px;
+        bottom: 2px;
+        border: 4px solid var(--orange-soft);
+        border-radius: 10px;
+      }
+      #lf-idl .sign i {
+        border-color: var(--blue-soft);
+      }
+      #lf-run {
+        left: 140px;
+        top: 560px;
+        width: 1000px;
+      }
+      #lf-run .term-title {
+        font-size: 21px;
+      }
+      #lf-run .tl {
+        font-size: 26px;
+        line-height: 40px;
+      }
+      #lf-failed {
+        position: absolute;
+        left: 1200px;
+        top: 620px;
+        font-size: 84px;
+        padding: 14px 34px;
+        border-radius: 16px;
+      }
+
+      /* The pass: the mirror of the first run. */
+      #ps-cmd {
+        left: 140px;
+        top: 104px;
+        width: 1640px;
+      }
+      #ps-cmd .tl {
+        font-size: 26px;
+        line-height: 64px;
+      }
+      #ps-head {
+        position: absolute;
+        left: 140px;
+        top: 236px;
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
+      #ps-label {
+        font-size: 60px;
+        font-weight: 600;
+      }
+      #ps-passed {
+        font-size: 40px;
+      }
+      #ps-rate {
+        position: absolute;
+        left: 128px;
+        top: 316px;
+        font-size: 380px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -16px;
+        color: var(--blue);
+        transform-origin: 0% 60%;
+      }
+      #ps-foot {
+        position: absolute;
+        left: 140px;
+        top: 716px;
+        display: flex;
+        align-items: center;
+        gap: 36px;
+      }
+      #ps-exit {
+        font-size: 44px;
+        font-weight: 700;
+        color: #ffffff;
+        background: var(--navy);
+        padding: 12px 26px;
+        border-radius: 12px;
+      }
+      #ps-note {
+        font-size: 40px;
+        color: var(--slate);
+      }
+
+      /* The end card. */
+      #end-body {
+        position: absolute;
+        left: 140px;
+        top: 150px;
+        width: 1400px;
+      }
+      #end-summary {
+        margin-top: 60px;
+        width: 1400px;
+        font-size: 70px;
         font-weight: 600;
         line-height: 1.18;
         letter-spacing: -1px;
       }
-      #s5-install {
+      #end-install {
         display: inline-block;
-        margin-top: 64px;
+        margin-top: 56px;
         font-size: 56px;
         font-weight: 700;
         color: #ffffff;
@@ -569,10 +760,33 @@
         padding: 22px 38px;
         border-radius: 14px;
       }
-      #s5-url {
-        margin-top: 34px;
+      #end-url {
+        margin-top: 30px;
         font-size: 40px;
         color: var(--slate);
+      }
+
+      /* The captions: each spoken line, word for word, at the bottom. */
+      .caption {
+        position: absolute;
+        left: 140px;
+        right: 140px;
+        bottom: 40px;
+        display: flex;
+        justify-content: center;
+        opacity: 0;
+      }
+      .caption span {
+        display: inline-block;
+        max-width: 1640px;
+        padding: 14px 32px;
+        border-radius: 14px;
+        background: rgba(13, 47, 90, 0.94);
+        color: #ffffff;
+        font-size: 44px;
+        font-weight: 600;
+        line-height: 1.25;
+        text-align: center;
       }
     </style>
   </head>
@@ -581,7 +795,7 @@
       id="root"
       data-composition-id="main"
       data-start="0"
-      data-duration="30"
+      data-duration="85.244"
       data-width="1920"
       data-height="1080"
     >
@@ -590,293 +804,505 @@
         <div id="glow-orange" class="glow" data-layout-allow-overflow></div>
         <div id="glow-blue" class="glow" data-layout-allow-overflow></div>
         <div id="bar"></div>
-        <div id="source" class="mono">Veridelta 0.35.1, the accounts demo in demo/promo at commit ebe1dff</div>
+        <div id="source" class="mono">Veridelta 0.35.1, the weather station demo in demo/promo at commit b8669bc</div>
       </div>
 
-      <div id="s1" class="scene" data-layout-allow-overflow>
-        <div id="s1-files">
-          <span class="file mono">accounts_legacy.csv</span>
-          <span id="s1-vs">and</span>
-          <span class="file mono">accounts_rewrite.csv</span>
+      <div id="hook" class="scene" data-layout-allow-overflow>
+        <div id="hook-kicker">Maya's weather station pipeline</div>
+        <div id="hook-title"><span id="hook-idl">IDL</span><span id="hook-arrow">→</span><span id="hook-py">Python</span></div>
+        <div id="hook-match">Must match, 1:1</div>
+        <div id="hook-files" class="files">
+          <div class="term">
+            <div class="term-title mono">&gt; head -n 5 stations_idl.csv</div>
+            <div class="term-body mono">
+              <div class="tl">station,obs_date,temp,pressure_hpa,humidity</div>
+              <div class="tl">S1,2025-01-01,-3.5,1020.0,91.900002</div>
+              <div class="tl">S1,2025-01-02,-5.0,1021.2,-999.000000</div>
+              <div class="tl">S1,2025-01-03,-5.9,1022.3,88.599998</div>
+              <div class="tl">S1,2025-01-04,-6.0,1023.2,85.900002</div>
+            </div>
+          </div>
+          <div class="term">
+            <div class="term-title mono">&gt; head -n 5 stations_python.csv</div>
+            <div class="term-body mono">
+              <div class="tl">station,obs_date,temperature_c,pressure_hpa,humidity</div>
+              <div class="tl">S1,2025-01-01,3.5,1020.0,91.9</div>
+              <div class="tl">S1,2025-01-02,5.0,1021.2,</div>
+              <div class="tl">S1,2025-01-03,5.9,1022.3,88.6</div>
+              <div class="tl">S1,2025-01-04,6.0,1023.2,85.9</div>
+            </div>
+          </div>
         </div>
-        <div id="s1-head">
-          <span id="s1-label">Match rate</span>
-          <span id="s1-failed">FAILED</span>
-        </div>
-        <div id="s1-rate">0.0%</div>
-        <div id="s1-count">40 rows. 40 issues.</div>
+        <div id="hook-note">A demo dataset: four made-up stations, January 2025.</div>
       </div>
 
-      <div id="s2" class="scene" data-layout-allow-overflow>
-        <div id="s2-head">Most of it is noise.</div>
-        <div id="s2-table">
-          <div class="s2-col"></div>
-          <div class="s2-col mono">accounts_legacy.csv</div>
-          <div class="s2-col"></div>
-          <div class="s2-col mono">accounts_rewrite.csv</div>
-          <div class="s2-row" id="r1">
-            <div class="s2-cell s2-label">Case</div>
-            <div class="s2-cell s2-old mono"><span>west</span></div>
-            <div class="s2-cell s2-arrow">→</div>
-            <div class="s2-cell s2-new mono"><span>WEST</span></div>
-          </div>
-          <div class="s2-row" id="r2">
-            <div class="s2-cell s2-label">Codes</div>
-            <div class="s2-cell s2-old mono"><span>active</span></div>
-            <div class="s2-cell s2-arrow">→</div>
-            <div class="s2-cell s2-new mono"><span>A</span></div>
-          </div>
-          <div class="s2-row" id="r3">
-            <div class="s2-cell s2-label">Rounding</div>
-            <div class="s2-cell s2-old mono"><span>137.5</span></div>
-            <div class="s2-cell s2-arrow">→</div>
-            <div class="s2-cell s2-new mono"><span>137.504</span></div>
-          </div>
-          <div class="s2-row" id="r4">
-            <div class="s2-cell s2-label">Blanks</div>
-            <div class="s2-cell s2-old mono"><span class="blank"></span></div>
-            <div class="s2-cell s2-arrow">→</div>
-            <div class="s2-cell s2-new mono"><span>N/A</span></div>
+      <div id="run" class="scene" data-layout-allow-overflow>
+        <div id="run-cmd" class="term">
+          <div class="tl mono">&gt; veridelta run stations_idl.csv stations_python.csv --key station --key obs_date</div>
+        </div>
+        <div id="run-head">
+          <span id="run-label">Match rate</span>
+          <span id="run-failed" class="badge orange">FAILED</span>
+        </div>
+        <div id="run-rate">0.0%</div>
+        <div id="run-count">124 rows. 124 changed.</div>
+        <div id="run-drift" class="term">
+          <div class="term-body mono">
+            <div class="tl">Top Column-Level Drifts:</div>
+            <div class="tl dim">---------------------------</div>
+            <div class="tl">- humidity: 124 mismatches</div>
+            <div class="tl">- pressure_hpa: 31 mismatches</div>
           </div>
         </div>
       </div>
 
-      <div id="sg" class="scene" data-layout-allow-overflow>
-        <div id="sg-logo">
-          <div class="symbol"></div>
-          <div class="wordmark"></div>
+      <div id="questions" class="scene" data-layout-allow-overflow>
+        <div id="q-head">Why does every row differ?</div>
+        <div id="q-table">
+          <div class="q-col"></div>
+          <div class="q-col mono">stations_idl.csv</div>
+          <div class="q-col"></div>
+          <div class="q-col mono">stations_python.csv</div>
+          <div class="q-col"></div>
+          <div class="q-row" id="q1">
+            <div class="q-cell q-label">Floats<small>IDL 32-bit, Python 64-bit</small></div>
+            <div class="q-cell q-old mono"><span>91.900002</span></div>
+            <div class="q-cell q-arrow">→</div>
+            <div class="q-cell q-new mono"><span>91.9</span></div>
+            <div class="q-cell q-ask"><span class="chip">Does it count?</span></div>
+          </div>
+          <div class="q-row" id="q2">
+            <div class="q-cell q-label">Missing</div>
+            <div class="q-cell q-old mono"><span>-999.000000</span></div>
+            <div class="q-cell q-arrow">→</div>
+            <div class="q-cell q-new mono"><span class="blank"></span></div>
+            <div class="q-cell q-ask"><span class="chip">Same reading?</span></div>
+          </div>
+          <div class="q-row" id="q3">
+            <div class="q-cell q-label">Renamed</div>
+            <div class="q-cell q-old mono"><span>temp</span></div>
+            <div class="q-cell q-arrow">→</div>
+            <div class="q-cell q-new mono"><span>temperature_c</span></div>
+            <div class="q-cell q-ask"><span class="chip">Never compared</span></div>
+          </div>
+          <div class="q-row" id="q4">
+            <div class="q-cell q-label">A real fix<small>S3's pressure, 31 rows</small></div>
+            <div class="q-cell q-old mono"><span>998.6</span></div>
+            <div class="q-cell q-arrow">→</div>
+            <div class="q-cell q-new mono"><span>1010.7</span></div>
+            <div class="q-cell q-ask"><span class="chip blue">On purpose</span></div>
+          </div>
         </div>
-        <div id="sg-head"><span class="mono">veridelta suggest</span> finds three, each with its evidence.</div>
-        <div id="sg-card">
-          <div id="sg-title" class="mono">&gt; veridelta suggest -c accounts.yaml</div>
-          <div id="sg-lines" class="mono">
-            <div class="line">region: case_insensitive true explains <span class="ev" id="ev1">38 of 39<i class="u"></i></span> differing rows</div>
-            <div class="line dim">  for example account_id=1; account_id=2; account_id=3</div>
-            <div class="line">balance: absolute_tolerance 0.005 explains <span class="ev" id="ev2">13 of 13<i class="u"></i></span> differing rows, the largest gap 0.004</div>
-            <div class="line dim">  for example account_id=3; account_id=6; account_id=9</div>
-            <div class="line">note: null_values ["N/A"] explains <span class="ev" id="ev3">7 of 7<i class="u"></i></span> differing rows</div>
-            <div class="line dim">  for example account_id=5; account_id=10; account_id=15</div>
+      </div>
+
+      <div id="pain" class="scene" data-layout-allow-overflow>
+        <div id="pain-label">124 changed rows: four stations, 31 days each</div>
+        <div id="pain-grid">
+          <div class="pg-row"><span class="pg-name mono">S1</span></div>
+          <div class="pg-row"><span class="pg-name mono">S2</span></div>
+          <div class="pg-row"><span class="pg-name mono">S3</span></div>
+          <div class="pg-row"><span class="pg-name mono">S4</span></div>
+        </div>
+        <div id="pain-scan"></div>
+        <div id="pain-head"><span id="pain-fix">Fix</span><br /><span id="pain-or">or corruption?</span></div>
+      </div>
+
+      <div id="veridelta" class="scene" data-layout-allow-overflow>
+        <div class="ghost" id="vd-ghost" data-layout-allow-overflow></div>
+        <div id="vd-body">
+          <div class="logo" id="vd-logo">
+            <div class="symbol"></div>
+            <div class="wordmark"></div>
+          </div>
+          <div id="vd-chips"><span>Two datasets</span><span>Their keys</span><span>Your rules</span></div>
+          <div id="vd-rule">Nothing is forgiven unless a rule says so.</div>
+        </div>
+      </div>
+
+      <div id="suggest" class="scene" data-layout-allow-overflow>
+        <div id="sg-head">One rule declared. The rest proposed, with evidence.</div>
+        <div id="sg-yaml" class="term">
+          <div class="term-title mono">&gt; cat stations.yaml</div>
+          <div class="term-body mono">
+            <div class="band" id="sg-band" style="top: 266px; height: 84px"></div>
+            <div class="tag" id="sg-tag" style="top: 267px">Declared</div>
+            <div class="tl">source:</div>
+            <div class="tl">  path: stations_idl.csv</div>
+            <div class="tl">target:</div>
+            <div class="tl">  path: stations_python.csv</div>
+            <div class="tl">primary_keys: [station, obs_date]</div>
+            <div class="tl">rules:</div>
+            <div class="tl">  - column_names: [temp]</div>
+            <div class="tl">    rename_to: temperature_c</div>
           </div>
         </div>
         <div id="sg-model">No model is called.</div>
-      </div>
-
-      <div id="s3" class="scene" data-layout-allow-overflow>
-        <div id="s3-head">Nothing is forgiven unless a rule says so.</div>
-        <div id="s3-card">
-          <div id="s3-title" class="mono">accounts_rules.yaml</div>
-          <div id="s3-code" class="mono">
-            <div class="band" id="band1" style="top: 70px; height: 88px"></div>
-            <div class="band" id="band2" style="top: 162px; height: 88px"></div>
-            <div class="band" id="band3" style="top: 254px; height: 88px"></div>
-            <div class="band" id="band4" style="top: 346px; height: 226px"></div>
-            <div class="tag" id="tag1" style="top: 68px">Case</div>
-            <div class="tag" id="tag2" style="top: 160px">Rounding</div>
-            <div class="tag" id="tag3" style="top: 252px">Blanks</div>
-            <div class="tag" id="tag4" style="top: 344px">Codes</div>
-            <div class="line">rules:</div>
-            <div class="line">  - column_names: [region]</div>
-            <div class="line">    case_insensitive: true</div>
-            <div class="line">  - column_names: [balance]</div>
-            <div class="line">    absolute_tolerance: 0.005</div>
-            <div class="line">  - column_names: [note]</div>
-            <div class="line">    null_values: ["N/A"]</div>
-            <div class="line">  - column_names: [status]</div>
-            <div class="line">    value_map:</div>
-            <div class="line">      active: A</div>
-            <div class="line">      closed: C</div>
-            <div class="line">      paused: P</div>
+        <div id="sg-out" class="term">
+          <div class="term-title mono">&gt; veridelta suggest -c stations.yaml</div>
+          <div class="term-body mono">
+            <div class="tl dim">Loading configuration from stations.yaml...</div>
+            <div class="tl dim">Comparing, and trying each rule...</div>
+            <div class="tl wrap">humidity: <span class="ev" id="ev-tol">relative_tolerance 5e-08<i class="u"></i></span>, <span class="ev" id="ev-null">null_values [-999.0]<i class="u"></i></span> explains <span class="ev" id="ev-count">124 of 124<i class="u"></i></span> differing rows, the largest gap 3e-06</div>
+            <div class="tl wrap dim">  for example station='S1', obs_date='2025-01-01'; station='S1', obs_date='2025-01-02'; station='S1', obs_date='2025-01-03'</div>
+            <div class="tl">rules:</div>
+            <div class="tl">- column_names:</div>
+            <div class="tl">  - humidity</div>
+            <div class="tl">  relative_tolerance: 5.0e-08</div>
+            <div class="tl">  null_values:</div>
+            <div class="tl">  - -999.0</div>
           </div>
         </div>
       </div>
 
-      <div id="s4" class="scene" data-layout-allow-overflow>
-        <div id="s4-head">What is left is real.</div>
-        <div id="s4-sub">CI fails the pull request on it.</div>
-        <div id="s4-card">
-          <div id="crop-head" class="crop"></div>
-          <div id="crop-values" class="crop">
-            <div id="outline"></div>
+      <div id="baseline" class="scene" data-layout-allow-overflow>
+        <div id="bl-json" class="term">
+          <div class="term-title mono">&gt; head -n 16 stations_accepted.json</div>
+          <div class="term-body mono">
+            <div class="band" id="bl-band1" style="top: 343px; height: 35px"></div>
+            <div class="band" id="bl-band2" style="top: 475px; height: 35px"></div>
+            <div class="tl">{</div>
+            <div class="tl">  "primary_keys": [</div>
+            <div class="tl">    "station",</div>
+            <div class="tl">    "obs_date"</div>
+            <div class="tl">  ],</div>
+            <div class="tl">  "added": [],</div>
+            <div class="tl">  "removed": [],</div>
+            <div class="tl">  "changed": [</div>
+            <div class="tl">    {</div>
+            <div class="tl">      "key": {</div>
+            <div class="tl">        "station": "S3",</div>
+            <div class="tl">        "obs_date": "2025-01-01"</div>
+            <div class="tl">      },</div>
+            <div class="tl">      "columns": [</div>
+            <div class="tl">        "pressure_hpa"</div>
+            <div class="tl">      ]</div>
+          </div>
+        </div>
+        <div id="bl-head">A fix made on purpose</div>
+        <div id="bl-num">31</div>
+        <div id="bl-label">rows accepted: S3's pressure, and only that</div>
+        <div id="bl-run" class="term">
+          <div class="term-title mono">&gt; veridelta run -c stations_rules.yaml --baseline stations_accepted.json</div>
+          <div class="term-body mono">
+            <div class="tl">Accepted:      31</div>
           </div>
         </div>
       </div>
 
-      <div id="sp" class="scene" data-layout-allow-overflow>
-        <div id="sp-head">Fix the export, and it passes.</div>
-        <div id="sp-row">
-          <span id="sp-label">Match rate</span>
-          <span id="sp-passed">PASSED</span>
-        </div>
-        <div id="sp-rate">100.0%</div>
-        <div id="sp-foot">
-          <span id="sp-exit" class="mono">exit code 0</span>
-          <span id="sp-note">The baseline accepts one removal, made on purpose.</span>
-        </div>
-      </div>
-
-      <div id="s5" class="scene" data-layout-allow-overflow>
-        <div id="s5-ghost"></div>
-        <div id="s5-body">
-          <div id="s5-logo">
-            <img class="symbol" src="assets/images/veridelta-symbol.png" alt="" />
-            <img class="wordmark" src="assets/images/veridelta-wordmark.png" alt="Veridelta" />
+      <div id="left" class="scene" data-layout-allow-overflow>
+        <div id="lf-head">What's left is real.</div>
+        <div id="lf-files" class="files">
+          <div class="term" id="lf-idl">
+            <div class="term-title mono">&gt; head -n 5 stations_idl.csv</div>
+            <div class="term-body mono">
+              <div class="tl">station,obs_date,temp,pressure_hpa,humidity</div>
+              <div class="tl">S1,2025-01-01,<span class="sign">-3.5<i></i></span>,1020.0,91.900002</div>
+              <div class="tl">S1,2025-01-02,<span class="sign">-5.0<i></i></span>,1021.2,-999.000000</div>
+              <div class="tl">S1,2025-01-03,<span class="sign">-5.9<i></i></span>,1022.3,88.599998</div>
+              <div class="tl">S1,2025-01-04,<span class="sign">-6.0<i></i></span>,1023.2,85.900002</div>
+            </div>
           </div>
-          <div id="s5-summary">Compare two datasets on their primary keys under rules you declare.</div>
-          <div id="s5-install" class="mono">pip install veridelta</div>
-          <div id="s5-url">veridelta.github.io/veridelta</div>
+          <div class="term" id="lf-py">
+            <div class="term-title mono">&gt; head -n 5 stations_python.csv</div>
+            <div class="term-body mono">
+              <div class="tl">station,obs_date,temperature_c,pressure_hpa,humidity</div>
+              <div class="tl">S1,2025-01-01,<span class="sign">3.5<i></i></span>,1020.0,91.9</div>
+              <div class="tl">S1,2025-01-02,<span class="sign">5.0<i></i></span>,1021.2,</div>
+              <div class="tl">S1,2025-01-03,<span class="sign">5.9<i></i></span>,1022.3,88.6</div>
+              <div class="tl">S1,2025-01-04,<span class="sign">6.0<i></i></span>,1023.2,85.9</div>
+            </div>
+          </div>
+        </div>
+        <div id="lf-run" class="term">
+          <div class="term-title mono">&gt; veridelta run -c stations_rules.yaml --baseline stations_accepted.json</div>
+          <div class="term-body mono">
+            <div class="tl">Status:        FAILED</div>
+            <div class="tl">Changed:       4</div>
+            <div class="tl">- temperature_c: 4 mismatches</div>
+            <div class="tl dim">&gt; echo "exit code: $?"</div>
+            <div class="tl">exit code: 1</div>
+          </div>
+        </div>
+        <div id="lf-failed" class="badge orange">FAILED</div>
+      </div>
+
+      <div id="pass" class="scene" data-layout-allow-overflow>
+        <div id="ps-cmd" class="term">
+          <div class="tl mono">&gt; veridelta run -c stations_fixed.yaml --baseline stations_accepted.json</div>
+        </div>
+        <div id="ps-head">
+          <span id="ps-label">Match rate</span>
+          <span id="ps-passed" class="badge blue">PASSED</span>
+        </div>
+        <div id="ps-rate">100.0%</div>
+        <div id="ps-foot">
+          <span id="ps-exit" class="mono">exit code 0</span>
+          <span id="ps-note">Accepted: 31, the pressure fix made on purpose.</span>
         </div>
       </div>
 
-      <!-- Music: Sascha Ende, "Happy Beats / Business Moves, Vol. 12", ende.app, CC BY 4.0. -->
-      <audio
-        id="music"
-        data-start="0"
-        data-duration="30"
-        data-track-index="10"
-        src="assets/music/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3"
-        data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0.32},{"t":28.5,"v":0.32},{"t":30,"v":0}]}]}'
-      ></audio>
+      <div id="end" class="scene" data-layout-allow-overflow>
+        <div class="ghost" id="end-ghost" data-layout-allow-overflow></div>
+        <div id="end-body">
+          <div class="logo" id="end-logo">
+            <div class="symbol"></div>
+            <div class="wordmark"></div>
+          </div>
+          <div id="end-summary">Compare two datasets on their primary keys under rules you declare.</div>
+          <div id="end-install" class="mono">pip install veridelta</div>
+          <div id="end-url">veridelta.github.io/veridelta</div>
+        </div>
+      </div>
+
+      <!-- narration: written by scripts/brag-timing.ts; edit brag/narration.json instead -->
+      <!-- Music: Sascha Ende, "Happy Beats / Business Moves, Vol. 1", ende.app, CC BY 4.0. -->
+      <audio id="music" data-start="0" data-duration="85.244" data-media-start="8.742" data-track-index="10" src="assets/music/happy-beats-business-moves-vol-1-by-ende-dot-app.mp3" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0.18},{"t":38.028,"v":0.18},{"t":38.328,"v":0.02},{"t":39.258,"v":0.02},{"t":39.278,"v":0.4},{"t":39.878,"v":0.4},{"t":40.028,"v":0.18},{"t":81.044,"v":0.18},{"t":81.844,"v":0.5},{"t":83.744,"v":0.5},{"t":85.244,"v":0}]}]}'></audio>
       <!-- Sound effects: Kenney, CC0. -->
-      <audio id="sfx-rate" data-start="0.52" data-duration="0.18" data-track-index="11" data-volume="0.7" src="assets/sfx/impact/impactSoft_medium_001.ogg"></audio>
-      <audio id="sfx-row1" data-start="4.37" data-duration="0.6" data-track-index="12" data-volume="0.45" src="assets/sfx/casino/card-slide-1.ogg"></audio>
-      <audio id="sfx-row4" data-start="5.98" data-duration="0.6" data-track-index="13" data-volume="0.45" src="assets/sfx/casino/card-slide-1.ogg"></audio>
-      <audio id="sfx-suggest" data-start="8.70" data-duration="0.14" data-track-index="14" data-volume="0.6" src="assets/sfx/impact/impactSoft_medium_002.ogg"></audio>
-      <audio id="sfx-rules" data-start="13.07" data-duration="0.18" data-track-index="15" data-volume="0.55" src="assets/sfx/impact/impactSoft_medium_001.ogg"></audio>
-      <audio id="sfx-comment" data-start="17.43" data-duration="0.14" data-track-index="16" data-volume="0.6" src="assets/sfx/impact/impactSoft_medium_003.ogg"></audio>
-      <audio id="sfx-pass" data-start="21.80" data-duration="0.14" data-track-index="17" data-volume="0.65" src="assets/sfx/impact/impactSoft_medium_002.ogg"></audio>
-      <audio id="sfx-exit" data-start="22.35" data-duration="0.12" data-track-index="18" data-volume="0.45" src="assets/sfx/interface/bong_001.ogg"></audio>
-      <audio id="sfx-logo" data-start="25.61" data-duration="1.48" data-track-index="19" data-volume="0.55" src="assets/sfx/impact/impactBell_heavy_000.ogg"></audio>
-      <audio id="sfx-install" data-start="26.72" data-duration="0.12" data-track-index="20" data-volume="0.5" src="assets/sfx/interface/bong_001.ogg"></audio>
+      <audio id="sfx-1" data-start="9.63" data-duration="0.183" data-track-index="11" data-volume="0.6" src="assets/sfx/impact/impactSoft_medium_001.ogg"></audio>
+      <audio id="sfx-2" data-start="12.104" data-duration="0.601" data-track-index="12" data-volume="0.35" src="assets/sfx/casino/card-slide-1.ogg"></audio>
+      <audio id="sfx-3" data-start="17.568" data-duration="0.601" data-track-index="13" data-volume="0.35" src="assets/sfx/casino/card-slide-1.ogg"></audio>
+      <audio id="sfx-4" data-start="21.608" data-duration="0.601" data-track-index="14" data-volume="0.35" src="assets/sfx/casino/card-slide-1.ogg"></audio>
+      <audio id="sfx-5" data-start="26.176" data-duration="0.601" data-track-index="11" data-volume="0.35" src="assets/sfx/casino/card-slide-1.ogg"></audio>
+      <audio id="sfx-6" data-start="37.5" data-duration="0.14" data-track-index="12" data-volume="0.6" src="assets/sfx/impact/impactSoft_medium_003.ogg"></audio>
+      <audio id="sfx-7" data-start="39.278" data-duration="1.48" data-track-index="13" data-volume="0.5" src="assets/sfx/impact/impactBell_heavy_000.ogg"></audio>
+      <audio id="sfx-8" data-start="56.306" data-duration="0.135" data-track-index="14" data-volume="0.5" src="assets/sfx/impact/impactSoft_medium_002.ogg"></audio>
+      <audio id="sfx-9" data-start="62.613" data-duration="0.123" data-track-index="11" data-volume="0.45" src="assets/sfx/interface/bong_001.ogg"></audio>
+      <audio id="sfx-10" data-start="70.544" data-duration="0.183" data-track-index="12" data-volume="0.55" src="assets/sfx/impact/impactSoft_medium_001.ogg"></audio>
+      <audio id="sfx-11" data-start="75.819" data-duration="0.135" data-track-index="13" data-volume="0.6" src="assets/sfx/impact/impactSoft_medium_002.ogg"></audio>
+      <audio id="sfx-12" data-start="76.326" data-duration="0.123" data-track-index="14" data-volume="0.45" src="assets/sfx/interface/bong_001.ogg"></audio>
+      <audio id="sfx-13" data-start="77.174" data-duration="0.14" data-track-index="11" data-volume="0.5" src="assets/sfx/impact/impactSoft_medium_003.ogg"></audio>
+      <audio id="voice-hook" data-start="0.6" data-duration="3.384" data-track-index="30" data-volume="1" src="assets/voice/hook-a8ca64f0f1f5.mp3"></audio>
+      <audio id="voice-parity" data-start="4.184" data-duration="2.784" data-track-index="31" data-volume="1" src="assets/voice/parity-92ad585186c7.mp3"></audio>
+      <audio id="voice-run" data-start="7.868" data-duration="3.336" data-track-index="30" data-volume="1" src="assets/voice/run-3b609c8ab0e7.mp3"></audio>
+      <audio id="voice-floats" data-start="12.104" data-duration="3.312" data-track-index="31" data-volume="1" src="assets/voice/floats-ca1bc5c59833.mp3"></audio>
+      <audio id="voice-noise" data-start="15.616" data-duration="1.752" data-track-index="30" data-volume="1" src="assets/voice/noise-3657759418a6.mp3"></audio>
+      <audio id="voice-fill" data-start="17.568" data-duration="3.84" data-track-index="31" data-volume="1" src="assets/voice/fill-f8f188c63fca.mp3"></audio>
+      <audio id="voice-rename" data-start="21.608" data-duration="4.368" data-track-index="30" data-volume="1" src="assets/voice/rename-bf6c01bcea06.mp3"></audio>
+      <audio id="voice-fix" data-start="26.176" data-duration="5.424" data-track-index="31" data-volume="1" src="assets/voice/fix-ae200e125ccf.mp3"></audio>
+      <audio id="voice-doubt" data-start="32.5" data-duration="2.736" data-track-index="30" data-volume="1" src="assets/voice/doubt-9649cdaf99f0.mp3"></audio>
+      <audio id="voice-question" data-start="35.436" data-duration="2.592" data-track-index="31" data-volume="1" src="assets/voice/question-1edbb55d5ed3.mp3"></audio>
+      <audio id="voice-reveal" data-start="40.028" data-duration="3.672" data-track-index="30" data-volume="1" src="assets/voice/reveal-7e4e44fad997.mp3"></audio>
+      <audio id="voice-forgiven" data-start="43.9" data-duration="1.968" data-track-index="31" data-volume="1" src="assets/voice/forgiven-2b696f1fbf96.mp3"></audio>
+      <audio id="voice-declare" data-start="47.168" data-duration="4.464" data-track-index="30" data-volume="1" src="assets/voice/declare-aac1416f2036.mp3"></audio>
+      <audio id="voice-evidence" data-start="51.832" data-duration="5.88" data-track-index="31" data-volume="1" src="assets/voice/evidence-bee8006cdb1e.mp3"></audio>
+      <audio id="voice-model" data-start="57.912" data-duration="0.936" data-track-index="30" data-volume="1" src="assets/voice/model-70a63138804f.mp3"></audio>
+      <audio id="voice-baseline" data-start="60.148" data-duration="4.248" data-track-index="31" data-volume="1" src="assets/voice/baseline-e1d9b9deacf6.mp3"></audio>
+      <audio id="voice-left" data-start="65.296" data-duration="3.552" data-track-index="30" data-volume="1" src="assets/voice/left-076993f510fc.mp3"></audio>
+      <audio id="voice-allalong" data-start="69.048" data-duration="1.296" data-track-index="31" data-volume="1" src="assets/voice/allalong-fc576750f027.mp3"></audio>
+      <audio id="voice-fails" data-start="70.544" data-duration="2.616" data-track-index="30" data-volume="1" src="assets/voice/fails-0cc307d261eb.mp3"></audio>
+      <audio id="voice-passes" data-start="74.36" data-duration="2.664" data-track-index="31" data-volume="1" src="assets/voice/passes-f4aabf6536c5.mp3"></audio>
+      <audio id="voice-end" data-start="77.924" data-duration="3.12" data-track-index="30" data-volume="1" src="assets/voice/end-30c3666603f4.mp3"></audio>
+      <div id="captions">
+        <div class="caption" id="caption-hook"><span>Maya is moving her weather station pipeline from IDL to Python.</span></div>
+        <div class="caption" id="caption-parity"><span>The new output has to match the old. One to one.</span></div>
+        <div class="caption" id="caption-run"><span>She runs both and compares. Every single row differs.</span></div>
+        <div class="caption" id="caption-floats"><span>IDL works in 32-bit floats. Python works in 64.</span></div>
+        <div class="caption" id="caption-noise"><span>So the same humidity comes out two ways.</span></div>
+        <div class="caption" id="caption-fill"><span>IDL wrote minus 999 for a missing reading. Python writes nothing.</span></div>
+        <div class="caption" id="caption-rename"><span>She renamed temp to temperature_c, so a match by name quietly leaves it out.</span></div>
+        <div class="caption" id="caption-fix"><span>And she fixed a real IDL bug. Station S3 had the wrong elevation, so its pressure changed on purpose.</span></div>
+        <div class="caption" id="caption-doubt"><span>Somewhere in all of that, the port has a bug of its own.</span></div>
+        <div class="caption" id="caption-question"><span>Which differences are fixes, and which are corruption?</span></div>
+        <div class="caption" id="caption-reveal"><span>Veridelta compares two datasets on their keys, under rules you declare.</span></div>
+        <div class="caption" id="caption-forgiven"><span>Nothing is forgiven unless a rule says so.</span></div>
+        <div class="caption" id="caption-declare"><span>Maya declares the rename. Then veridelta suggest reads the data and proposes the rest.</span></div>
+        <div class="caption" id="caption-evidence"><span>One rule for humidity: a tiny tolerance, and minus 999 as missing. It explains all 124 rows.</span></div>
+        <div class="caption" id="caption-model"><span>No model is called.</span></div>
+        <div class="caption" id="caption-baseline"><span>The pressure fix was on purpose, so a baseline accepts those 31 rows. Only those.</span></div>
+        <div class="caption" id="caption-left"><span>What's left is the real bug. Four cold readings lost their minus sign.</span></div>
+        <div class="caption" id="caption-allalong"><span>They were in the first rows all along.</span></div>
+        <div class="caption" id="caption-fails"><span>The run fails, and in CI, so does the pull request.</span></div>
+        <div class="caption" id="caption-passes"><span>She fixes the port. It passes. One to one.</span></div>
+        <div class="caption" id="caption-end"><span>Veridelta. Compare two datasets under rules you declare.</span></div>
+      </div>
+      <!-- /narration -->
     </div>
 
     <script>
+      // Every time comes from assets/timing.js, which scripts/brag-timing.ts writes from the
+      // voice's lengths: a scene's picture moves as it enters, and its words land as they are said.
+      const T = window.TIMING;
       const tl = gsap.timeline({ paused: true });
+      const line = (id) => T.lines[id];
+      const scene = (name) => T.scenes[name];
+      // When a word of a line is spoken, estimated from where it falls in the line's text, as
+      // scripts/brag-timing.ts places the sound effects.
+      const word = (id, text) => {
+        const { start, end, text: whole } = line(id);
+        const index = whole.indexOf(text);
+        if (index < 0) {
+          throw new Error(`The line "${id}" has no "${text}".`);
+        }
+        return start + (index / whole.length) * (end - start);
+      };
+      const push = (from, to, at) => {
+        tl.to(from, { x: -1920, duration: 0.5, ease: "power3.inOut" }, at);
+        tl.fromTo(to, { x: 1920, opacity: 1 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.inOut" }, at);
+      };
+      // The glow is orange while something is wrong, blue for the answer, and both on the end card.
+      const glow = (orange, blue, at) => {
+        tl.to("#glow-orange", { opacity: orange, duration: 0.6, ease: "sine.inOut" }, at);
+        tl.to("#glow-blue", { opacity: blue, duration: 0.6, ease: "sine.inOut" }, at);
+      };
+      const rise = (target, at, from = { y: 30 }) => {
+        tl.fromTo(target, { ...from, opacity: 0 }, { x: 0, y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, at);
+      };
+
+      // The pain grid: one cell for each of the 124 changed rows, a station to a row.
+      document.querySelectorAll(".pg-row").forEach((row) => {
+        for (let day = 0; day < 31; day++) {
+          const cell = document.createElement("i");
+          cell.className = "cell";
+          row.appendChild(cell);
+        }
+      });
 
       // Ambient: the grid drifts the whole time.
-      tl.fromTo("#grid", { x: 0, y: 0 }, { x: -110, y: -55, duration: 30, ease: "none" }, 0);
+      tl.fromTo("#grid", { x: 0, y: 0 }, { x: -260, y: -130, duration: T.duration, ease: "none" }, 0);
 
-      // Audio-reactive: the glow breathes with the bed's level, sampled once a frame.
+      // Audio-reactive: the glow breathes with the music's level, sampled once a frame.
       const levels = window.AUDIO_LEVELS.levels;
       for (let f = 0; f < levels.length; f++) {
-        tl.call(
-          (level) => {
-            gsap.set(".glow", { scale: 0.94 + level * 0.1 });
-            gsap.set("#bg", { "--level": level });
-          },
-          [levels[f]],
-          f / window.AUDIO_LEVELS.fps,
-        );
+        tl.call((level) => gsap.set(".glow", { scale: 0.94 + level * 0.1 }), [levels[f]], f / window.AUDIO_LEVELS.fps);
       }
 
-      // Scene 1, the alarm.
-      tl.fromTo(".file, #s1-vs", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out", stagger: 0.06 }, 0.04);
-      tl.fromTo("#s1-head", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, 0.26);
-      // beat-locked: 0.56s
-      tl.fromTo("#s1-rate", { scale: 1.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power4.out" }, 0.4);
-      tl.to("#s1-rate", { scale: 1.035, duration: 2.3, ease: "none" }, 0.75);
-      // beat-grid: 1.64s
-      tl.fromTo("#s1-count", { y: 34, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "back.out(1.6)" }, 1.5);
-
-      // Scene 1 to 2: push slide.
-      const T1 = 3.05;
-      tl.to("#s1", { x: -1920, duration: 0.45, ease: "power3.inOut" }, T1);
-      tl.fromTo("#s2", { x: 1920, opacity: 1 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.inOut" }, T1);
-
-      // Scene 2, the noise.
-      tl.fromTo("#s2-head", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out" }, T1 + 0.05);
-      tl.fromTo(".s2-col", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, T1 + 0.3);
-      // beat-grid: rows at 4.39, 4.91, 5.34, 6.00s, then all four hold for 1.45s
-      [4.39, 4.91, 5.34, 6.0].forEach((at, index) => {
-        const row = `#r${index + 1}`;
-        tl.fromTo(`${row} .s2-cell`, { x: -48, opacity: 0 }, { x: 0, opacity: 1, duration: 0.32, ease: "power3.out", stagger: 0.03 }, at - 0.1);
-        tl.fromTo(`${row} .s2-new span`, { scale: 1.35 }, { scale: 1, duration: 0.35, ease: "back.out(2)" }, at + 0.06);
+      // The captions: each line shows as it is said, and stays until the next one when they are close.
+      const ids = Object.keys(T.lines);
+      ids.forEach((id, index) => {
+        const { start, end } = line(id);
+        const next = T.lines[ids[index + 1]];
+        const hide = next && next.start - end < 0.6 ? next.start - 0.08 : end + 0.35;
+        tl.fromTo(`#caption-${id}`, { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.14, ease: "power2.out" }, start - 0.08);
+        tl.to(`#caption-${id}`, { opacity: 0, duration: 0.1, ease: "power1.in" }, hide - 0.1);
       });
 
-      // Scene 2 to suggest: push slide, and the glow turns blue for the answer.
-      const T2 = 7.45;
-      tl.to("#s2", { x: -1920, duration: 0.45, ease: "power3.inOut" }, T2);
-      tl.fromTo("#sg", { x: 1920, opacity: 1 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.inOut" }, T2);
-      tl.to("#glow-orange", { opacity: 0, duration: 0.6, ease: "sine.inOut" }, T2);
-      tl.to("#glow-blue", { opacity: 1, duration: 0.6, ease: "sine.inOut" }, T2);
+      // The hook: the pipeline, then the first rows of both files, which have to match.
+      rise("#hook-kicker", 0.1);
+      tl.fromTo("#hook-title span", { x: -50, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45, ease: "expo.out", stagger: 0.14 }, 0.3);
+      tl.fromTo("#hook-files .term", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out", stagger: 0.14 }, word("hook", "pipeline"));
+      tl.fromTo("#hook-match", { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(2)" }, word("parity", "match") - 0.1);
+      rise("#hook-note", word("parity", "One to one"));
 
-      // Suggest: the logo, then the evidence, each count underlined on the beat.
-      tl.fromTo("#sg-logo", { y: -30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, T2 + 0.05);
-      tl.fromTo("#sg-card", { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, T2 + 0.15);
-      // beat-locked: 8.74s
-      tl.fromTo("#sg-head", { y: 44, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power4.out" }, 8.44);
-      // beat-grid: counts at 9.29, 9.83, 10.37s
-      [9.29, 9.83, 10.37].forEach((at, index) => {
-        tl.fromTo(`#ev${index + 1} .u`, { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power3.out" }, at - 0.05);
+      // The first run: every row differs.
+      const run = scene("run").enter;
+      push("#hook", "#run", run);
+      rise("#run-cmd", run + 0.3, { y: -24 });
+      rise("#run-head", line("run").start + 0.2, { x: -40 });
+      const every = word("run", "Every");
+      tl.fromTo("#run-rate", { scale: 1.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power4.out" }, every - 0.12);
+      tl.to("#run-rate", { scale: 1.035, duration: 3, ease: "none" }, every + 0.2);
+      tl.fromTo("#run-count", { y: 34, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "back.out(1.6)" }, word("run", "row"));
+      rise("#run-drift", word("run", "differs"), { x: 80 });
+
+      // The questions: each kind of difference, and what it asks.
+      const questions = scene("questions").enter;
+      push("#run", "#questions", questions);
+      tl.fromTo("#q-head", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out" }, questions + 0.05);
+      tl.fromTo(".q-col", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, questions + 0.3);
+      [
+        ["q1", line("floats").start, word("noise", "two ways")],
+        ["q2", line("fill").start, word("fill", "Python")],
+        ["q3", line("rename").start, word("rename", "quietly")],
+        ["q4", line("fix").start, word("fix", "on purpose")],
+      ].forEach(([row, at, ask]) => {
+        tl.fromTo(`#${row} .q-cell:not(.q-ask)`, { x: -48, opacity: 0 }, { x: 0, opacity: 1, duration: 0.32, ease: "power3.out", stagger: 0.04 }, at - 0.12);
+        tl.fromTo(`#${row} .q-ask`, { opacity: 0 }, { opacity: 1, duration: 0.01 }, at - 0.12);
+        tl.fromTo(`#${row} .q-new span`, { scale: 1.35 }, { scale: 1, duration: 0.35, ease: "back.out(2)" }, at + 0.1);
+        tl.fromTo(`#${row} .chip`, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }, ask);
       });
-      // beat-grid: 10.93s, then it holds for 1.4s
-      tl.fromTo("#sg-model", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 10.85);
 
-      // Suggest to the rules: push slide.
-      const T3 = 12.35;
-      tl.to("#sg", { x: -1920, duration: 0.45, ease: "power3.inOut" }, T3);
-      tl.fromTo("#s3", { x: 1920, opacity: 1 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.inOut" }, T3);
+      // The pain: every changed row, a bug somewhere among them, and the question.
+      const pain = scene("pain").enter;
+      push("#questions", "#pain", pain);
+      rise("#pain-label", pain + 0.3);
+      tl.fromTo(".pg-name", { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.05 }, pain + 0.3);
+      tl.fromTo(".cell", { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.25, ease: "power2.out", stagger: 0.006 }, pain + 0.4);
+      tl.fromTo("#pain-scan", { x: 0, opacity: 0 }, { x: 1540, opacity: 1, duration: 2.2, ease: "sine.inOut" }, line("doubt").start);
+      tl.to("#pain-scan", { opacity: 0, duration: 0.3 }, line("doubt").start + 2.0);
+      tl.fromTo("#pain-fix", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power4.out" }, word("question", "fixes") - 0.1);
+      tl.fromTo("#pain-or", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power4.out" }, word("question", "corruption") - 0.1);
+      tl.to(".cell", { opacity: 0.35, duration: 0.12, yoyo: true, repeat: 1, ease: "none", immediateRender: false }, word("question", "corruption"));
 
-      // The rules.
-      tl.fromTo("#s3-card", { x: 140, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, T3 + 0.1);
-      // beat-locked: 13.11s
-      tl.fromTo("#s3-head", { y: 44, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power4.out" }, 12.81);
-      // beat-grid: rules lit at 13.64, 14.20, 14.73, 15.28s, then all four hold
-      [13.64, 14.2, 14.73, 15.28].forEach((at, index) => {
-        tl.fromTo(`#band${index + 1}`, { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, at - 0.08);
-        tl.fromTo(`#tag${index + 1}`, { x: 30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.28, ease: "back.out(1.8)" }, at);
+      // Veridelta, on the music's drop.
+      const veridelta = scene("veridelta").enter;
+      tl.to("#pain", { scale: 1.08, opacity: 0, filter: "blur(12px)", duration: 0.3, ease: "power2.in" }, veridelta - 0.25);
+      tl.fromTo("#veridelta", { scale: 0.94, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "power3.out" }, veridelta);
+      glow(0, 1, veridelta);
+      tl.fromTo("#vd-ghost", { scale: 0.9, opacity: 0 }, { scale: 1, opacity: 0.12, duration: 1.2, ease: "sine.out" }, veridelta);
+      tl.to("#vd-ghost", { rotation: -4, duration: 6, ease: "none" }, veridelta + 1.2);
+      tl.fromTo("#vd-logo .symbol", { scale: 0.6, rotation: -10, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.52, ease: "back.out(1.6)" }, veridelta);
+      tl.fromTo("#vd-logo .wordmark", { x: -36, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, veridelta + 0.12);
+      ["two datasets", "keys", "rules you declare"].forEach((text, index) => {
+        tl.fromTo(`#vd-chips span:nth-child(${index + 1})`, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "back.out(1.8)" }, word("reveal", text) - 0.05);
       });
+      rise("#vd-rule", line("forgiven").start - 0.05);
 
-      // The rules to what is left: push slide, and the glow turns orange for what is wrong.
-      const T4 = 16.2;
-      tl.to("#s3", { x: -1920, duration: 0.45, ease: "power3.inOut" }, T4);
-      tl.fromTo("#s4", { x: 1920, opacity: 1 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.inOut" }, T4);
-      tl.to("#glow-blue", { opacity: 0, duration: 0.6, ease: "sine.inOut" }, T4);
-      tl.to("#glow-orange", { opacity: 1, duration: 0.6, ease: "sine.inOut" }, T4);
+      // Suggest: the rename declared, then the rest proposed, each count underlined as it is said.
+      const suggest = scene("suggest").enter;
+      push("#veridelta", "#suggest", suggest);
+      tl.fromTo("#sg-head", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out" }, suggest + 0.05);
+      rise("#sg-yaml", suggest + 0.15, { y: 50 });
+      tl.fromTo("#sg-band", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.35, ease: "power3.out" }, word("declare", "rename") - 0.1);
+      tl.fromTo("#sg-tag", { x: 30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.28, ease: "back.out(1.8)" }, word("declare", "rename"));
+      rise("#sg-out", word("declare", "Then"), { x: 80 });
+      tl.fromTo("#sg-out .tl", { opacity: 0 }, { opacity: 1, duration: 0.2, stagger: 0.12 }, word("declare", "suggest"));
+      [
+        ["#ev-tol", "tiny"],
+        ["#ev-null", "minus 999"],
+        ["#ev-count", "explains"],
+      ].forEach(([target, text]) => {
+        tl.fromTo(`${target} .u`, { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power3.out" }, word("evidence", text));
+      });
+      rise("#sg-model", line("model").start - 0.05, { x: -40 });
 
-      // What is left.
-      tl.fromTo("#s4-head", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out" }, T4 + 0.05);
-      // beat-locked: 17.47s
-      tl.fromTo("#s4-card", { x: 140, opacity: 0 }, { x: 0, opacity: 1, duration: 0.35, ease: "power4.out" }, 17.12);
-      tl.to("#s4-card", { scale: 1.025, duration: 3.0, ease: "none" }, 17.47);
-      // beat-grid: 18.02s
-      tl.fromTo("#outline", { scale: 1.08, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, 17.98);
-      tl.fromTo("#s4-sub", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 18.02);
+      // The baseline: the fix made on purpose, accepted row by row.
+      const baseline = scene("baseline").enter;
+      push("#suggest", "#baseline", baseline);
+      rise("#bl-json", baseline + 0.15, { x: -60 });
+      tl.fromTo("#bl-head", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out" }, baseline + 0.1);
+      tl.fromTo("#bl-band1", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, word("baseline", "pressure fix"));
+      tl.fromTo("#bl-band2", { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, word("baseline", "pressure fix") + 0.2);
+      tl.fromTo("#bl-num", { scale: 1.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power4.out" }, word("baseline", "accepts") - 0.05);
+      rise("#bl-label", word("baseline", "31"), { x: -30 });
+      rise("#bl-run", word("baseline", "Only those"), { y: 40 });
 
-      // What is left to the pass: push slide, and the glow turns blue again.
-      const T5 = 20.55;
-      tl.to("#s4", { x: -1920, duration: 0.45, ease: "power3.inOut" }, T5);
-      tl.fromTo("#sp", { x: 1920, opacity: 1 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.inOut" }, T5);
-      tl.to("#glow-orange", { opacity: 0, duration: 0.6, ease: "sine.inOut" }, T5);
-      tl.to("#glow-blue", { opacity: 1, duration: 0.6, ease: "sine.inOut" }, T5);
+      // What is left: the four lost minus signs, in the rows from the start.
+      const left = scene("left").enter;
+      push("#baseline", "#left", left);
+      glow(1, 0, left);
+      tl.fromTo("#lf-head", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out" }, left + 0.05);
+      tl.fromTo("#lf-files .term", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out", stagger: 0.12 }, left + 0.2);
+      tl.fromTo("#lf-py .sign i", { scale: 1.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power3.out", stagger: 0.12 }, word("left", "Four cold"));
+      tl.fromTo("#lf-idl .sign i", { scale: 1.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power3.out", stagger: 0.1 }, word("left", "minus sign"));
+      tl.to("#lf-files", { scale: 1.02, duration: 0.25, yoyo: true, repeat: 1, ease: "sine.inOut" }, word("allalong", "first rows"));
+      rise("#lf-run", line("fails").start - 0.1, { y: 50 });
+      tl.fromTo("#lf-failed", { scale: 1.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power4.out" }, line("fails").start);
 
-      // The pass, the mirror of the alarm.
-      tl.fromTo("#sp-head", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out" }, T5 + 0.05);
-      tl.fromTo("#sp-row", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, 21.3);
-      // beat-grid: 21.84s
-      tl.fromTo("#sp-rate", { scale: 1.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power4.out" }, 21.68);
-      tl.to("#sp-rate", { scale: 1.03, duration: 2.8, ease: "none" }, 22.0);
-      // beat-locked: 22.37s
-      tl.fromTo("#sp-exit", { scale: 0.88, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.26, ease: "back.out(2)" }, 22.11);
-      tl.fromTo("#sp-note", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 22.2);
+      // The pass, the mirror of the first run.
+      const pass = scene("pass").enter;
+      push("#left", "#pass", pass);
+      glow(0, 1, pass);
+      rise("#ps-cmd", pass + 0.3, { y: -24 });
+      rise("#ps-head", line("passes").start, { x: -40 });
+      const passes = word("passes", "passes");
+      tl.fromTo("#ps-rate", { scale: 1.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power4.out" }, passes - 0.12);
+      tl.to("#ps-rate", { scale: 1.03, duration: 3, ease: "none" }, passes + 0.2);
+      tl.fromTo("#ps-exit", { scale: 0.88, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.26, ease: "back.out(2)" }, word("passes", "One to one") - 0.05);
+      rise("#ps-note", word("passes", "One to one") + 0.1, { x: -30 });
 
-      // The pass to Veridelta: blur crossfade, the wind-down.
-      const T6 = 24.85;
-      tl.fromTo("#sp", { filter: "blur(0px)" }, { opacity: 0, filter: "blur(14px)", duration: 0.6, ease: "sine.inOut", immediateRender: false }, T6);
-      tl.fromTo("#s5", { opacity: 0, filter: "blur(14px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.6, ease: "sine.inOut" }, T6);
-      tl.to("#glow-orange", { opacity: 0.6, duration: 0.6, ease: "sine.inOut" }, T6);
-      tl.to("#glow-blue", { opacity: 0.6, duration: 0.6, ease: "sine.inOut" }, T6);
-
-      // Veridelta.
-      tl.fromTo("#s5-ghost", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 0.12, duration: 1.2, ease: "sine.out" }, T6);
-      tl.to("#s5-ghost", { rotation: -4, duration: 4, ease: "none" }, 25.7);
-      // beat-locked: 25.65s
-      tl.fromTo("#s5-logo .symbol", { scale: 0.6, rotation: -10, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.52, ease: "back.out(1.6)" }, 25.13);
-      tl.fromTo("#s5-logo .wordmark", { x: -36, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 25.25);
-      tl.fromTo("#s5-summary", { y: 34, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 25.8);
-      // beat-locked: 26.74s
-      tl.fromTo("#s5-install", { scale: 0.88, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.26, ease: "back.out(2)" }, 26.48);
-      // beat-locked: 27.30s
-      tl.fromTo("#s5-url", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 27.0);
+      // The end card.
+      const end = scene("end").enter;
+      tl.fromTo("#pass", { filter: "blur(0px)" }, { opacity: 0, filter: "blur(14px)", duration: 0.6, ease: "sine.inOut", immediateRender: false }, end);
+      tl.fromTo("#end", { opacity: 0, filter: "blur(14px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.6, ease: "sine.inOut" }, end);
+      tl.to("#source", { opacity: 0, duration: 0.4 }, end);
+      glow(0.6, 0.6, end);
+      tl.fromTo("#end-ghost", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 0.12, duration: 1.2, ease: "sine.out" }, end);
+      tl.to("#end-ghost", { rotation: -4, duration: T.duration - end, ease: "none" }, end + 1.2);
+      tl.fromTo("#end-logo .symbol", { scale: 0.6, rotation: -10, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.52, ease: "back.out(1.6)" }, end + 0.1);
+      tl.fromTo("#end-logo .wordmark", { x: -36, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, end + 0.22);
+      rise("#end-summary", word("end", "Compare"));
+      tl.fromTo("#end-install", { scale: 0.88, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.26, ease: "back.out(2)" }, line("end").end + 0.3);
+      rise("#end-url", line("end").end + 0.8, { y: 20 });
 
       window.__timelines["main"] = tl;
     </script>

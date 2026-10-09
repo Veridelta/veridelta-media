@@ -1,3 +1,3 @@
-A rewritten export matched the old one 0.0%. Most of it was noise: case, codes, rounding, blanks. Declare those as rules in Veridelta, and what is left is real. Here, account 17's region, and CI fails the pull request on it.
+Porting a weather pipeline from IDL to Python, every row differed. Float noise, a fill value, a renamed column, a fix made on purpose, and one new bug. Veridelta sorts them under rules you declare, and only the new bug fails the run.
 
 https://veridelta.github.io/veridelta/
