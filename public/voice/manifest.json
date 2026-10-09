@@ -154,59 +154,59 @@
     },
     {
       "text": "The HTML report shows that row side by side.",
-      "file": "25c552fb30e126d4.mp3",
-      "seconds": 3.12,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "8da737061f48fc4bdeb5bf0d6a8c13ad152a098e000eb334a34d151ffca6b259"
+      "file": "70d87dd432624f2d.mp3",
+      "seconds": 2.928,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "aebb6ade59fe77628bfa23b458881ab17146f5cc68aacc906eaa669ec926245f"
     },
     {
       "text": "Account 17 moved from south to east. That is the real defect.",
-      "file": "d576a3c6f2f97dd4.mp3",
-      "seconds": 4.224,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "f9c48fd0c7ce50431a560a35722dfcff5790e7c4a9919e54039fa7fd3ff1ed25"
+      "file": "24bc09069d18f0b5.mp3",
+      "seconds": 4.32,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "aa7a03ebd602be619eff44f56f69d65943ef4a2d7d27784487681a6be9cda0d9"
     },
     {
       "text": "Veridelta is early, at version 0.33.",
-      "file": "236c68c4ab6313ef.mp3",
-      "seconds": 3.168,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "412de30d0fa97ef4be7151e73760f1a40491ce366d1285efa8fe500b33d00592"
+      "file": "601dae97e326de9b.mp3",
+      "seconds": 3.36,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "7a4607126788c83b6c57c777afdd07fac8ec6e56fd90b2505418b12220ea503c"
     },
     {
       "text": "It is tested on generated data, with drift seeded on purpose.",
-      "file": "d7806da8c49135dd.mp3",
-      "seconds": 3.768,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "c545a20847499a4531e01be2c2c4a156d50124b821885dd6e8315e1cc090ec33"
+      "file": "dc021eeb45a628e2.mp3",
+      "seconds": 3.504,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "9fe39ed1372ad030a7fd49b793062dd32a626fd863555fa58e0a51e2e5f2b82a"
     },
     {
       "text": "It has not yet been run by other users, or in a live cloud warehouse.",
-      "file": "b7808b1341e476cc.mp3",
-      "seconds": 4.056,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "6c443682559b7f237075167387a4efc4161f525fb704b859c9b8d7c67a1c541a"
+      "file": "be69a79a11e8f426.mp3",
+      "seconds": 3.816,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "bbd855c6a22235ca45dfd422ecc47381aecf143d776e853970dde15a1d85db00"
     },
     {
       "text": "Feedback is welcome.",
-      "file": "dfdb54a2cdc34418.mp3",
-      "seconds": 1.272,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "9142540245885d0a7724b9aba144bb5f9b8f4fd0acbff2931100cc791513ea33"
+      "file": "54de614a154aebb2.mp3",
+      "seconds": 0.864,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "71aba2ea4b2af73f11dfee9b40e4f71fc71d5e310c08d0141f1640a1bf7ae7f2"
     },
     {
       "text": "Try it with pip install veridelta.",
-      "file": "68369ab5e8831991.mp3",
-      "seconds": 2.04,
-      "engine": "espeak",
-      "voice": "en-us",
-      "sha256": "62344c069a0d5bc0127c5d56854d5ba7d24b25e96b83b7ff8e2c5175d33f00ee"
+      "file": "8e60aba70e6374bf.mp3",
+      "seconds": 2.496,
+      "engine": "gemini",
+      "voice": "Orus",
+      "sha256": "6126eefba016baad87229935dedfefa0a2ca500221051b88cff92ef8787d6f00"
     }
   ]
 }

@@ -4,7 +4,7 @@
 
 Every terminal recording and the report screenshot come from Veridelta commit `6375e5b`, whose package is v0.27.1's, rendered with make demo-video and vhs v0.12.1. `public/clips/manifest.json` holds each file's tape and checksum. Each recording plays whole, as its tape typed it.
 
-The narrated cut sets in type the transcripts of Veridelta commit `c0afe41`, whose package is v0.33.4's, and shows the HTML report of the run its last tape types. `public/transcripts/manifest.json` holds each file's tape, its steps, and its checksum. Its voice is gemini (Orus) and espeak (en-us), and its subtitles are the voice's lines, word for word.
+The narrated cut sets in type the transcripts of Veridelta commit `c0afe41`, whose package is v0.33.4's, and shows the HTML report of the run its last tape types. `public/transcripts/manifest.json` holds each file's tape, its steps, and its checksum. Its voice is gemini (Orus), and its subtitles are the voice's lines, word for word.
 
 ## promo-30: 30 seconds, 1920 by 1080
 
@@ -44,7 +44,7 @@ The narrated cut sets in type the transcripts of Veridelta commit `c0afe41`, who
 
 ## demo-120: About two minutes, 1920 by 1080, narrated, on CSV files
 
-110.5 seconds, with subtitles in `captions/demo-120.srt`.
+110.1 seconds, with subtitles in `captions/demo-120.srt`.
 
 | Time | Scene | Picture | Captions | Backed by |
 | :--- | :--- | :--- | :--- | :--- |
@@ -55,6 +55,6 @@ The narrated cut sets in type the transcripts of Veridelta commit `c0afe41`, who
 | 0:47.3 to 0:56.8 | accounts-crosswalk | `veridelta crosswalk` with the three suggested rules: a value map from each status to its letter, 13 of 13 rows each. | 0:47.3 The status codes changed too, from words to letters.<br>0:51.4 crosswalk lines up the values and proposes a map, with how many rows agree. | [veridelta.github.io/veridelta/rules/#proposing-a-value-map](https://veridelta.github.io/veridelta/rules/#proposing-a-value-map) |
 | 0:56.8 to 1:06.4 | accounts-rules | The configuration with all four rules, then its run: 95.0%, 1 removed, 1 changed. | 0:56.8 The configuration now declares all four rules.<br>1:00.3 Two rows still differ.<br>1:03.1 Nothing is forgiven unless a rule says so. | [veridelta.github.io/veridelta/rules/](https://veridelta.github.io/veridelta/rules/) |
 | 1:06.4 to 1:19.3 | accounts-baseline | A baseline that accepts the removed account, then the run against it: 1 accepted, 1 changed, and exit code 1. | 1:06.4 Account 40 was removed on purpose, so a baseline file accepts that change.<br>1:11.9 The run accepts it, and still fails on the other row.<br>1:15.5 So CI holds the rewrite until that row is fixed. | [veridelta.github.io/veridelta/cli/#accepting-drift](https://veridelta.github.io/veridelta/cli/#accepting-drift) |
-| 1:19.3 to 1:28.7 | accounts-report | The HTML report of the baseline run: account 17, south in the legacy file and east in the rewrite. | 1:19.3 The HTML report shows that row side by side.<br>1:23.5 Account 17 moved from south to east. That is the real defect. | [veridelta.github.io/veridelta/results/#html-report](https://veridelta.github.io/veridelta/results/#html-report) |
-| 1:28.7 to 1:43.9 | status | A card in the logo's colors that says where the project stands. | 1:28.7 Veridelta is early, at version 0.33.<br>1:32.9 It is tested on generated data, with drift seeded on purpose.<br>1:37.1 It has not yet been run by other users, or in a live cloud warehouse.<br>1:41.6 Feedback is welcome. | [veridelta.github.io/veridelta/#status](https://veridelta.github.io/veridelta/#status) |
-| 1:43.9 to 1:50.5 | demo-install | The wordmark, the install command, the docs and repository addresses, and the music's credit. | 1:43.9 Try it with pip install veridelta. | [veridelta.github.io/veridelta/#install](https://veridelta.github.io/veridelta/#install) |
+| 1:19.3 to 1:28.6 | accounts-report | The HTML report of the baseline run: account 17, south in the legacy file and east in the rewrite. | 1:19.3 The HTML report shows that row side by side.<br>1:23.3 Account 17 moved from south to east. That is the real defect. | [veridelta.github.io/veridelta/results/#html-report](https://veridelta.github.io/veridelta/results/#html-report) |
+| 1:28.6 to 1:43.1 | status | A card in the logo's colors that says where the project stands. | 1:28.6 Veridelta is early, at version 0.33.<br>1:33.0 It is tested on generated data, with drift seeded on purpose.<br>1:37.0 It has not yet been run by other users, or in a live cloud warehouse.<br>1:41.2 Feedback is welcome. | [veridelta.github.io/veridelta/#status](https://veridelta.github.io/veridelta/#status) |
+| 1:43.1 to 1:50.1 | demo-install | The wordmark, the install command, the docs and repository addresses, and the music's credit. | 1:43.1 Try it with pip install veridelta. | [veridelta.github.io/veridelta/#install](https://veridelta.github.io/veridelta/#install) |

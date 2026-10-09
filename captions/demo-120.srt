@@ -75,29 +75,29 @@ The run accepts it, and still fails on the other row.
 So CI holds the rewrite until that row is fixed.
 
 20
-00:01:19,333 --> 00:01:23,503
+00:01:19,333 --> 00:01:23,311
 The HTML report shows that row side by side.
 
 21
-00:01:23,503 --> 00:01:28,700
+00:01:23,311 --> 00:01:28,600
 Account 17 moved from south to east. That is the real defect.
 
 22
-00:01:28,700 --> 00:01:32,918
+00:01:28,600 --> 00:01:33,010
 Veridelta is early, at version 0.33.
 
 23
-00:01:32,918 --> 00:01:37,136
+00:01:33,010 --> 00:01:36,964
 It is tested on generated data, with drift seeded on purpose.
 
 24
-00:01:37,136 --> 00:01:41,642
+00:01:36,964 --> 00:01:41,230
 It has not yet been run by other users, or in a live cloud warehouse.
 
 25
-00:01:41,642 --> 00:01:43,900
+00:01:41,230 --> 00:01:43,067
 Feedback is welcome.
 
 26
-00:01:43,900 --> 00:01:50,533
+00:01:43,067 --> 00:01:50,133
 Try it with pip install veridelta.
