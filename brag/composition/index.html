@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Veridelta in 21 seconds</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"
+      integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2"
+      crossorigin="anonymous"
+    ></script>
+    <script src="assets/audio-levels.js"></script>
+    <style>
+      @font-face {
+        font-family: "Inter";
+        font-weight: 400;
+        src: url("assets/fonts/Inter-Regular.otf") format("opentype");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 600;
+        src: url("assets/fonts/Inter-SemiBold.otf") format("opentype");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 700;
+        src: url("assets/fonts/Inter-Bold.otf") format("opentype");
+      }
+      @font-face {
+        font-family: "DejaVu Sans Mono";
+        font-weight: 400;
+        src: url("assets/fonts/DejaVuSansMono.ttf") format("truetype");
+      }
+      @font-face {
+        font-family: "DejaVu Sans Mono";
+        font-weight: 700;
+        src: url("assets/fonts/DejaVuSansMono-Bold.ttf") format("truetype");
+      }
+
+      /* The logo's colors, as Veridelta's docs and link preview card use them. */
+      :root {
+        --navy: #0d2f5a;
+        --orange: #de5807;
+        --orange-deep: #b24606;
+        --blue: #2054b2;
+        --canvas: #f5f7fa;
+        --rule: #d6dde5;
+        --slate: #4a5d75;
+        --code: #e8eef6;
+        --code-dim: #9fb0c6;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--canvas);
+        color: var(--navy);
+        font-family: "Inter", sans-serif;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      .mono {
+        font-family: "DejaVu Sans Mono", monospace;
+      }
+
+      /* The background every scene shares: a data grid, a glow that breathes with the music, and
+         the symbol's two halves, orange into blue, along the top, as the docs header draws them. */
+      #bg {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      #grid {
+        position: absolute;
+        top: -80px;
+        left: -80px;
+        width: 2160px;
+        height: 1240px;
+        background-image:
+          linear-gradient(rgba(13, 47, 90, 0.07) 2px, transparent 2px),
+          linear-gradient(90deg, rgba(13, 47, 90, 0.07) 2px, transparent 2px);
+        background-size: 80px 80px;
+      }
+      .glow {
+        position: absolute;
+        width: 1400px;
+        height: 1400px;
+        right: -420px;
+        top: -260px;
+        border-radius: 50%;
+      }
+      #glow-orange {
+        background: radial-gradient(circle, rgba(222, 88, 7, 0.22) 0%, rgba(222, 88, 7, 0) 65%);
+      }
+      #glow-blue {
+        background: radial-gradient(circle, rgba(32, 84, 178, 0.2) 0%, rgba(32, 84, 178, 0) 65%);
+        opacity: 0;
+      }
+      #bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1920px;
+        height: 12px;
+        background: linear-gradient(90deg, var(--orange) 0%, var(--orange) 45%, var(--blue) 55%, var(--blue) 100%);
+      }
+      #source {
+        position: absolute;
+        left: 140px;
+        bottom: 48px;
+        font-size: 22px;
+        color: var(--slate);
+      }
+
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+      }
+      #s2,
+      #s3,
+      #s4,
+      #s5 {
+        opacity: 0;
+      }
+
+      /* Scene 1: the alarm. */
+      #s1 {
+        display: flex;
+        flex-direction: column;
+        padding: 120px 140px 0;
+      }
+      #s1-files {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+      .file {
+        font-size: 34px;
+        padding: 14px 24px;
+        border: 3px solid var(--rule);
+        border-radius: 12px;
+        background: #ffffff;
+        color: var(--navy);
+      }
+      #s1-vs {
+        font-size: 32px;
+        color: var(--slate);
+      }
+      #s1-head {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        margin-top: 84px;
+      }
+      #s1-label {
+        font-size: 60px;
+        font-weight: 600;
+      }
+      #s1-failed {
+        font-size: 40px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: #ffffff;
+        background: var(--orange-deep);
+        padding: 8px 22px;
+        border-radius: 10px;
+      }
+      #s1-rate {
+        display: block;
+        width: 1100px;
+        font-size: 400px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -16px;
+        color: var(--orange);
+        transform-origin: 0% 60%;
+      }
+      #s1-count {
+        font-size: 80px;
+        font-weight: 600;
+        margin-top: 8px;
+      }
+
+      /* Scene 2: the noise. */
+      #s2 {
+        padding: 120px 140px 0;
+      }
+      #s2-head {
+        font-size: 108px;
+        font-weight: 700;
+        letter-spacing: -2px;
+      }
+      #s2-table {
+        margin-top: 56px;
+        display: grid;
+        grid-template-columns: 300px 420px 120px 460px;
+        align-items: center;
+        width: 1300px;
+      }
+      .s2-col {
+        font-size: 26px;
+        color: var(--slate);
+        padding-bottom: 14px;
+      }
+      .s2-row {
+        display: contents;
+      }
+      .s2-cell {
+        height: 132px;
+        display: flex;
+        align-items: center;
+        border-top: 3px solid var(--rule);
+      }
+      .s2-label {
+        font-size: 52px;
+        font-weight: 600;
+      }
+      .s2-old {
+        font-size: 64px;
+        color: var(--slate);
+      }
+      .s2-arrow {
+        font-size: 56px;
+        color: var(--slate);
+      }
+      .s2-new {
+        font-size: 64px;
+        font-weight: 700;
+        color: var(--orange);
+      }
+      .s2-new span,
+      .s2-old span {
+        display: inline-block;
+      }
+      .blank {
+        display: inline-block;
+        width: 150px;
+        height: 70px;
+        border: 4px dashed var(--slate);
+        border-radius: 10px;
+      }
+
+      /* Scene 3: the rules. */
+      #s3-logo {
+        position: absolute;
+        left: 140px;
+        top: 110px;
+        display: flex;
+        align-items: center;
+        gap: 22px;
+      }
+      #s3-logo .symbol {
+        width: 112px;
+        height: 104px;
+        background: url("assets/images/veridelta-symbol.png") center / contain no-repeat;
+      }
+      #s3-logo .wordmark {
+        width: 336px;
+        height: 70px;
+        background: url("assets/images/veridelta-wordmark.png") center / contain no-repeat;
+      }
+      #s3-head {
+        position: absolute;
+        left: 140px;
+        top: 330px;
+        width: 780px;
+        font-size: 92px;
+        font-weight: 700;
+        line-height: 1.12;
+        letter-spacing: -2px;
+      }
+      #s3-card {
+        position: absolute;
+        left: 1000px;
+        top: 150px;
+        width: 800px;
+        border-radius: 22px;
+        background: var(--navy);
+        box-shadow: 0 30px 80px rgba(13, 47, 90, 0.28);
+        overflow: hidden;
+      }
+      #s3-title {
+        font-size: 26px;
+        color: var(--code-dim);
+        padding: 22px 40px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+      }
+      #s3-code {
+        position: relative;
+        padding: 22px 0 26px;
+      }
+      .line {
+        position: relative;
+        z-index: 1;
+        height: 46px;
+        line-height: 46px;
+        padding-left: 40px;
+        font-size: 31px;
+        color: var(--code);
+        white-space: pre;
+      }
+      .band {
+        position: absolute;
+        left: 16px;
+        width: 768px;
+        z-index: 0;
+        border-radius: 10px;
+        background: rgba(32, 84, 178, 0.75);
+        transform-origin: 0% 50%;
+      }
+      .tag {
+        position: absolute;
+        z-index: 2;
+        right: 28px;
+        font-family: "Inter", sans-serif;
+        font-size: 30px;
+        font-weight: 700;
+        line-height: 1;
+        color: var(--navy);
+        background: #ffffff;
+        padding: 8px 16px;
+        border-radius: 8px;
+      }
+
+      /* Scene 4: what is left. */
+      #s4-head {
+        position: absolute;
+        left: 140px;
+        top: 250px;
+        width: 600px;
+        font-size: 100px;
+        font-weight: 700;
+        line-height: 1.08;
+        letter-spacing: -2px;
+      }
+      #s4-sub {
+        position: absolute;
+        left: 140px;
+        top: 540px;
+        width: 680px;
+        font-size: 56px;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+      #s4-card {
+        position: absolute;
+        left: 880px;
+        top: 260px;
+        width: 924px;
+        background: #ffffff;
+        border: 2px solid #d0d7de;
+        border-radius: 16px;
+        box-shadow: 0 30px 80px rgba(13, 47, 90, 0.22);
+        overflow: hidden;
+      }
+      .crop {
+        position: relative;
+        width: 920px;
+        overflow: hidden;
+      }
+      /* The CI guide's screenshot of the comment, 1632 by 1380, at 920 / 780 of its size: its
+         heading, then its changed values table. */
+      .crop {
+        background-image: url("assets/images/action-comment-light.png");
+        background-repeat: no-repeat;
+        background-size: 1925px auto;
+      }
+      #crop-head {
+        height: 201px;
+        background-position: 0 0;
+        border-bottom: 2px solid #d0d7de;
+      }
+      #crop-values {
+        height: 283px;
+        background-position: 0 -1286px;
+      }
+      #outline {
+        position: absolute;
+        left: 34px;
+        top: 171px;
+        width: 848px;
+        height: 96px;
+        border: 6px solid var(--orange);
+        border-radius: 12px;
+      }
+
+      /* Scene 5: Veridelta. */
+      #s5-ghost {
+        position: absolute;
+        right: 40px;
+        top: 300px;
+        width: 669px;
+        height: 620px;
+        background: url("assets/images/veridelta-symbol.png") center / contain no-repeat;
+        opacity: 0.12;
+      }
+      #s5-body {
+        position: absolute;
+        left: 140px;
+        top: 170px;
+        width: 1400px;
+      }
+      #s5-logo {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+      }
+      #s5-logo .symbol {
+        display: block;
+        height: 165px;
+      }
+      #s5-logo .wordmark {
+        display: block;
+        height: 80px;
+      }
+      #s5-summary {
+        margin-top: 64px;
+        width: 1050px;
+        font-size: 72px;
+        font-weight: 600;
+        line-height: 1.18;
+        letter-spacing: -1px;
+      }
+      #s5-install {
+        display: inline-block;
+        margin-top: 64px;
+        font-size: 56px;
+        font-weight: 700;
+        color: #ffffff;
+        background: var(--navy);
+        padding: 22px 38px;
+        border-radius: 14px;
+      }
+      #s5-url {
+        margin-top: 34px;
+        font-size: 40px;
+        color: var(--slate);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="21.5"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="bg">
+        <div id="grid" data-layout-allow-overflow></div>
+        <div id="glow-orange" class="glow" data-layout-allow-overflow></div>
+        <div id="glow-blue" class="glow" data-layout-allow-overflow></div>
+        <div id="bar"></div>
+        <div id="source" class="mono">Veridelta 0.35.1, the accounts demo in demo/promo at commit ebe1dff</div>
+      </div>
+
+      <div id="s1" class="scene" data-layout-allow-overflow>
+        <div id="s1-files">
+          <span class="file mono">accounts_legacy.csv</span>
+          <span id="s1-vs">and</span>
+          <span class="file mono">accounts_rewrite.csv</span>
+        </div>
+        <div id="s1-head">
+          <span id="s1-label">Match rate</span>
+          <span id="s1-failed">FAILED</span>
+        </div>
+        <div id="s1-rate">0.0%</div>
+        <div id="s1-count">40 rows. 40 issues.</div>
+      </div>
+
+      <div id="s2" class="scene" data-layout-allow-overflow>
+        <div id="s2-head">Most of it is noise.</div>
+        <div id="s2-table">
+          <div class="s2-col"></div>
+          <div class="s2-col mono">accounts_legacy.csv</div>
+          <div class="s2-col"></div>
+          <div class="s2-col mono">accounts_rewrite.csv</div>
+          <div class="s2-row" id="r1">
+            <div class="s2-cell s2-label">Case</div>
+            <div class="s2-cell s2-old mono"><span>west</span></div>
+            <div class="s2-cell s2-arrow">→</div>
+            <div class="s2-cell s2-new mono"><span>WEST</span></div>
+          </div>
+          <div class="s2-row" id="r2">
+            <div class="s2-cell s2-label">Codes</div>
+            <div class="s2-cell s2-old mono"><span>active</span></div>
+            <div class="s2-cell s2-arrow">→</div>
+            <div class="s2-cell s2-new mono"><span>A</span></div>
+          </div>
+          <div class="s2-row" id="r3">
+            <div class="s2-cell s2-label">Rounding</div>
+            <div class="s2-cell s2-old mono"><span>137.5</span></div>
+            <div class="s2-cell s2-arrow">→</div>
+            <div class="s2-cell s2-new mono"><span>137.504</span></div>
+          </div>
+          <div class="s2-row" id="r4">
+            <div class="s2-cell s2-label">Blanks</div>
+            <div class="s2-cell s2-old mono"><span class="blank"></span></div>
+            <div class="s2-cell s2-arrow">→</div>
+            <div class="s2-cell s2-new mono"><span>N/A</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s3" class="scene" data-layout-allow-overflow>
+        <div id="s3-logo">
+          <div class="symbol"></div>
+          <div class="wordmark"></div>
+        </div>
+        <div id="s3-head">Nothing is forgiven unless a rule says so.</div>
+        <div id="s3-card">
+          <div id="s3-title" class="mono">accounts_rules.yaml</div>
+          <div id="s3-code" class="mono">
+            <div class="band" id="band1" style="top: 70px; height: 88px"></div>
+            <div class="band" id="band2" style="top: 162px; height: 88px"></div>
+            <div class="band" id="band3" style="top: 254px; height: 88px"></div>
+            <div class="band" id="band4" style="top: 346px; height: 226px"></div>
+            <div class="tag" id="tag1" style="top: 68px">Case</div>
+            <div class="tag" id="tag2" style="top: 160px">Rounding</div>
+            <div class="tag" id="tag3" style="top: 252px">Blanks</div>
+            <div class="tag" id="tag4" style="top: 344px">Codes</div>
+            <div class="line">rules:</div>
+            <div class="line">  - column_names: [region]</div>
+            <div class="line">    case_insensitive: true</div>
+            <div class="line">  - column_names: [balance]</div>
+            <div class="line">    absolute_tolerance: 0.005</div>
+            <div class="line">  - column_names: [note]</div>
+            <div class="line">    null_values: ["N/A"]</div>
+            <div class="line">  - column_names: [status]</div>
+            <div class="line">    value_map:</div>
+            <div class="line">      active: A</div>
+            <div class="line">      closed: C</div>
+            <div class="line">      paused: P</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s4" class="scene" data-layout-allow-overflow>
+        <div id="s4-head">What is left is real.</div>
+        <div id="s4-sub">CI fails the pull request on it.</div>
+        <div id="s4-card">
+          <div id="crop-head" class="crop"></div>
+          <div id="crop-values" class="crop">
+            <div id="outline"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s5" class="scene" data-layout-allow-overflow>
+        <div id="s5-ghost"></div>
+        <div id="s5-body">
+          <div id="s5-logo">
+            <img class="symbol" src="assets/images/veridelta-symbol.png" alt="" />
+            <img class="wordmark" src="assets/images/veridelta-wordmark.png" alt="Veridelta" />
+          </div>
+          <div id="s5-summary">Compare two datasets on their primary keys under rules you declare.</div>
+          <div id="s5-install" class="mono">pip install veridelta</div>
+          <div id="s5-url">veridelta.github.io/veridelta</div>
+        </div>
+      </div>
+
+      <!-- Music: Sascha Ende, "Happy Beats / Business Moves, Vol. 12", ende.app, CC BY 4.0. -->
+      <audio
+        id="music"
+        data-start="0"
+        data-duration="21.5"
+        data-track-index="10"
+        src="assets/music/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3"
+        data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0.32},{"t":20,"v":0.32},{"t":21.5,"v":0}]}]}'
+      ></audio>
+      <!-- Sound effects: Kenney, CC0. -->
+      <audio id="sfx-rate" data-start="0.52" data-duration="0.18" data-track-index="11" data-volume="0.7" src="assets/sfx/impact/impactSoft_medium_001.ogg"></audio>
+      <audio id="sfx-row1" data-start="4.37" data-duration="0.6" data-track-index="12" data-volume="0.45" src="assets/sfx/casino/card-slide-1.ogg"></audio>
+      <audio id="sfx-row4" data-start="5.98" data-duration="0.6" data-track-index="13" data-volume="0.45" src="assets/sfx/casino/card-slide-1.ogg"></audio>
+      <audio id="sfx-rules" data-start="8.70" data-duration="0.14" data-track-index="14" data-volume="0.6" src="assets/sfx/impact/impactSoft_medium_002.ogg"></audio>
+      <audio id="sfx-comment" data-start="13.07" data-duration="0.14" data-track-index="15" data-volume="0.6" src="assets/sfx/impact/impactSoft_medium_003.ogg"></audio>
+      <audio id="sfx-logo" data-start="17.42" data-duration="1.48" data-track-index="16" data-volume="0.55" src="assets/sfx/impact/impactBell_heavy_000.ogg"></audio>
+      <audio id="sfx-install" data-start="18.54" data-duration="0.12" data-track-index="17" data-volume="0.5" src="assets/sfx/interface/bong_001.ogg"></audio>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+
+      // Ambient: the grid drifts the whole time.
+      tl.fromTo("#grid", { x: 0, y: 0 }, { x: -80, y: -40, duration: 21.5, ease: "none" }, 0);
+
+      // Audio-reactive: the glow breathes with the bed's level, sampled once a frame.
+      const levels = window.AUDIO_LEVELS.levels;
+      for (let f = 0; f < levels.length; f++) {
+        tl.call(
+          (level) => {
+            gsap.set(".glow", { scale: 0.94 + level * 0.1 });
+            gsap.set("#bg", { "--level": level });
+          },
+          [levels[f]],
+          f / window.AUDIO_LEVELS.fps,
+        );
+      }
+
+      // Scene 1, the alarm.
+      tl.fromTo(".file, #s1-vs", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out", stagger: 0.06 }, 0.04);
+      tl.fromTo("#s1-head", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, 0.26);
+      // beat-locked: 0.56s
+      tl.fromTo("#s1-rate", { scale: 1.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power4.out" }, 0.4);
+      tl.to("#s1-rate", { scale: 1.035, duration: 2.3, ease: "none" }, 0.75);
+      // beat-grid: 1.64s
+      tl.fromTo("#s1-count", { y: 34, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "back.out(1.6)" }, 1.5);
+
+      // Scene 1 to 2: push slide.
+      const T1 = 3.05;
+      tl.to("#s1", { x: -1920, duration: 0.45, ease: "power3.inOut" }, T1);
+      tl.fromTo("#s2", { x: 1920, opacity: 1 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.inOut" }, T1);
+
+      // Scene 2, the noise.
+      tl.fromTo("#s2-head", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out" }, T1 + 0.05);
+      tl.fromTo(".s2-col", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, T1 + 0.3);
+      // beat-grid: rows at 4.39, 4.91, 5.34, 6.00s, then all four hold for 1.45s
+      [4.39, 4.91, 5.34, 6.0].forEach((at, index) => {
+        const row = `#r${index + 1}`;
+        tl.fromTo(`${row} .s2-cell`, { x: -48, opacity: 0 }, { x: 0, opacity: 1, duration: 0.32, ease: "power3.out", stagger: 0.03 }, at - 0.1);
+        tl.fromTo(`${row} .s2-new span`, { scale: 1.35 }, { scale: 1, duration: 0.35, ease: "back.out(2)" }, at + 0.06);
+      });
+
+      // Scene 2 to 3: push slide, and the glow turns blue for the rules.
+      const T2 = 7.45;
+      tl.to("#s2", { x: -1920, duration: 0.45, ease: "power3.inOut" }, T2);
+      tl.fromTo("#s3", { x: 1920, opacity: 1 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.inOut" }, T2);
+      tl.to("#glow-orange", { opacity: 0, duration: 0.6, ease: "sine.inOut" }, T2);
+      tl.to("#glow-blue", { opacity: 1, duration: 0.6, ease: "sine.inOut" }, T2);
+
+      // Scene 3, the rules.
+      tl.fromTo("#s3-logo", { y: -30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, T2 + 0.05);
+      tl.fromTo("#s3-card", { x: 140, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, T2 + 0.1);
+      // beat-locked: 8.74s
+      tl.fromTo("#s3-head", { y: 44, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power4.out" }, 8.44);
+      // beat-grid: rules lit at 9.29, 9.83, 10.37, 10.93s, then all four hold
+      [9.29, 9.83, 10.37, 10.93].forEach((at, index) => {
+        tl.fromTo(`#band${index + 1}`, { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, at - 0.08);
+        tl.fromTo(`#tag${index + 1}`, { x: 30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.28, ease: "back.out(1.8)" }, at);
+      });
+
+      // Scene 3 to 4: push slide, and the glow turns orange for what is wrong.
+      const T3 = 11.85;
+      tl.to("#s3", { x: -1920, duration: 0.45, ease: "power3.inOut" }, T3);
+      tl.fromTo("#s4", { x: 1920, opacity: 1 }, { x: 0, opacity: 1, duration: 0.45, ease: "power3.inOut" }, T3);
+      tl.to("#glow-blue", { opacity: 0, duration: 0.6, ease: "sine.inOut" }, T3);
+      tl.to("#glow-orange", { opacity: 1, duration: 0.6, ease: "sine.inOut" }, T3);
+
+      // Scene 4, what is left.
+      tl.fromTo("#s4-head", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 0.55, ease: "expo.out" }, T3 + 0.05);
+      // beat-locked: 13.11s
+      tl.fromTo("#s4-card", { x: 140, opacity: 0 }, { x: 0, opacity: 1, duration: 0.35, ease: "power4.out" }, 12.76);
+      tl.to("#s4-card", { scale: 1.025, duration: 3.0, ease: "none" }, 13.11);
+      // beat-grid: 13.64s
+      tl.fromTo("#outline", { scale: 1.08, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "power3.out" }, 13.6);
+      tl.fromTo("#s4-sub", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 13.64);
+
+      // Scene 4 to 5: blur crossfade, the wind-down.
+      const T4 = 16.2;
+      tl.fromTo("#s4", { filter: "blur(0px)" }, { opacity: 0, filter: "blur(14px)", duration: 0.6, ease: "sine.inOut", immediateRender: false }, T4);
+      tl.fromTo("#s5", { opacity: 0, filter: "blur(14px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.6, ease: "sine.inOut" }, T4);
+      tl.to("#glow-orange", { opacity: 0.6, duration: 0.6, ease: "sine.inOut" }, T4);
+      tl.to("#glow-blue", { opacity: 0.6, duration: 0.6, ease: "sine.inOut" }, T4);
+
+      // Scene 5, Veridelta.
+      tl.fromTo("#s5-ghost", { scale: 0.92, opacity: 0 }, { scale: 1, opacity: 0.12, duration: 1.2, ease: "sine.out" }, T4);
+      tl.to("#s5-ghost", { rotation: -4, duration: 4, ease: "none" }, 17.5);
+      // beat-locked: 17.47s
+      tl.fromTo("#s5-logo .symbol", { scale: 0.6, rotation: -10, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.52, ease: "back.out(1.6)" }, 16.95);
+      tl.fromTo("#s5-logo .wordmark", { x: -36, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, 17.07);
+      tl.fromTo("#s5-summary", { y: 34, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out" }, 17.6);
+      // beat-locked: 18.56s
+      tl.fromTo("#s5-install", { scale: 0.88, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.26, ease: "back.out(2)" }, 18.3);
+      tl.fromTo("#s5-url", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 19.1);
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

@@ -14,6 +14,14 @@ The paragraph, from the README:
 
 ## Posts
 
+With the demo, `brag/brag.mp4`, as `brag/share-copy.txt` has it:
+
+```text
+A rewritten export matched the old one 0.0%. Most of it was noise: case, codes, rounding, blanks. Declare those as rules in Veridelta, and what is left is real. Here, account 17's region, and CI fails the pull request on it.
+
+https://veridelta.github.io/veridelta/
+```
+
 With `promo-30` or `promo-square-30`:
 
 ```text
@@ -41,6 +49,10 @@ https://veridelta.github.io/veridelta/agents/
 
 ## Alt text
 
+The demo:
+
+> Two files, accounts_legacy.csv and accounts_rewrite.csv, and a match rate of 0.0%: 40 rows, 40 issues. Most of it is noise: west became WEST, active became A, 137.5 became 137.504, and a blank became N/A. Then the Veridelta logo, the line "Nothing is forgiven unless a rule says so.", and the four rules in accounts_rules.yaml that declare that noise. What is left is real: the GitHub Action's comment on a pull request, Veridelta: FAILED, with account 17's region changed from south to east, and the line "CI fails the pull request on it." It ends on the logo, the summary, pip install veridelta, and the docs address.
+
 `promo-30` and `promo-square-30`:
 
 > The Veridelta logo and its summary, then a terminal in a large font. A five-line veridelta.yaml names two three-row CSV files, legacy.csv and modern.csv. veridelta run finds 1 row added, 1 removed, and 1 changed, and the exit code is 1. It ends on pip install veridelta and the docs address.
@@ -57,6 +69,7 @@ The link preview card, `docs/assets/social-card.png` in the Veridelta repository
 
 | File | Size | Shape | Use |
 | :--- | :--- | :--- | :--- |
+| `brag/brag.mp4` | 1920 by 1080, 21.5 seconds, about 6.5 MB | 16:9 | The first video anyone sees: a release, a README, a post |
 | `renders/promo-30.mp4` | 1920 by 1080, about 30 seconds | 16:9 | A post with a wide player, or a page |
 | `renders/promo-60.mp4` | 1920 by 1080, under 60 seconds | 16:9 | A launch post, or the README of a talk |
 | `renders/promo-square-30.mp4` | 1080 by 1080, about 30 seconds | 1:1 | A feed that crops wide video |

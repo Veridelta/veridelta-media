@@ -9,9 +9,12 @@ Promotional videos for [Veridelta](https://github.com/Veridelta/veridelta), made
 | `promo-30` | 1920 by 1080 | About 30 seconds | The logo and summary, the quick start's files and run, how to install |
 | `promo-60` | 1920 by 1080 | Under 60 seconds | Those, plus the HTML report, comparison inside the warehouse, and the MCP server |
 | `promo-square-30` | 1080 by 1080 | About 30 seconds | As `promo-30`, for feeds that crop wide video |
-| `demo-120` | 1920 by 1080 | About three minutes | A narrated story on two CSV files: Sam checks the rewrite of a nightly export with the first run, how Veridelta decides, `suggest`, the rules and their limits, a baseline, the report, the GitHub Action's comment on a pull request, and the fixed export passing, then where else it runs and where the project stands |
+| The demo, in [brag/](brag/README.md) | 1920 by 1080 | 21.5 seconds | The problem, then the answer, with music and no voice: two exports that match 0.0%, the noise behind it, the rules that declare it, the GitHub Action's comment on the one real change, and how to install |
+| `demo-120` | 1920 by 1080 | About three minutes | The walkthrough, a narrated story on two CSV files: Sam checks the rewrite of a nightly export with the first run, how Veridelta decides, `suggest`, the rules and their limits, a baseline, the report, the GitHub Action's comment on a pull request, and the fixed export passing, then where else it runs and where the project stands |
 
-The Veridelta organization page shows [posters/demo-120-poster.png](posters/demo-120-poster.png), a frame of `demo-120` with a play button, and links it to the video.
+The demo is a [Hyperframes](https://hyperframes.heygen.com/) project made with [brag](https://github.com/latent-spaces/brag), not a Remotion cut. [brag/README.md](brag/README.md) says how it was made and how to render it.
+
+The Veridelta organization page shows [posters/demo-poster.png](posters/demo-poster.png), the demo's end card with a play button, links it to the demo, and links the walkthrough below it. [posters/demo-120-poster.png](posters/demo-120-poster.png) is a frame of `demo-120` with a play button.
 
 [storyboard.md](storyboard.md) lists every scene with its length, its picture, its captions, and the docs page that backs each claim. [launch-kit.md](launch-kit.md) holds the posts and the alt text to publish them with.
 
