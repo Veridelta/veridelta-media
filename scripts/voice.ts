@@ -1,27 +1,29 @@
 // Speaks every line of every narrated cut into public/voice/, and writes its manifest: each
-// line's file, length, and checksum, and the engine and voice that spoke it. A scene is spoken
-// again only when a line's text, the engine, or the voice changes, so the key is needed only
-// for new lines.
+// line's file, length, and checksum, the engine and voice that spoke it, and the take it came
+// from. A cut is spoken again only when a line's text, the engine, or the voice changes, so the
+// key is needed only then.
 //
 // Usage:
 //   npm run voice                 Gemini's speech model, with the key in GEMINI_API_KEY
 //   npm run voice -- --draft      espeak-ng, a robotic voice to time a draft with
+//   npm run voice -- --again      speak every take again, as after a change to STYLE
 //   npm run voice -- --samples    the first scene in each voice of SAMPLES, into samples/
 //   npm run voice -- --samples Orus,Sulafat    the first scene in the voices named
 //
-// Gemini reads a scene's lines in one request, which sounds more even and spends fewer of the
-// free tier's few requests a day, with a long pause between lines; scripts/split-lines.ts then
-// cuts the clip into its lines. The speech model reads its text word for word, so how to read
-// goes apart from the text, in STYLE. A
-// scene it cannot cut safely is spoken again a line at a time. The key travels only in a request
-// header, on curl's standard input, never in a URL, an argument, a file, or a log. Every clip is
-// trimmed of silence at both ends and set to -16 LUFS, so the lines play at one loudness.
+// Gemini reads a whole cut in one request, a take, with a long pause between lines, so every
+// line has the same tone. scripts/align.py hears where each line's words are, with Whisper on
+// the CPU, through uv, and scripts/split-lines.ts cuts the take between them. A take it cannot
+// cut safely, such as one that skips or garbles a line, is spoken again whole, never a line at
+// a time. The speech model reads its text word for word, so how to read goes apart from the
+// text, in STYLE. The key travels only in a request header, on curl's standard input, never in
+// a URL, an argument, a file, or a log. The take is set to -16 LUFS once, before it is cut, so
+// the lines keep its levels, and each clip is trimmed of silence at both ends.
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { cuts as cutsOf, cut, duration } from "./split-lines";
+import { cuts as cutsOf, cut, duration, type Span } from "./split-lines";
 import { cuts } from "../src/storyboard";
 import { voices, type Engine, type VoiceLine } from "../src/voice";
 
@@ -31,10 +33,10 @@ const VOICE = "Orus";
 const SAMPLES = ["Charon", "Iapetus", "Sulafat", "Kore"];
 /** How the voice reads every line, sent apart from the text so it is never read aloud. */
 const STYLE = `AUDIO PROFILE: The narrator of a short demo video for a command-line data tool.
-THE SCENE: A two-minute walkthrough, watched by engineers and hiring managers.
+THE SCENE: A three-minute story, watched by engineers and hiring managers.
 DIRECTOR'S NOTES:
-- Style: Energetic and authoritative. Confident, clear, and warm, with a vocal smile, never salesy.
-- Pace: Brisk but unhurried, with crisp consonants.
+- Style: Warm and confident, telling one engineer's story. Clear, with a vocal smile, never salesy.
+- Pace: Calm and steady, a storyteller's pace, with crisp consonants. Keep pauses inside a sentence short.
 - Accent: Neutral American English.`;
 const API = "https://generativelanguage.googleapis.com/v1beta";
 const FOLDER = join("public", "voice");
@@ -155,14 +157,12 @@ const espeak = (text: string, voice: string, wav: string) => {
   execFileSync("espeak-ng", ["-v", voice, "-s", "160", "-w", wav, text]);
 };
 
-/** Trim silence from both ends, and set the clip to -16 LUFS in two passes, as an MP3. */
-const finish = (wav: string, mp3: string) => {
-  const trim =
-    "silenceremove=start_periods=1:start_threshold=-50dB,areverse,silenceremove=start_periods=1:start_threshold=-50dB,areverse";
+/** Set a WAV to -16 LUFS in two passes, as one gain for all of it. */
+const level = (wav: string, out: string) => {
   const target = "I=-16:TP=-1.5:LRA=11";
   // The first pass measures; ffmpeg prints the measurement as JSON on standard error.
   const log = spawnSync("ffmpeg", [
-    "-hide_banner", "-nostats", "-i", wav, "-af", `${trim},loudnorm=${target}:print_format=json`, "-f", "null", "-",
+    "-hide_banner", "-nostats", "-i", wav, "-af", `loudnorm=${target}:print_format=json`, "-f", "null", "-",
   ]).stderr.toString();
   const measured = JSON.parse(log.slice(log.lastIndexOf("{"), log.lastIndexOf("}") + 1));
   const second = [
@@ -174,66 +174,66 @@ const finish = (wav: string, mp3: string) => {
     "linear=true",
   ].join(":");
   execFileSync("ffmpeg", [
-    "-hide_banner", "-loglevel", "error", "-y", "-i", wav,
-    "-af", `${trim},loudnorm=${target}:${second}`,
-    "-ar", "48000", "-ac", "1", "-c:a", "libmp3lame", "-b:a", "160k", mp3,
+    "-hide_banner", "-loglevel", "error", "-y", "-i", wav, "-af", `loudnorm=${target}:${second}`, "-ar", "48000", "-ac", "1", out,
+  ]);
+};
+
+/** Trim silence from both ends of a clip, as an MP3, at the level it has. */
+const finish = (wav: string, mp3: string) => {
+  const trim =
+    "silenceremove=start_periods=1:start_threshold=-50dB,areverse,silenceremove=start_periods=1:start_threshold=-50dB,areverse";
+  execFileSync("ffmpeg", [
+    "-hide_banner", "-loglevel", "error", "-y", "-i", wav, "-af", trim, "-ar", "48000", "-ac", "1", "-c:a", "libmp3lame", "-b:a", "160k", mp3,
   ]);
 };
 
 /**
- * The text for a scene's lines: the lines and a long pause between each two, and nothing else,
+ * The text for a take's lines: the lines and two long pauses between each two, and nothing else,
  * since the speech model reads aloud whatever text it is given. The pause tag is the model's own
- * and is not spoken.
+ * and is not spoken. Two make the gap between lines several times any pause inside one, so the
+ * take cuts cleanly.
  */
-const prompt = (lines: string[]) => lines.join("\n\n<long pause>\n\n");
+const prompt = (lines: string[]) => lines.join("\n\n<long pause> <long pause>\n\n");
 
-/** Seconds per character of each line Gemini has spoken in this run, to check the next by. */
-const paces: number[] = [];
+/** Takes to try before giving up on a cut that will not split. */
+const TRIES = 3;
+/** The faster-whisper release scripts/align.py runs with, through uvx. */
+const WHISPER = "1.2.1";
 
-/** Why a line spoken alone cannot be trusted, such as a read-out style, or undefined. */
-const offPace = (wav: string, line: string) => {
-  if (paces.length === 0) {
-    return undefined;
-  }
-  const median = [...paces].sort((a, b) => a - b)[Math.floor(paces.length / 2)];
-  const pace = duration(wav) / line.length;
-  return pace < 0.6 * median || pace > 1.6 * median ? `"${line}" took ${duration(wav).toFixed(1)} seconds, off the voice's pace` : undefined;
-};
-
-/** Speak a scene's lines into one WAV per line, in order. */
-const speakScene = (lines: string[], engine: Engine, voice: string, work: string): string[] => {
+/** Speak a cut's lines in one take, at one level, and cut it into one WAV per line, in order. */
+const speakTake = (lines: string[], engine: Engine, voice: string, work: string): { wavs: string[]; take: string } => {
   const each = lines.map((_, index) => join(work, `line-${index}.wav`));
   if (engine === "espeak") {
     lines.forEach((line, index) => espeak(line, voice, each[index]));
-    return each;
+    return { wavs: each, take: "espeak" };
   }
-  const whole = join(work, "scene.wav");
-  gemini(prompt(lines), voice, whole);
-  const points = lines.length === 1 ? (offPace(whole, lines[0]) ?? []) : cutsOf(whole, lines);
-  if (typeof points === "string") {
-    console.log(`Cannot cut "${lines[0].slice(0, 40)}..." safely (${points}); speaking it a line at a time.`);
-    lines.forEach((line, index) => {
-      gemini(prompt([line]), voice, each[index]);
-      const problem = offPace(each[index], line);
-      if (problem) {
-        throw new Error(`${problem}; listen to it, then set GEMINI_TTS_MODEL to another speech model.`);
-      }
-    });
-    return each;
+  for (let attempt = 1; attempt <= TRIES; attempt++) {
+    const raw = join(work, "take-raw.wav");
+    const whole = join(work, "take.wav");
+    gemini(prompt(lines), voice, raw);
+    level(raw, whole);
+    writeFileSync(join(work, "lines.json"), JSON.stringify(lines));
+    const heard = execFileSync("uvx", ["--quiet", "--from", `faster-whisper==${WHISPER}`, "python", join("scripts", "align.py"), whole, join(work, "lines.json")], {
+      maxBuffer: 64 * 1024 * 1024,
+    }).toString();
+    const points = cutsOf(whole, lines, JSON.parse(heard) as Span[]);
+    if (typeof points === "string") {
+      console.log(`Take ${attempt} of ${TRIES} (${duration(whole).toFixed(1)} seconds) cannot be cut safely: ${points}.`);
+      continue;
+    }
+    const bounds = [0, ...points, duration(whole)];
+    lines.forEach((_, index) => cut(whole, bounds[index], bounds[index + 1], each[index]));
+    const take = sha256(readFileSync(whole)).slice(0, 12);
+    console.log(`Take ${take}: ${duration(whole).toFixed(1)} seconds, ${lines.length} lines.`);
+    return { wavs: each, take };
   }
-  const bounds = [0, ...points, duration(whole)];
-  lines.forEach((line, index) => {
-    cut(whole, bounds[index], bounds[index + 1], each[index]);
-    paces.push(duration(each[index]) / line.length);
-  });
-  return each;
+  throw new Error(`No take of ${TRIES} could be cut into its ${lines.length} lines; the lines spoken before are kept.`);
 };
 
-/** Every narrated scene's lines, in order. */
-const scenes = cuts
+/** Every narrated cut's lines, in order, one take to a cut. */
+const takes = cuts
   .filter((entry) => entry.narrated)
-  .flatMap((entry) => entry.scenes)
-  .map((scene) => (scene.voice ?? []).map(({ text }) => text))
+  .map((entry) => entry.scenes.flatMap((scene) => (scene.voice ?? []).map(({ text }) => text)))
   .filter((lines) => lines.length > 0);
 
 const args = process.argv.slice(2);
@@ -242,10 +242,12 @@ try {
   if (args.includes("--samples")) {
     mkdirSync("samples", { recursive: true });
     const named = args[args.indexOf("--samples") + 1];
+    const first = takes[0].slice(0, 3);
     for (const voice of named && !named.startsWith("--") ? named.split(",") : SAMPLES) {
       const wav = join(work, `${voice}.wav`);
-      gemini(prompt(scenes[0]), voice, wav);
-      finish(wav, join("samples", `${voice}.mp3`));
+      gemini(prompt(first), voice, wav);
+      level(wav, join(work, `${voice}-level.wav`));
+      finish(join(work, `${voice}-level.wav`), join("samples", `${voice}.mp3`));
       console.log(`samples/${voice}.mp3`);
     }
   } else {
@@ -253,28 +255,27 @@ try {
     const voice = engine === "gemini" ? VOICE : "en-us";
     mkdirSync(FOLDER, { recursive: true });
     const kept = new Map<string, VoiceLine>();
-    const save = () =>
-      writeFileSync(
-        join(FOLDER, "manifest.json"),
-        `${JSON.stringify({ lines: scenes.flat().flatMap((text) => kept.get(text) ?? voices.lines.filter((line) => line.text === text)) }, null, 2)}\n`,
-      );
-    for (const lines of scenes) {
+    for (const lines of takes) {
       const old = lines.map((text) => voices.lines.find((line) => line.text === text && line.engine === engine && line.voice === voice));
-      if (old.every((line) => line && sha256(readFileSync(join(FOLDER, line.file))) === line.sha256)) {
+      const one = new Set(old.map((line) => line?.take));
+      const reuse = !args.includes("--again") && one.size === 1;
+      if (reuse && old.every((line) => line && sha256(readFileSync(join(FOLDER, line.file))) === line.sha256)) {
         old.forEach((line) => kept.set(line!.text, line!));
         continue;
       }
-      const wavs = speakScene(lines, engine, voice, work);
+      const { wavs, take } = speakTake(lines, engine, voice, work);
       lines.forEach((text, index) => {
-        const file = `${sha256(`${engine}\n${voice}\n${text}`).slice(0, 16)}.mp3`;
+        const file = `${sha256(`${engine}\n${voice}\n${take}\n${text}`).slice(0, 16)}.mp3`;
         finish(wavs[index], join(FOLDER, file));
-        kept.set(text, { text, file, seconds: duration(join(FOLDER, file)), engine, voice, sha256: sha256(readFileSync(join(FOLDER, file))) });
-        console.log(`${file}: ${text}`);
+        const seconds = duration(join(FOLDER, file));
+        kept.set(text, { text, file, seconds, engine, voice, take, sha256: sha256(readFileSync(join(FOLDER, file))) });
+        console.log(`${file} ${seconds.toFixed(2)}s: ${text}`);
       });
-      // Saved after each scene, so a limit reached partway keeps what was spoken.
-      save();
     }
-    save();
+    writeFileSync(
+      join(FOLDER, "manifest.json"),
+      `${JSON.stringify({ lines: takes.flat().flatMap((text) => kept.get(text) ?? []) }, null, 2)}\n`,
+    );
     // A clip no line uses any more goes.
     for (const name of readdirSync(FOLDER)) {
       if (name.endsWith(".mp3") && ![...kept.values()].some((line) => line.file === name)) {

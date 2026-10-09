@@ -1,7 +1,8 @@
 // Checks what a reviewer would otherwise check by hand: every clip, transcript, and line of
 // the voice matches the checksum its manifest recorded, every scene names a docs page, its
 // captions fit inside it, a terminal shows only its transcript's lines, and every post in
-// launch-kit.md fits in 280 characters. With --final, it also refuses a draft voice.
+// launch-kit.md fits in 280 characters. With --final, it also refuses a draft voice, and a
+// narrated cut whose lines come from more than one take.
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -46,6 +47,13 @@ for (const line of voices.lines) {
 }
 
 for (const cut of cuts) {
+  // Every line of a cut comes from one take, so the voice keeps one tone and one level.
+  const takes = new Set(
+    cut.scenes.flatMap((scene) => (scene.voice ?? []).map(({ text }) => voices.lines.find((line) => line.text === text)?.take)),
+  );
+  if (final && cut.narrated && takes.size > 1) {
+    problems.push(`${cut.id}: its lines come from ${takes.size} takes; run npm run voice to speak them in one.`);
+  }
   for (const scene of cut.scenes) {
     const where = `${cut.id}, scene ${scene.id}`;
     if (!scene.backedBy.startsWith("https://veridelta.github.io/veridelta/")) {

@@ -50,7 +50,9 @@ export const SceneView = ({
             scrollAt={picture.scrollAt}
           />
         )}
-        {picture.kind === "card" && <CardScene heading={picture.heading} lines={picture.lines} square={square} />}
+        {picture.kind === "card" && (
+          <CardScene heading={picture.heading} lines={picture.lines} square={square} shows={picture.shows} />
+        )}
         {picture.kind === "install" && (
           <InstallScene square={square} repository={picture.repository} credit={credit} />
         )}

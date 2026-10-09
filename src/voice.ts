@@ -1,6 +1,6 @@
-// The voice's lines, as scripts/voice.ts made them: each line's file, its length, and the
-// engine and voice that spoke it. A line the voice has not spoken yet gets an estimated length,
-// so the cut still renders, and `npm run check` names it.
+// The voice's lines, as scripts/voice.ts made them: each line's file, its length, the engine
+// and voice that spoke it, and the take it was cut from. A line the voice has not spoken yet
+// gets an estimated length, so the cut still renders, and `npm run check` names it.
 import manifest from "../public/voice/manifest.json";
 
 export type Engine = "gemini" | "espeak";
@@ -11,6 +11,8 @@ export type VoiceLine = {
   seconds: number;
   engine: Engine;
   voice: string;
+  /** The take the line was cut from: every line of a cut comes from one. */
+  take?: string;
   sha256: string;
 };
 

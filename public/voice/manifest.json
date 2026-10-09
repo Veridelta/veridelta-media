@@ -1,204 +1,319 @@
 {
   "lines": [
     {
-      "text": "Sam is replacing a legacy job that exports 40 accounts.",
-      "file": "9cfc81a54964c952.mp3",
-      "seconds": 3.552,
-      "engine": "gemini",
-      "voice": "Orus",
-      "sha256": "f8e6dccf98450e6dc740e16e833df568c58268c2baf445f604e51f7706582378"
-    },
-    {
-      "text": "Before switching, Sam has to show that the new export matches the old one.",
-      "file": "9f33804931c2f5cb.mp3",
-      "seconds": 3.84,
-      "engine": "gemini",
-      "voice": "Orus",
-      "sha256": "99f7d423e5ecf1585b686a07e5ba673b6d01a3bcd15fadcce5bea622f467c276"
-    },
-    {
-      "text": "Veridelta pairs the rows by account ID and compares each column.",
-      "file": "bed1bae0d1a47a65.mp3",
-      "seconds": 3.888,
-      "engine": "gemini",
-      "voice": "Orus",
-      "sha256": "74c34477ea92e4f3a4d5668bc75c6e553d27d01425c1d175604e18d0fec9e66f"
-    },
-    {
-      "text": "39 rows differ, and one account is missing.",
-      "file": "617e094ef1768a7e.mp3",
-      "seconds": 2.976,
-      "engine": "gemini",
-      "voice": "Orus",
-      "sha256": "c671b6dd783ca2c87c15dfa8ce557579868a8e92862766ec3f89357a3bb83d2a"
-    },
-    {
-      "text": "In CI, exit code 1 fails the check. But is any of this a real error?",
-      "file": "03b8c63fbf8925c8.mp3",
-      "seconds": 5.568,
-      "engine": "gemini",
-      "voice": "Orus",
-      "sha256": "b8bf3c12371418cf1a806f33733f9ed29307074034d5c46d23d786d545ae5037"
-    },
-    {
-      "text": "Rules say which differences are expected, column by column.",
-      "file": "7bf50fbd5604b9b1.mp3",
-      "seconds": 3.144,
-      "engine": "gemini",
-      "voice": "Orus",
-      "sha256": "6d610eee3698401fc54f9c1cd11728dabb12f92080b00012cc7878ad8017872e"
-    },
-    {
-      "text": "Veridelta cleans each side by those rules, then reports whatever they do not explain.",
-      "file": "871ecb7c94d79b2f.mp3",
-      "seconds": 4.704,
-      "engine": "gemini",
-      "voice": "Orus",
-      "sha256": "b232bf73644f7f0999e97a94453a17d6646a83d2716f94231b37fef4ef74ec5e"
-    },
-    {
-      "text": "Sam does not have to guess the rules.",
-      "file": "3ba7678e7d540bd9.mp3",
-      "seconds": 2.28,
-      "engine": "gemini",
-      "voice": "Orus",
-      "sha256": "aacce8bae85472aa4fe6c9852b4f83152062104f2c3c04e00c0511c23f948e9c"
-    },
-    {
-      "text": "veridelta suggest tries each kind of rule on the columns that differ.",
-      "file": "f00d7ee3a6ae092e.mp3",
-      "seconds": 4.368,
-      "engine": "gemini",
-      "voice": "Orus",
-      "sha256": "eb9c8c35ff4b5da688b3d6c9b4bb093fefe59bd6243a9057fc5b6e359f07c4c8"
-    },
-    {
-      "text": "It proposes three, each with the rows it explains, and calls no model.",
-      "file": "7040f8537898bdc8.mp3",
-      "seconds": 4.008,
-      "engine": "gemini",
-      "voice": "Orus",
-      "sha256": "8e08e63a0f7ee7449faaa7eb51ec9ae575bb0e14e875576ef0218a41d97d8244"
-    },
-    {
-      "text": "Sam adds a map from the old status words to the new letters. The rules live in one file.",
-      "file": "8a912a5890f6b20a.mp3",
-      "seconds": 4.968,
-      "engine": "gemini",
-      "voice": "Orus",
-      "sha256": "0fb84a39a4af391ff2f90630bab4cfe992d017b575acb6191eea5f62fb88fb77"
-    },
-    {
-      "text": "Now only two rows differ.",
-      "file": "332a4ed0e8f015f4.mp3",
-      "seconds": 1.488,
-      "engine": "gemini",
-      "voice": "Orus",
-      "sha256": "52153aa3baac78e79622e7bc98da044d3a69c749ab1fa9156486360f5511c37d"
-    },
-    {
-      "text": "Rules forgive rounding, case, empty markers, renamed codes, dates, and types.",
-      "file": "fc400711f5205542.mp3",
-      "seconds": 5.856,
-      "engine": "gemini",
-      "voice": "Orus",
-      "sha256": "e85ddab0a21fb10c0767856138f42ef682939cbf4a8fefa6a73f4ef3c8bc5440"
-    },
-    {
-      "text": "They cannot do arithmetic, like rounding to a multiple of seven, or compare two columns.",
-      "file": "4e7052dca64b2454.mp3",
-      "seconds": 4.824,
-      "engine": "gemini",
-      "voice": "Orus",
-      "sha256": "75b45e3824a934f465605fbfcce206859ff54969b1f0fd8fb9be08758976232d"
-    },
-    {
-      "text": "Account 40 was closed on purpose, so a baseline file accepts it.",
-      "file": "2916ec87eaca501b.mp3",
+      "text": "This is Sam. He looks after the data jobs at a small company.",
+      "file": "24b5702e609deebf.mp3",
       "seconds": 3.864,
       "engine": "gemini",
       "voice": "Orus",
-      "sha256": "8174cd8236a358b40f541f5199d9cf7798632e17f3e51da3d335d00541bd6b1c"
+      "take": "5e258af147de",
+      "sha256": "99f7c09913638da15f93a5361f10d16e99e37dc71b69acb9d3c24ac900d67206"
     },
     {
-      "text": "The run accepts it, and one row still differs.",
-      "file": "311a99426af2ca0f.mp3",
-      "seconds": 2.904,
+      "text": "Every night, an old job exports the company's 40 customer accounts to a CSV file.",
+      "file": "3c250a721a2e09c7.mp3",
+      "seconds": 5.376,
       "engine": "gemini",
       "voice": "Orus",
-      "sha256": "4ff3047f2f9cc308f9c8a23fe6444bf1595912e90ac42fe00feb707b3f7e72be"
+      "take": "5e258af147de",
+      "sha256": "270106a2b046a22a69a38bfba723a28fba0940058cfcb427c74933aaa8166a50"
     },
     {
-      "text": "So the exit code is still 1.",
-      "file": "84b21f3310daf637.mp3",
-      "seconds": 1.8,
+      "text": "Sam has rewritten that job. Before he switches over, he has to show the new export matches the old one.",
+      "file": "e83853563629148e.mp3",
+      "seconds": 6.12,
       "engine": "gemini",
       "voice": "Orus",
-      "sha256": "8f6fc67200014248662b098c0e870b6ae3720d426da71f750ecb6422c8f7fe3e"
+      "take": "5e258af147de",
+      "sha256": "c9b58910260a79e12498189519bb2e7caa16d6d5b38c254ea56da952c9fe9bf6"
     },
     {
-      "text": "The report shows that row side by side. Account 17 moved from south to east.",
-      "file": "cbe712d0c3144336.mp3",
-      "seconds": 5.136,
+      "text": "This is the old export. Each account has a region, a status, a balance, and a note.",
+      "file": "a5a156737850f125.mp3",
+      "seconds": 6.072,
       "engine": "gemini",
       "voice": "Orus",
-      "sha256": "8fe3df17c37404f0cb230abbe466eebfaac9442caf2a491e6b6105eeb2b9bdb1"
+      "take": "5e258af147de",
+      "sha256": "0ad13360fd3c6a6578d664e1085e0990f07e24440f58dc951a2836f3279e036f"
     },
     {
-      "text": "That is the real error, out of 40 differences.",
-      "file": "de5a2ec28f196c90.mp3",
-      "seconds": 2.736,
+      "text": "They do not look the same. Regions are in capitals, and statuses are single letters.",
+      "file": "9c288e88c98712e0.mp3",
+      "seconds": 5.016,
       "engine": "gemini",
       "voice": "Orus",
-      "sha256": "8463f95c1382f1b624cf63827334e883a4eaaa3071abf17267b9283ebbf52257"
+      "take": "5e258af147de",
+      "sha256": "d64a10dd8953380f3b38d1e173b86a3c482aca5c63f0c02edfbca052b7543134"
     },
     {
-      "text": "On every pull request, the GitHub Action runs the same check, with the same rules and baseline.",
-      "file": "7720b999e5326c06.mp3",
-      "seconds": 5.4,
+      "text": "So Sam runs Veridelta on the two files, pairing the rows by account ID.",
+      "file": "7552d17106643758.mp3",
+      "seconds": 4.344,
       "engine": "gemini",
       "voice": "Orus",
-      "sha256": "9fcfba2434ef156c098ecec15bc696edca3db547b13a6c7574fba97bdf02b63a"
+      "take": "5e258af147de",
+      "sha256": "5748b13f748c9ccaed94f21ed43a37166982aed012702a20cac6c1beb6bd8fe7"
     },
     {
-      "text": "It comments the result, and its check fails until account 17 is fixed.",
-      "file": "661622f4f0ec1a88.mp3",
-      "seconds": 4.248,
+      "text": "39 accounts differ, and one is missing from the rewrite.",
+      "file": "86d9a3375d06e7b6.mp3",
+      "seconds": 3.48,
       "engine": "gemini",
       "voice": "Orus",
-      "sha256": "8dadb17ab3b3dd7acb121f3e89c19c490b7473f7be0bca26afbfbd45f0b41d98"
+      "take": "5e258af147de",
+      "sha256": "1008dffc72bcf0bda373ddfd25c0bc034cde60cf4a864285edc4f3b2cdebe218"
     },
     {
-      "text": "Agents can call the same checks through MCP, and warehouse tables are compared where they are stored.",
-      "file": "956bf5c33eaf521a.mp3",
-      "seconds": 4.92,
+      "text": "The exit code is 1, so in CI, this run would fail.",
+      "file": "dd925ce115c7f4a8.mp3",
+      "seconds": 3.12,
       "engine": "gemini",
       "voice": "Orus",
-      "sha256": "eedc648ffdc397c93e91eac85149b0ceac83b740dcb3dcff40822c0e77a7e67c"
+      "take": "5e258af147de",
+      "sha256": "172320dfbbc1be2374870fee49f15da75401377ab0a2cc6017fe4c2fd78a998c"
+    },
+    {
+      "text": "But which of these differences are real errors?",
+      "file": "a392c7b5853dec6c.mp3",
+      "seconds": 2.136,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "bbd8406f890466ead72382eb476f8736782c4bb1391847de08617e4c6701da2f"
+    },
+    {
+      "text": "Veridelta pairs each row with its match, by the key.",
+      "file": "526c2761b2da74fd.mp3",
+      "seconds": 2.928,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "7c87912c972079f3c43493672ecfb89e051f40b24ec4f6908622399c562a4c31"
+    },
+    {
+      "text": "Rules tell it which differences Sam expects, column by column.",
+      "file": "f6be951b484c6536.mp3",
+      "seconds": 3.456,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "5d279c0918fd4d7687a9a7aacf5c433900b34633f58b5de4dabb4346bebe7f0f"
+    },
+    {
+      "text": "Whatever the rules do not explain is reported. Nothing is hidden.",
+      "file": "500e203f3e8864a4.mp3",
+      "seconds": 3.36,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "20805af39a830156abd12b41e8b2a4d2b39fe10bbf774efd7cc4225a74dd26eb"
+    },
+    {
+      "text": "Sam starts from a configuration with no rules at all.",
+      "file": "38bee1df5e509dfc.mp3",
+      "seconds": 2.616,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "db24d2bdca6d8511cf1c10e81d5e46696fc4a561eaf96215f4a3c87fcd2be46d"
+    },
+    {
+      "text": "veridelta suggest tries each kind of rule on the columns that differ, without calling a model.",
+      "file": "86992c0f79f4b181.mp3",
+      "seconds": 4.944,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "bd39532ae9bfb61931487c9e8ae6e29e4ca5394e08f2fd8d412c354502f5cd56"
+    },
+    {
+      "text": "It finds three, each with the rows it explains: letter case in region, rounding in balance, and N/A as an empty note.",
+      "file": "ab1fbc537efd4d53.mp3",
+      "seconds": 8.16,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "f59ef3205be6edb1706ea77233f65406936e8f1c4914062112754a44b88a9bfe"
+    },
+    {
+      "text": "Sam keeps all three, and adds one suggest could not guess: the old status words, mapped to the new letters.",
+      "file": "c7a1c9afa108eee5.mp3",
+      "seconds": 6.336,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "efecb4a997e4257736d7ebf72d33a6e5ee41ebd139a074dfd65f996872664100"
+    },
+    {
+      "text": "Now only two accounts differ.",
+      "file": "1a85a73c4c03e9fe.mp3",
+      "seconds": 1.584,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "4aeee37027d7b0b98fb4676aa2ecd654c9d62a77b2b63459cae560f1cda24096"
+    },
+    {
+      "text": "Rules can forgive rounding, case, empty markers, renamed codes, dates, and types.",
+      "file": "5d25bf6d285f2fba.mp3",
+      "seconds": 6.288,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "4343454ddae649580cf98512e7cdf016a8bad28b346879ed119d24d81b86475b"
+    },
+    {
+      "text": "They cannot do arithmetic, like rounding to a multiple of seven.",
+      "file": "1948defa6a0b345c.mp3",
+      "seconds": 3.144,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "2e69276e5d02ab6ccf400ea14b91107409327931786451798afe75232d0af66a"
+    },
+    {
+      "text": "And they cannot compare two columns. Rows pair only by their key.",
+      "file": "4dc414b9c2f57476.mp3",
+      "seconds": 4.008,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "cfeb48af7ad16e335f175f2c215098c78223a737f2033dc4fbe91509b3d04dcf"
+    },
+    {
+      "text": "The missing account, number 40, was closed on purpose. Sam writes that down in a baseline file.",
+      "file": "cbe8758381aeacdc.mp3",
+      "seconds": 5.208,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "22c0a7da195483fa898a677c58947b3fdd6c55d18b910fd3f60162e79293fc7d"
+    },
+    {
+      "text": "Veridelta accepts the closed account. One account still differs.",
+      "file": "3310d5c16a1b0ca1.mp3",
+      "seconds": 5.376,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "8b9cecea3122c295af2ddb1837d6e35bc8bb1da1342240224819270cc3fac3a1"
+    },
+    {
+      "text": "So the run still fails.",
+      "file": "aac7f710cc68f0dc.mp3",
+      "seconds": 1.2,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "50e64c2915e0e517aeb7fdc4f918ad2860f73e32b2b2b3f80752f56a2707c5fd"
+    },
+    {
+      "text": "The report shows that row side by side. Account 17 is in the south in the old export, and in the east in the rewrite.",
+      "file": "d9e19c17bfbb74c9.mp3",
+      "seconds": 6.72,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "adc0f4b88961766d2c81a8dd03f1a16ee76eee63c1218b9f7c29c9ccc431630c"
+    },
+    {
+      "text": "That is the real bug, one among 40 differences.",
+      "file": "79a4dfa9b08a5ebb.mp3",
+      "seconds": 3,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "63f50cb5d1bc9be4fd60521c6baea36f9e575859226686a0ea0be09a75690fd2"
+    },
+    {
+      "text": "On every pull request, the GitHub Action runs the same check and comments the result.",
+      "file": "95cc9cb1adf2c355.mp3",
+      "seconds": 4.056,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "e708cc176f7792a4b979dbe837838e890036b01d51e4646522a72a995fa64cc6"
+    },
+    {
+      "text": "Until account 17 is fixed, the check fails, so the bug cannot ship.",
+      "file": "cbb5d36124655519.mp3",
+      "seconds": 3.888,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "40bf0def6e2f9623e4e3e019c9ad3477e0928973f5ab8beacbca6e72b22ca737"
+    },
+    {
+      "text": "Sam fixes the region in his rewrite and runs the check on the new export.",
+      "file": "ba949525e8eecbde.mp3",
+      "seconds": 3.48,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "baa7e31035e30ecde78b58fb772ce77ce5ca06db163c5a2bbbd0935e19dca394"
+    },
+    {
+      "text": "It passes.",
+      "file": "8fbaa9d2cce7c8e7.mp3",
+      "seconds": 0.6,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "4d41f23b6ad8e78cf008e5f56ef2a7a45344af696c98a32eb6256a549c32ffd9"
+    },
+    {
+      "text": "The exit code is 0. Sam can switch off the old job.",
+      "file": "dc1bcbd0db1251a4.mp3",
+      "seconds": 3.12,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "8f884846a8504a21727c3a63ad75b360d30675808e93769420a23e14f9f93b5c"
+    },
+    {
+      "text": "AI agents can run the same check through MCP.",
+      "file": "e254226cb6855517.mp3",
+      "seconds": 2.496,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "3218f2196f8787c944b292be3e61fde72ba122a200c69006569c81c184afc583"
+    },
+    {
+      "text": "And warehouse tables are compared where they are stored.",
+      "file": "5ff32f6c22d9fc9e.mp3",
+      "seconds": 2.304,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "5e258af147de",
+      "sha256": "2460f0e0a7ae66d8085cf69f4f392235ee4af530564615596bf185c976684274"
     },
     {
       "text": "Veridelta is early, and tested on generated data.",
-      "file": "38097257d65b27fd.mp3",
-      "seconds": 3.312,
+      "file": "2355bb8bde0c4740.mp3",
+      "seconds": 2.736,
       "engine": "gemini",
       "voice": "Orus",
-      "sha256": "a404c626ab015ada92e48fe4e4c7db23dafba1290acc4449f7342b5d17b99e07"
+      "take": "5e258af147de",
+      "sha256": "87ec6aae7683cfb0e5d362020b3b0831e64a5725e46d72895833728a73de47a0"
     },
     {
       "text": "Feedback is welcome.",
-      "file": "54de614a154aebb2.mp3",
-      "seconds": 1.128,
+      "file": "282ff309b6d8e484.mp3",
+      "seconds": 0.888,
       "engine": "gemini",
       "voice": "Orus",
-      "sha256": "86db512612ea6558f31c99da911c76e5b372ca8ccd138e16dee145570f8259e6"
+      "take": "5e258af147de",
+      "sha256": "d8fac57003717c687db999c99c3e021a66cc27dd93b7eabb240e4712c3e66ff2"
     },
     {
       "text": "Try it with pip install veridelta.",
-      "file": "8e60aba70e6374bf.mp3",
-      "seconds": 1.992,
+      "file": "3413d035dce42e2b.mp3",
+      "seconds": 1.848,
       "engine": "gemini",
       "voice": "Orus",
-      "sha256": "8814de3003407cb11d2304002a135926e662428fd779efd5269c8980debf2a9d"
+      "take": "5e258af147de",
+      "sha256": "f4f9f94ba0f993765369ae845b01c51f653646b8bb214c3e8207f68fd2a90c7d"
     }
   ]
 }
