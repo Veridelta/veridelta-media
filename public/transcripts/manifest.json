@@ -1,7 +1,7 @@
 {
   "source": "https://github.com/Veridelta/veridelta",
   "release": "v0.35.1",
-  "commit": "ebe1dff31cecac6f7227e273ce40c162c507b783",
+  "commit": "b8669bcea129c42c524016e8822adebe8dec170c",
   "transcripts": [
     {
       "name": "accounts-baseline",
@@ -297,6 +297,270 @@
           ]
         }
       ]
+    },
+    {
+      "name": "stations-baseline",
+      "file": "stations-baseline.txt",
+      "tape": "demo/promo/stations-baseline.tape",
+      "sha256": "5c8be006bd5550bc7db3c2e19a6ae8870ca64c5b0f4e270a1ea48b442ea2d71a",
+      "steps": [
+        {
+          "command": "head -n 16 stations_accepted.json",
+          "output": [
+            "{",
+            "  \"primary_keys\": [",
+            "    \"station\",",
+            "    \"obs_date\"",
+            "  ],",
+            "  \"added\": [],",
+            "  \"removed\": [],",
+            "  \"changed\": [",
+            "    {",
+            "      \"key\": {",
+            "        \"station\": \"S3\",",
+            "        \"obs_date\": \"2025-01-01\"",
+            "      },",
+            "      \"columns\": [",
+            "        \"pressure_hpa\"",
+            "      ]"
+          ]
+        },
+        {
+          "command": "veridelta run -c stations_rules.yaml --baseline stations_accepted.json",
+          "output": [
+            "Loading configuration from stations_rules.yaml...",
+            "Comparing...",
+            "",
+            "Veridelta Execution Summary",
+            "===========================",
+            "Status:        FAILED",
+            "Match Rate:    96.77%",
+            "Source Rows:   124",
+            "Target Rows:   124",
+            "Volume Shift:  +0 rows",
+            "",
+            "Row-Level Discrepancies:",
+            "---------------------------",
+            "Added:         0",
+            "Removed:       0",
+            "Changed:       4",
+            "Total Issues:  4",
+            "Accepted:      31",
+            "",
+            "Top Column-Level Drifts:",
+            "---------------------------",
+            "- temperature_c: 4 mismatches",
+            ""
+          ]
+        },
+        {
+          "command": "echo \"exit code: $?\"",
+          "output": [
+            "exit code: 1"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "stations-data",
+      "file": "stations-data.txt",
+      "tape": "demo/promo/stations-data.tape",
+      "sha256": "09c0abb0619329df60bba82e0d75ce70211eec78d36cc1927255d1346f6c7036",
+      "steps": [
+        {
+          "command": "head -n 5 stations_idl.csv",
+          "output": [
+            "station,obs_date,temp,pressure_hpa,humidity",
+            "S1,2025-01-01,-3.5,1020.0,91.900002",
+            "S1,2025-01-02,-5.0,1021.2,-999.000000",
+            "S1,2025-01-03,-5.9,1022.3,88.599998",
+            "S1,2025-01-04,-6.0,1023.2,85.900002"
+          ]
+        },
+        {
+          "command": "head -n 5 stations_python.csv",
+          "output": [
+            "station,obs_date,temperature_c,pressure_hpa,humidity",
+            "S1,2025-01-01,3.5,1020.0,91.9",
+            "S1,2025-01-02,5.0,1021.2,",
+            "S1,2025-01-03,5.9,1022.3,88.6",
+            "S1,2025-01-04,6.0,1023.2,85.9"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "stations-fixed",
+      "file": "stations-fixed.txt",
+      "tape": "demo/promo/stations-fixed.tape",
+      "sha256": "514c87350961ae95c258804291b4f7d701205504931258661674e312d23c72ea",
+      "steps": [
+        {
+          "command": "veridelta run -c stations_fixed.yaml --baseline stations_accepted.json",
+          "output": [
+            "Loading configuration from stations_fixed.yaml...",
+            "Comparing...",
+            "",
+            "Veridelta Execution Summary",
+            "===========================",
+            "Status:        PASSED (Perfect Match)",
+            "Match Rate:    100.0%",
+            "Source Rows:   124",
+            "Target Rows:   124",
+            "Volume Shift:  +0 rows",
+            "",
+            "Row-Level Discrepancies:",
+            "---------------------------",
+            "Added:         0",
+            "Removed:       0",
+            "Changed:       0",
+            "Total Issues:  0",
+            "Accepted:      31",
+            ""
+          ]
+        },
+        {
+          "command": "echo \"exit code: $?\"",
+          "output": [
+            "exit code: 0"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "stations-rules",
+      "file": "stations-rules.txt",
+      "tape": "demo/promo/stations-rules.tape",
+      "sha256": "ac2da7e82b776277f301c69eb48ed2e17038656733f5206cfd5936c79636d6b3",
+      "steps": [
+        {
+          "command": "cat stations_rules.yaml",
+          "output": [
+            "source:",
+            "  path: stations_idl.csv",
+            "target:",
+            "  path: stations_python.csv",
+            "primary_keys: [station, obs_date]",
+            "rules:",
+            "  - column_names: [temp]",
+            "    rename_to: temperature_c",
+            "  - column_names: [humidity]",
+            "    relative_tolerance: 5.0e-08",
+            "    null_values: [-999.0]"
+          ]
+        },
+        {
+          "command": "veridelta run -c stations_rules.yaml",
+          "output": [
+            "Loading configuration from stations_rules.yaml...",
+            "Comparing...",
+            "",
+            "Veridelta Execution Summary",
+            "===========================",
+            "Status:        FAILED",
+            "Match Rate:    71.77%",
+            "Source Rows:   124",
+            "Target Rows:   124",
+            "Volume Shift:  +0 rows",
+            "",
+            "Row-Level Discrepancies:",
+            "---------------------------",
+            "Added:         0",
+            "Removed:       0",
+            "Changed:       35",
+            "Total Issues:  35",
+            "",
+            "Top Column-Level Drifts:",
+            "---------------------------",
+            "- pressure_hpa: 31 mismatches",
+            "- temperature_c: 4 mismatches",
+            ""
+          ]
+        },
+        {
+          "command": "echo \"exit code: $?\"",
+          "output": [
+            "exit code: 1"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "stations-run",
+      "file": "stations-run.txt",
+      "tape": "demo/promo/stations-run.tape",
+      "sha256": "a6cde9aa06c898bd0f608206f897851b5a0245863072c75eaf1e043cdba0495f",
+      "steps": [
+        {
+          "command": "veridelta run stations_idl.csv stations_python.csv --key station --key obs_date",
+          "output": [
+            "Comparing...",
+            "",
+            "Veridelta Execution Summary",
+            "===========================",
+            "Status:        FAILED",
+            "Match Rate:    0.0%",
+            "Source Rows:   124",
+            "Target Rows:   124",
+            "Volume Shift:  +0 rows",
+            "",
+            "Row-Level Discrepancies:",
+            "---------------------------",
+            "Added:         0",
+            "Removed:       0",
+            "Changed:       124",
+            "Total Issues:  124",
+            "",
+            "Top Column-Level Drifts:",
+            "---------------------------",
+            "- humidity: 124 mismatches",
+            "- pressure_hpa: 31 mismatches",
+            ""
+          ]
+        },
+        {
+          "command": "echo \"exit code: $?\"",
+          "output": [
+            "exit code: 1"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "stations-suggest",
+      "file": "stations-suggest.txt",
+      "tape": "demo/promo/stations-suggest.tape",
+      "sha256": "46475a22a3348bd0dbaa9810ad47590b5861e75dc4400d050f47ca14f36ddb9a",
+      "steps": [
+        {
+          "command": "cat stations.yaml",
+          "output": [
+            "source:",
+            "  path: stations_idl.csv",
+            "target:",
+            "  path: stations_python.csv",
+            "primary_keys: [station, obs_date]",
+            "rules:",
+            "  - column_names: [temp]",
+            "    rename_to: temperature_c"
+          ]
+        },
+        {
+          "command": "veridelta suggest -c stations.yaml",
+          "output": [
+            "Loading configuration from stations.yaml...",
+            "Comparing, and trying each rule...",
+            "humidity: relative_tolerance 5e-08, null_values [-999.0] explains 124 of 124 differing rows, the largest gap 3e-06",
+            "  for example station='S1', obs_date='2025-01-01'; station='S1', obs_date='2025-01-02'; station='S1', obs_date='2025-01-03'",
+            "rules:",
+            "- column_names:",
+            "  - humidity",
+            "  relative_tolerance: 5.0e-08",
+            "  null_values:",
+            "  - -999.0"
+          ]
+        }
+      ]
     }
   ],
   "images": [
@@ -316,7 +580,7 @@
       "caption": "Screenshot of the HTML report of the run in demo/promo/accounts-baseline.tape",
       "width": 1920,
       "height": 1080,
-      "sha256": "d33b0d8b6b89e2a3c0ca118ec72a25872f594e4385e41409bdeb10dbf632dba3"
+      "sha256": "6c1f5abf9e1b321da94fc94dbb48d5d54a736087800e64cc5a301274a138e0ba"
     }
   ]
 }
