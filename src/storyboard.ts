@@ -30,7 +30,13 @@ export type Picture =
       /** Seconds from the scene's start when the picture scrolls to its bottom, in place of a slow push. */
       scrollAt?: number;
     }
-  | { kind: "card"; heading: string; lines: string[] }
+  | {
+      kind: "card";
+      heading: string;
+      lines: string[];
+      /** Seconds from the scene's start when each line appears; without them, all show at once. */
+      shows?: number[];
+    }
   | { kind: "install"; repository?: boolean };
 
 /** A caption, timed in seconds from the start of its scene. */
@@ -170,28 +176,35 @@ const install = (seconds: number): Scene => ({
   backedBy: `${DOCS}#install`,
 });
 
-// The two-minute demo, narrated. Each scene is a list of beats: a line the voice says, and
-// what the picture does as the line starts, such as typing a transcript's next command or
-// underlining a line of its output. The voice's measured lengths set every time, so a scene
-// is as long as its lines, and its subtitles are those lines, word for word.
+// The narrated demo. Each scene is a list of beats: a line the voice says, and what the
+// picture does with it, such as typing a transcript's next command, underlining a line of its
+// output, or showing a card's next line. The voice's measured lengths set every time, so a scene
+// is as long as its lines, and its subtitles are those lines, word for word. A line never talks
+// about output that is not on screen yet.
 
-/** One line the voice says, and what the picture does as it starts. */
+/** One line the voice says, and what the picture does with it. */
 export type Beat = {
   say: string;
   /** The transcript's next step, whose command starts to type as the line starts. */
   type?: number;
-  /** Output lines to underline, matched whole, once the line starts and any command has run. */
+  /** The transcript's next step, typed first; the line starts once its output shows. */
+  run?: number;
+  /** Output lines to underline, matched whole, which must be on screen as the line starts. */
   mark?: string[];
   /** A screenshot taller than its frame scrolls to its bottom as the line starts. */
   scroll?: boolean;
+  /** The card's next line appears as the line starts. */
+  reveal?: boolean;
 };
 
 /** Seconds before the first line, between two lines, and after the last. */
 const LEAD = 0.6;
-const GAP = 0.45;
-const TAIL = 0.8;
+const GAP = 0.5;
+const TAIL = 0.9;
 /** Seconds a command's output stays on screen before the next line starts. */
-const SETTLE = 0.9;
+const SETTLE = 1.2;
+/** Seconds from a command's output to the line that talks about it. */
+const AFTER = 0.4;
 
 type Narrated = Omit<Scene, "seconds" | "captions" | "voice" | "picture"> & {
   picture: Exclude<Picture, TerminalPicture> | Omit<TerminalPicture, "timing">;
@@ -204,30 +217,48 @@ const narrate = ({ beats, picture, hold = 0, ...scene }: Narrated): Scene => {
   const timing: TerminalTiming = { starts: [], marks: [] };
   const steps = picture.kind === "terminal" ? transcript(picture.transcript).steps : [];
   const voice: NonNullable<Scene["voice"]> = [];
+  const shows: number[] = [];
   let scrollAt: number | undefined;
   let at = LEAD;
   for (const beat of beats) {
-    if (beat.scroll) {
-      if (picture.kind !== "screenshot") {
-        throw new Error(`Scene ${scene.id}: "${beat.say}" scrolls, but only a screenshot scrolls.`);
-      }
-      scrollAt = at;
-    }
+    const where = `Scene ${scene.id}: "${beat.say}"`;
     const line = spoken(beat.say);
     const seconds = line?.seconds ?? estimate(beat.say);
-    let busy = seconds;
-    let ran = at;
-    if (beat.type !== undefined) {
-      if (beat.type !== timing.starts.length || !steps[beat.type]) {
-        throw new Error(`Scene ${scene.id}: "${beat.say}" types step ${beat.type}, but the next is ${timing.starts.length}.`);
+    if (beat.type !== undefined && beat.run !== undefined) {
+      throw new Error(`${where} both types and runs a step.`);
+    }
+    const step = beat.type ?? beat.run;
+    // When the step's output shows, or when the line starts if it types nothing.
+    let ran: number | undefined;
+    if (step !== undefined) {
+      if (step !== timing.starts.length || !steps[step]) {
+        throw new Error(`${where} types step ${step}, but the next is ${timing.starts.length}.`);
       }
       timing.starts.push(at);
-      ran = at + runSeconds(steps[beat.type].command);
-      busy = Math.max(busy, ran - at + SETTLE);
+      ran = at + runSeconds(steps[step].command);
     }
-    timing.marks.push(...(beat.mark ?? []).map((text) => ({ text, at: ran })));
-    voice.push({ text: beat.say, file: line?.file, at, seconds });
-    at += busy + GAP;
+    const from = beat.run !== undefined && ran !== undefined ? ran + AFTER : at;
+    if (beat.mark?.length && ran !== undefined && ran > from) {
+      throw new Error(`${where} marks output before it shows; run the step instead of typing it.`);
+    }
+    timing.marks.push(...(beat.mark ?? []).map((text) => ({ text, at: ran ?? from })));
+    if (beat.scroll) {
+      if (picture.kind !== "screenshot") {
+        throw new Error(`${where} scrolls, but only a screenshot scrolls.`);
+      }
+      scrollAt = from;
+    }
+    if (beat.reveal) {
+      if (picture.kind !== "card" || shows.length >= picture.lines.length) {
+        throw new Error(`${where} shows a card line that is not there.`);
+      }
+      shows.push(from);
+    }
+    voice.push({ text: beat.say, file: line?.file, at: from, seconds });
+    at = Math.max(from + seconds, ran === undefined ? 0 : ran + SETTLE) + GAP;
+  }
+  if (picture.kind === "card" && shows.length > 0 && shows.length !== picture.lines.length) {
+    throw new Error(`Scene ${scene.id} shows ${shows.length} of its card's ${picture.lines.length} lines.`);
   }
   const seconds = at - GAP + TAIL + hold;
   const captions = voice.map(({ text, at: from }, index) => ({
@@ -242,7 +273,9 @@ const narrate = ({ beats, picture, hold = 0, ...scene }: Narrated): Scene => {
         ? { ...picture, timing }
         : picture.kind === "screenshot" && scrollAt !== undefined
           ? { ...picture, scrollAt }
-          : picture,
+          : picture.kind === "card" && shows.length > 0
+            ? { ...picture, shows }
+            : picture,
     seconds,
     captions,
     voice,
@@ -251,12 +284,38 @@ const narrate = ({ beats, picture, hold = 0, ...scene }: Narrated): Scene => {
 
 const demo: Scene[] = [
   narrate({
+    id: "sam",
+    description: "A card in the logo's colors that introduces Sam, the nightly export, and the rewrite he has to check.",
+    picture: {
+      kind: "card",
+      heading: "Meet Sam",
+      lines: [
+        "Sam looks after the data jobs at a small company.",
+        "Every night, an old job exports 40 accounts to a CSV file.",
+        "Sam rewrote it. Before switching, the new export has to match.",
+      ],
+    },
+    beats: [
+      { say: "This is Sam. He looks after the data jobs at a small company.", reveal: true },
+      { say: "Every night, an old job exports the company's 40 customer accounts to a CSV file.", reveal: true },
+      {
+        say: "Sam has rewritten that job. Before he switches over, he has to show the new export matches the old one.",
+        reveal: true,
+      },
+    ],
+    backedBy: `${DOCS}how-to/from-drift-to-rules/`,
+  }),
+  narrate({
     id: "accounts-data",
-    description: "The first six lines of each CSV file, from the legacy job and its rewrite.",
+    description: "The first six lines of each CSV file, from the legacy job and its rewrite, with two rows of the rewrite underlined.",
     picture: { kind: "terminal", transcript: "accounts-data", label: "1 · Two exports" },
     beats: [
-      { say: "Sam is replacing a legacy job that exports 40 accounts.", type: 0 },
-      { say: "Before switching, Sam has to show that the new export matches the old one.", type: 1 },
+      { say: "This is the old export. Each account has a region, a status, a balance, and a note.", type: 0 },
+      {
+        say: "They do not look the same. Regions are in capitals, and statuses are single letters.",
+        run: 1,
+        mark: ["1,SOUTH,P,112.5,renewal 2027", "2,EAST,C,125.0,renewal 2028"],
+      },
     ],
     backedBy: `${DOCS}how-to/from-drift-to-rules/`,
   }),
@@ -265,15 +324,16 @@ const demo: Scene[] = [
     description: "`veridelta run` on the two files and `--key account_id`: FAILED, 39 changed, 1 removed, and exit code 1.",
     picture: { kind: "terminal", transcript: "accounts-run", label: "2 · The first run" },
     beats: [
-      { say: "Veridelta pairs the rows by account ID and compares each column.", type: 0 },
-      { say: "39 rows differ, and one account is missing.", mark: ["Changed:       39", "Removed:       1"] },
-      { say: "In CI, exit code 1 fails the check. But is any of this a real error?", type: 1, mark: ["exit code: 1"] },
+      { say: "So Sam runs Veridelta on the two files, pairing the rows by account ID.", type: 0 },
+      { say: "39 accounts differ, and one is missing from the rewrite.", mark: ["Changed:       39", "Removed:       1"] },
+      { say: "The exit code is 1, so in CI, this run would fail.", run: 1, mark: ["exit code: 1"] },
+      { say: "But which of these differences are real errors?" },
     ],
     backedBy: `${DOCS}cli/#exit-codes`,
   }),
   narrate({
     id: "how-it-decides",
-    description: "A card in the logo's colors with the three steps of a comparison.",
+    description: "A card in the logo's colors with the three steps of a comparison, each shown as the voice names it.",
     picture: {
       kind: "card",
       heading: "How Veridelta decides",
@@ -284,8 +344,9 @@ const demo: Scene[] = [
       ],
     },
     beats: [
-      { say: "Rules say which differences are expected, column by column." },
-      { say: "Veridelta cleans each side by those rules, then reports whatever they do not explain." },
+      { say: "Veridelta pairs each row with its match, by the key.", reveal: true },
+      { say: "Rules tell it which differences Sam expects, column by column.", reveal: true },
+      { say: "Whatever the rules do not explain is reported. Nothing is hidden.", reveal: true },
     ],
     backedBy: `${DOCS}rules/#transform-order`,
   }),
@@ -294,10 +355,10 @@ const demo: Scene[] = [
     description: "A configuration with no rules, then `veridelta suggest`, which proposes three rules with their evidence.",
     picture: { kind: "terminal", transcript: "accounts-suggest", label: "3 · suggest" },
     beats: [
-      { say: "Sam does not have to guess the rules.", type: 0 },
-      { say: "veridelta suggest tries each kind of rule on the columns that differ.", type: 1 },
+      { say: "Sam starts from a configuration with no rules at all.", type: 0 },
+      { say: "veridelta suggest tries each kind of rule on the columns that differ, without calling a model.", type: 1 },
       {
-        say: "It proposes three, each with the rows it explains, and calls no model.",
+        say: "It finds three, each with the rows it explains: letter case in region, rounding in balance, and N/A as an empty note.",
         mark: [
           "region: case_insensitive true explains 38 of 39 differing rows",
           "balance: absolute_tolerance 0.005 explains 13 of 13 differing rows, the largest gap 0.004",
@@ -309,17 +370,21 @@ const demo: Scene[] = [
   }),
   narrate({
     id: "accounts-rules",
-    description: "The configuration with all four rules, then its run: 95.0%, 1 removed, 1 changed.",
+    description: "The configuration with all four rules, its status map underlined, then its run: 95.0%, 1 removed, 1 changed.",
     picture: { kind: "terminal", transcript: "accounts-rules", label: "4 · Four rules" },
     beats: [
-      { say: "Sam adds a map from the old status words to the new letters. The rules live in one file.", type: 0 },
-      { say: "Now only two rows differ.", type: 1, mark: ["Removed:       1", "Changed:       1"] },
+      {
+        say: "Sam keeps all three, and adds one suggest could not guess: the old status words, mapped to the new letters.",
+        run: 0,
+        mark: ["    value_map:", "      active: A", "      closed: C", "      paused: P"],
+      },
+      { say: "Now only two accounts differ.", run: 1, mark: ["Removed:       1", "Changed:       1"] },
     ],
     backedBy: `${DOCS}rules/`,
   }),
   narrate({
     id: "rule-limits",
-    description: "A card in the logo's colors with what rules can and cannot do.",
+    description: "A card in the logo's colors with what rules can and cannot do, each line shown as the voice says it.",
     picture: {
       kind: "card",
       heading: "What rules can and cannot do",
@@ -330,8 +395,9 @@ const demo: Scene[] = [
       ],
     },
     beats: [
-      { say: "Rules forgive rounding, case, empty markers, renamed codes, dates, and types." },
-      { say: "They cannot do arithmetic, like rounding to a multiple of seven, or compare two columns." },
+      { say: "Rules can forgive rounding, case, empty markers, renamed codes, dates, and types.", reveal: true },
+      { say: "They cannot do arithmetic, like rounding to a multiple of seven.", reveal: true },
+      { say: "And they cannot compare two columns. Rows pair only by their key.", reveal: true },
     ],
     backedBy: `${DOCS}rules/#what-rules-cannot-do`,
   }),
@@ -340,9 +406,13 @@ const demo: Scene[] = [
     description: "A baseline that accepts the removed account, then the run against it: 1 accepted, 1 changed, and exit code 1.",
     picture: { kind: "terminal", transcript: "accounts-baseline", label: "5 · A baseline" },
     beats: [
-      { say: "Account 40 was closed on purpose, so a baseline file accepts it.", type: 0 },
-      { say: "The run accepts it, and one row still differs.", type: 1, mark: ["Accepted:      1", "Changed:       1"] },
-      { say: "So the exit code is still 1.", type: 2, mark: ["exit code: 1"] },
+      {
+        say: "The missing account, number 40, was closed on purpose. Sam writes that down in a baseline file.",
+        run: 0,
+        mark: ['      "account_id": 40'],
+      },
+      { say: "Veridelta accepts the closed account. One account still differs.", run: 1, mark: ["Accepted:      1", "Changed:       1"] },
+      { say: "So the run still fails.", run: 2, mark: ["exit code: 1"] },
     ],
     backedBy: `${DOCS}cli/#accepting-drift`,
   }),
@@ -351,8 +421,8 @@ const demo: Scene[] = [
     description: "The HTML report of the baseline run: account 17, south in the legacy file and east in the rewrite.",
     picture: { kind: "screenshot", image: "promo-report", label: "6 · The HTML report" },
     beats: [
-      { say: "The report shows that row side by side. Account 17 moved from south to east." },
-      { say: "That is the real error, out of 40 differences." },
+      { say: "The report shows that row side by side. Account 17 is in the south in the old export, and in the east in the rewrite." },
+      { say: "That is the real bug, one among 40 differences." },
     ],
     backedBy: `${DOCS}results/#html-report`,
   }),
@@ -362,14 +432,25 @@ const demo: Scene[] = [
       "The GitHub Action's comment on a pull request that compares the same files with the same rules and baseline: FAILED, 1 accepted, and account 17's region, south to east.",
     picture: { kind: "screenshot", image: "action-comment", label: "7 · The pull request", width: 1400 },
     beats: [
-      { say: "On every pull request, the GitHub Action runs the same check, with the same rules and baseline." },
-      { say: "It comments the result, and its check fails until account 17 is fixed.", scroll: true },
+      { say: "On every pull request, the GitHub Action runs the same check and comments the result." },
+      { say: "Until account 17 is fixed, the check fails, so the bug cannot ship.", scroll: true },
     ],
     backedBy: `${DOCS}ci/`,
   }),
   narrate({
+    id: "accounts-fixed",
+    description: "The same run on the fixed export, with account 17's region corrected: PASSED, 1 accepted, and exit code 0.",
+    picture: { kind: "terminal", transcript: "accounts-fixed", label: "8 · The fix" },
+    beats: [
+      { say: "Sam fixes the region in his rewrite and runs the check on the new export.", type: 0 },
+      { say: "It passes.", mark: ["Status:        PASSED (Perfect Match)"] },
+      { say: "The exit code is 0. Sam can switch off the old job.", run: 1, mark: ["exit code: 0"] },
+    ],
+    backedBy: `${DOCS}cli/#accepting-drift`,
+  }),
+  narrate({
     id: "elsewhere",
-    description: "A card in the logo's colors with the other places a comparison runs.",
+    description: "A card in the logo's colors with the other places a comparison runs, each shown as the voice names it.",
     picture: {
       kind: "card",
       heading: "Elsewhere",
@@ -378,7 +459,10 @@ const demo: Scene[] = [
         "Tables in Snowflake, Databricks, or BigQuery are compared where they are stored.",
       ],
     },
-    beats: [{ say: "Agents can call the same checks through MCP, and warehouse tables are compared where they are stored." }],
+    beats: [
+      { say: "AI agents can run the same check through MCP.", reveal: true },
+      { say: "And warehouse tables are compared where they are stored.", reveal: true },
+    ],
     backedBy: DOCS,
   }),
   narrate({
@@ -400,7 +484,7 @@ const demo: Scene[] = [
     description: "The wordmark, the install command, the docs and repository addresses, and the music's credit.",
     picture: { kind: "install", repository: true },
     beats: [{ say: "Try it with pip install veridelta." }],
-    hold: 2.5,
+    hold: 2,
     backedBy: `${DOCS}#install`,
   }),
 ];
@@ -429,7 +513,7 @@ export const cuts: Cut[] = [
   },
   {
     id: "demo-120",
-    title: "About two minutes, 1920 by 1080, narrated, on CSV files",
+    title: "About three minutes, 1920 by 1080, narrated, on CSV files",
     width: 1920,
     height: 1080,
     scenes: demo,

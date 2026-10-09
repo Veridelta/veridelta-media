@@ -1,7 +1,7 @@
 {
   "source": "https://github.com/Veridelta/veridelta",
-  "release": "v0.35.0",
-  "commit": "ee04c6d906225e4abcf208a45a2f638895c7090d",
+  "release": "v0.35.1",
+  "commit": "ebe1dff31cecac6f7227e273ce40c162c507b783",
   "transcripts": [
     {
       "name": "accounts-baseline",
@@ -114,6 +114,44 @@
             "3,WEST,A,137.504,renewal 2026",
             "4,NORTH,P,150.0,renewal 2027",
             "5,SOUTH,C,162.5,N/A"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "accounts-fixed",
+      "file": "accounts-fixed.txt",
+      "tape": "demo/promo/accounts-fixed.tape",
+      "sha256": "522dd54a4cd9cbc45951a728d7ed234bdb11feb716486a7cc85114b180825f4f",
+      "steps": [
+        {
+          "command": "veridelta run -c accounts_fixed.yaml --baseline accepted.json",
+          "output": [
+            "Loading configuration from accounts_fixed.yaml...",
+            "Comparing...",
+            "",
+            "Veridelta Execution Summary",
+            "===========================",
+            "Status:        PASSED (Perfect Match)",
+            "Match Rate:    100.0%",
+            "Source Rows:   40",
+            "Target Rows:   39",
+            "Volume Shift:  -1 row",
+            "",
+            "Row-Level Discrepancies:",
+            "---------------------------",
+            "Added:         0",
+            "Removed:       0",
+            "Changed:       0",
+            "Total Issues:  0",
+            "Accepted:      1",
+            ""
+          ]
+        },
+        {
+          "command": "echo \"exit code: $?\"",
+          "output": [
+            "exit code: 0"
           ]
         }
       ]
@@ -278,7 +316,7 @@
       "caption": "Screenshot of the HTML report of the run in demo/promo/accounts-baseline.tape",
       "width": 1920,
       "height": 1080,
-      "sha256": "70932f0c142b6b111ffa9a03fa4c4459a3095ca112e6e965c8e918847fcaa39d"
+      "sha256": "d33b0d8b6b89e2a3c0ca118ec72a25872f594e4385e41409bdeb10dbf632dba3"
     }
   ]
 }

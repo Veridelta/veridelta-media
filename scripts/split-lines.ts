@@ -1,16 +1,20 @@
-// Splits one clip of several spoken lines into a clip per line, at the pauses between them.
-// The voice reads a scene's lines in one request, which sounds more even and spends fewer
-// requests, and this cuts the clip where it paused longest. It refuses a split it cannot
-// trust, so a line's clip never carries another line's words.
+// Splits one take of many spoken lines into a clip per line. The voice reads a whole cut in
+// one request, so every line has the same tone and level; scripts/align.py hears the take and
+// says where each line's words start and end, and this cuts in the silence between one line's
+// last word and the next line's first. It refuses a split it cannot trust, so a line's clip
+// never carries another line's words.
 import { execFileSync, spawnSync } from "node:child_process";
 
 /** Pauses quieter than this, and at least this long, count as a pause. */
 const NOISE = "-38dB";
-const SHORTEST = 0.18;
-/** A pause at least this long ends a paragraph; a pause inside a line is shorter. */
-const LONG = 0.8;
+const SHORTEST = 0.08;
+/** The share of a line's words the take must hold, so a garbled or skipped line is refused. */
+const HEARD = 0.8;
 
 type Pause = { start: number; end: number; length: number };
+
+/** Where scripts/align.py heard a line: its first word's start, its last word's end, and the share of its words heard. */
+export type Span = { start: number | null; end: number | null; heard: number };
 
 export const duration = (file: string) =>
   Number(execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", file]).toString());
@@ -29,36 +33,31 @@ export const pauses = (wav: string): Pause[] => {
 };
 
 /**
- * Where to cut a clip of these lines, in seconds, or why it cannot be cut safely. The cuts sit
- * in the middle of the longest pauses, one fewer than the lines. A split is trusted only when
- * those pauses are clearly longer than every other, and each line's length matches its words.
+ * Where to cut a take of these lines, in seconds, or why it cannot be cut safely. Each cut sits
+ * in the longest pause between one line's last word and the next line's first, or halfway
+ * between them when the take holds no pause there.
  */
-export const cuts = (wav: string, lines: string[]): number[] | string => {
-  if (lines.length === 1) {
-    return [];
+export const cuts = (wav: string, lines: string[], spans: Span[]): number[] | string => {
+  if (spans.length !== lines.length) {
+    return `heard ${spans.length} spans for ${lines.length} lines`;
   }
-  const found = pauses(wav);
-  const longest = [...found].sort((a, b) => b.length - a.length);
-  const chosen = longest.slice(0, lines.length - 1);
-  const rest = longest.slice(lines.length - 1);
-  if (chosen.length < lines.length - 1) {
-    return `found ${found.length} pauses for ${lines.length} lines`;
+  const missing = spans.findIndex((span) => span.start === null || span.end === null || span.heard < HEARD);
+  if (missing >= 0) {
+    return `"${lines[missing].slice(0, 40)}..." is not all in the take, ${Math.round(spans[missing].heard * 100)}% of its words heard`;
   }
-  const shortestChosen = Math.min(...chosen.map((pause) => pause.length));
-  if (shortestChosen < 0.25 || (rest.length > 0 && shortestChosen < 1.15 * rest[0].length)) {
-    return "the pauses between lines are no longer than the pauses inside them";
-  }
-  // A pause this long inside a line is a paragraph's, so the clip holds more than its lines,
-  // such as an instruction the model read aloud.
-  if (rest.length > 0 && rest[0].length >= LONG) {
-    return "the clip has more long pauses than its lines have gaps";
-  }
-  const points = chosen.map((pause) => (pause.start + pause.end) / 2).sort((a, b) => a - b);
-  const bounds = [0, ...points, duration(wav)];
-  const pace = lines.map((line, index) => (bounds[index + 1] - bounds[index]) / line.length);
-  const mean = pace.reduce((sum, value) => sum + value, 0) / pace.length;
-  if (pace.some((value) => value < 0.6 * mean || value > 1.6 * mean)) {
-    return "a line's length does not match its words";
+  const all = pauses(wav);
+  const points: number[] = [];
+  for (let index = 0; index + 1 < lines.length; index++) {
+    const after = spans[index].end!;
+    const before = spans[index + 1].start!;
+    if (after > before + 0.05) {
+      return `"${lines[index + 1].slice(0, 40)}..." starts before the line ahead of it ends`;
+    }
+    const between = all
+      .map((pause) => ({ start: Math.max(pause.start, after), end: Math.min(pause.end, before) }))
+      .filter((pause) => pause.end > pause.start)
+      .sort((a, b) => b.end - b.start - (a.end - a.start));
+    points.push(between.length > 0 ? (between[0].start + between[0].end) / 2 : (after + before) / 2);
   }
   return points;
 };

@@ -18,7 +18,7 @@ export type PosterProps = {
 
 export const posters: (PosterProps & { id: string })[] = [
   // suggest's three rules, each underlined with its evidence, while the voice says so.
-  { id: "demo-120-poster", cutId: "demo-120", line: "It proposes three, each with the rows it explains", x: 1440, y: 500 },
+  { id: "demo-120-poster", cutId: "demo-120", line: "It finds three, each with the rows it explains", x: 1440, y: 500 },
 ];
 
 /** The last frame of the line that starts with this text. */
