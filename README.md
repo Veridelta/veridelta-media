@@ -11,6 +11,8 @@ Promotional videos for [Veridelta](https://github.com/Veridelta/veridelta), made
 | `promo-square-30` | 1080 by 1080 | About 30 seconds | As `promo-30`, for feeds that crop wide video |
 | `demo-120` | 1920 by 1080 | About two minutes | A narrated walk through the "From drift to rules" guide on two CSV files: the first run, `suggest`, `crosswalk`, the rules, a baseline, the report, and where the project stands |
 
+The Veridelta organization page shows [posters/demo-120-poster.png](posters/demo-120-poster.png), a frame of `demo-120` with a play button, and links it to the video.
+
 [storyboard.md](storyboard.md) lists every scene with its length, its picture, its captions, and the docs page that backs each claim. [launch-kit.md](launch-kit.md) holds the posts and the alt text to publish them with.
 
 ## The rules
@@ -33,6 +35,7 @@ You need Node 22. `npm ci` installs the exact versions in `package-lock.json`.
 | :--- | :--- |
 | `npm run studio` | Opens Remotion Studio, to watch and adjust the cuts. |
 | `npm run render` | Renders every cut to `renders/`, which git ignores. `npm run render -- --scale=0.5` renders a half size preview. |
+| `npm run posters` | Renders each poster in `src/Poster.tsx` to `posters/`: the last frame of one line of a cut, with a play button, for a README to link to the video. |
 | `npm run generate` | Writes `captions/*.srt` and `storyboard.md` from `src/storyboard.ts`. Run it after changing a scene. |
 | `npm run check` | Checks each clip against its checksum, each scene's docs page and caption times, and each post's length. |
 | `npm run typecheck` | Type-checks the project. |

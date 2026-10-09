@@ -10,6 +10,7 @@
     "check": "tsx scripts/check.ts",
     "generate": "tsx scripts/generate.ts",
     "render": "bash scripts/render.sh",
+    "posters": "bash scripts/posters.sh",
     "fetch-clips": "bash scripts/fetch-clips.sh",
     "voice": "tsx scripts/voice.ts",
     "fetch-transcripts": "bash scripts/fetch-transcripts.sh"
