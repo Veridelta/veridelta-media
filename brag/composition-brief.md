@@ -9,7 +9,7 @@ Create a short narrated story for Veridelta that makes its problem felt before i
 - Composition directory: `brag/composition/`
 - Rendered video: `brag/brag.mp4`, which git ignores
 - Format: landscape, 1920 by 1080, 30 fps
-- Duration: set by the voice, 85.2 seconds
+- Duration: set by the voice, 90.6 seconds
 
 ## Source material
 
@@ -62,7 +62,7 @@ Create a short narrated story for Veridelta that makes its problem felt before i
 ## Audio
 
 - Voice: 21 lines in `assets/voice/`, Gemini's Orus, one take, on tracks 30 and 31.
-- Music: `assets/music/happy-beats-business-moves-vol-1-by-ende-dot-app.mp3` at 0.18 under the voice, from 8.74 seconds into the track so its drop at 48.02, from brag's cue preset, lands as Veridelta enters. A volume lane hushes it before the drop, lifts it on the drop, and raises it on the end card.
+- Music: `assets/music/happy-beats-business-moves-vol-1-by-ende-dot-app.mp3` at 0.12 under the voice, from 5.66 seconds into the track so its drop at 48.02, from brag's cue preset, lands as Veridelta enters. A volume lane hushes it before the drop, lifts it on the drop, and raises it on the end card.
 - Audio-reactive: subtle. The glow behind the content breathes with the music's level, from `assets/audio-levels.js`, made by Hyperframes' `extract-audio-data.py` from the part of the track the video plays.
 - SFX: Kenney's, under CC0, from brag's `assets/sfx/`, placed by `narration.json` on a scene or a word.
 

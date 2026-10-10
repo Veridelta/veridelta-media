@@ -1,83 +1,83 @@
 1
-00:00:00,600 --> 00:00:03,984
+00:00:00,600 --> 00:00:04,224
 Maya is moving her weather station pipeline from IDL to Python.
 
 2
-00:00:04,184 --> 00:00:06,968
+00:00:04,424 --> 00:00:07,400
 The new output has to match the old. One to one.
 
 3
-00:00:07,868 --> 00:00:11,204
+00:00:08,300 --> 00:00:11,876
 She runs both and compares. Every single row differs.
 
 4
-00:00:12,104 --> 00:00:15,416
+00:00:12,776 --> 00:00:16,304
 IDL works in 32-bit floats. Python works in 64.
 
 5
-00:00:15,616 --> 00:00:17,368
+00:00:16,504 --> 00:00:18,376
 So the same humidity comes out two ways.
 
 6
-00:00:17,568 --> 00:00:21,408
+00:00:18,576 --> 00:00:22,680
 IDL wrote minus 999 for a missing reading. Python writes nothing.
 
 7
-00:00:21,608 --> 00:00:25,976
+00:00:22,880 --> 00:00:27,536
 She renamed temp to temperature_c, so a match by name quietly leaves it out.
 
 8
-00:00:26,176 --> 00:00:31,600
+00:00:27,736 --> 00:00:33,520
 And she fixed a real IDL bug. Station S3 had the wrong elevation, so its pressure changed on purpose.
 
 9
-00:00:32,500 --> 00:00:35,236
+00:00:34,420 --> 00:00:37,348
 Somewhere in all of that, the port has a bug of its own.
 
 10
-00:00:35,436 --> 00:00:38,028
+00:00:37,548 --> 00:00:40,308
 Which differences are fixes, and which are corruption?
 
 11
-00:00:40,028 --> 00:00:43,700
+00:00:43,108 --> 00:00:47,020
 Veridelta compares two datasets on their keys, under rules you declare.
 
 12
-00:00:43,900 --> 00:00:45,868
+00:00:47,220 --> 00:00:49,308
 Nothing is forgiven unless a rule says so.
 
 13
-00:00:47,168 --> 00:00:51,632
+00:00:50,608 --> 00:00:55,384
 Maya declares the rename. Then veridelta suggest reads the data and proposes the rest.
 
 14
-00:00:51,832 --> 00:00:57,712
+00:00:55,584 --> 00:01:01,872
 One rule for humidity: a tiny tolerance, and minus 999 as missing. It explains all 124 rows.
 
 15
-00:00:57,912 --> 00:00:58,848
+00:01:02,072 --> 00:01:03,032
 No model is called.
 
 16
-00:01:00,148 --> 00:01:04,396
+00:01:04,332 --> 00:01:08,868
 The pressure fix was on purpose, so a baseline accepts those 31 rows. Only those.
 
 17
-00:01:05,296 --> 00:01:08,848
+00:01:09,768 --> 00:01:13,584
 What's left is the real bug. Four cold readings lost their minus sign.
 
 18
-00:01:09,048 --> 00:01:10,344
+00:01:13,784 --> 00:01:15,152
 They were in the first rows all along.
 
 19
-00:01:10,544 --> 00:01:13,160
+00:01:15,352 --> 00:01:18,136
 The run fails, and in CI, so does the pull request.
 
 20
-00:01:14,360 --> 00:01:17,024
+00:01:19,336 --> 00:01:22,168
 She fixes the port. It passes. One to one.
 
 21
-00:01:17,924 --> 00:01:21,044
+00:01:23,068 --> 00:01:26,380
 Veridelta. Compare two datasets under rules you declare.

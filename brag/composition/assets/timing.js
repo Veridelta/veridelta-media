@@ -1,163 +1,163 @@
 // Written by scripts/brag-timing.ts from the voice's lengths; edit brag/narration.json instead.
 window.TIMING = {
-  "duration": 85.244,
+  "duration": 90.58,
   "scenes": {
     "hook": {
       "enter": 0,
       "start": 0.6,
-      "end": 6.968
+      "end": 7.4
     },
     "run": {
-      "enter": 7.118,
-      "start": 7.868,
-      "end": 11.204
+      "enter": 7.55,
+      "start": 8.3,
+      "end": 11.876
     },
     "questions": {
-      "enter": 11.354,
-      "start": 12.104,
-      "end": 31.6
+      "enter": 12.026,
+      "start": 12.776,
+      "end": 33.52
     },
     "pain": {
-      "enter": 31.75,
-      "start": 32.5,
-      "end": 38.028
+      "enter": 33.67,
+      "start": 34.42,
+      "end": 40.308
     },
     "veridelta": {
-      "enter": 39.278,
-      "start": 40.028,
-      "end": 45.868
+      "enter": 42.358,
+      "start": 43.108,
+      "end": 49.308
     },
     "suggest": {
-      "enter": 46.418,
-      "start": 47.168,
-      "end": 58.848
+      "enter": 49.858,
+      "start": 50.608,
+      "end": 63.032
     },
     "baseline": {
-      "enter": 59.398,
-      "start": 60.148,
-      "end": 64.396
+      "enter": 63.582,
+      "start": 64.332,
+      "end": 68.868
     },
     "left": {
-      "enter": 64.546,
-      "start": 65.296,
-      "end": 73.16
+      "enter": 69.018,
+      "start": 69.768,
+      "end": 78.136
     },
     "pass": {
-      "enter": 73.61,
-      "start": 74.36,
-      "end": 77.024
+      "enter": 78.586,
+      "start": 79.336,
+      "end": 82.168
     },
     "end": {
-      "enter": 77.174,
-      "start": 77.924,
-      "end": 81.044
+      "enter": 82.318,
+      "start": 83.068,
+      "end": 86.38
     }
   },
   "lines": {
     "hook": {
       "text": "Maya is moving her weather station pipeline from IDL to Python.",
       "start": 0.6,
-      "end": 3.984
+      "end": 4.224
     },
     "parity": {
       "text": "The new output has to match the old. One to one.",
-      "start": 4.184,
-      "end": 6.968
+      "start": 4.424,
+      "end": 7.4
     },
     "run": {
       "text": "She runs both and compares. Every single row differs.",
-      "start": 7.868,
-      "end": 11.204
+      "start": 8.3,
+      "end": 11.876
     },
     "floats": {
       "text": "IDL works in 32-bit floats. Python works in 64.",
-      "start": 12.104,
-      "end": 15.416
+      "start": 12.776,
+      "end": 16.304
     },
     "noise": {
       "text": "So the same humidity comes out two ways.",
-      "start": 15.616,
-      "end": 17.368
+      "start": 16.504,
+      "end": 18.376
     },
     "fill": {
       "text": "IDL wrote minus 999 for a missing reading. Python writes nothing.",
-      "start": 17.568,
-      "end": 21.408
+      "start": 18.576,
+      "end": 22.68
     },
     "rename": {
       "text": "She renamed temp to temperature_c, so a match by name quietly leaves it out.",
-      "start": 21.608,
-      "end": 25.976
+      "start": 22.88,
+      "end": 27.536
     },
     "fix": {
       "text": "And she fixed a real IDL bug. Station S3 had the wrong elevation, so its pressure changed on purpose.",
-      "start": 26.176,
-      "end": 31.6
+      "start": 27.736,
+      "end": 33.52
     },
     "doubt": {
       "text": "Somewhere in all of that, the port has a bug of its own.",
-      "start": 32.5,
-      "end": 35.236
+      "start": 34.42,
+      "end": 37.348
     },
     "question": {
       "text": "Which differences are fixes, and which are corruption?",
-      "start": 35.436,
-      "end": 38.028
+      "start": 37.548,
+      "end": 40.308
     },
     "reveal": {
       "text": "Veridelta compares two datasets on their keys, under rules you declare.",
-      "start": 40.028,
-      "end": 43.7
+      "start": 43.108,
+      "end": 47.02
     },
     "forgiven": {
       "text": "Nothing is forgiven unless a rule says so.",
-      "start": 43.9,
-      "end": 45.868
+      "start": 47.22,
+      "end": 49.308
     },
     "declare": {
       "text": "Maya declares the rename. Then veridelta suggest reads the data and proposes the rest.",
-      "start": 47.168,
-      "end": 51.632
+      "start": 50.608,
+      "end": 55.384
     },
     "evidence": {
       "text": "One rule for humidity: a tiny tolerance, and minus 999 as missing. It explains all 124 rows.",
-      "start": 51.832,
-      "end": 57.712
+      "start": 55.584,
+      "end": 61.872
     },
     "model": {
       "text": "No model is called.",
-      "start": 57.912,
-      "end": 58.848
+      "start": 62.072,
+      "end": 63.032
     },
     "baseline": {
       "text": "The pressure fix was on purpose, so a baseline accepts those 31 rows. Only those.",
-      "start": 60.148,
-      "end": 64.396
+      "start": 64.332,
+      "end": 68.868
     },
     "left": {
       "text": "What's left is the real bug. Four cold readings lost their minus sign.",
-      "start": 65.296,
-      "end": 68.848
+      "start": 69.768,
+      "end": 73.584
     },
     "allalong": {
       "text": "They were in the first rows all along.",
-      "start": 69.048,
-      "end": 70.344
+      "start": 73.784,
+      "end": 75.152
     },
     "fails": {
       "text": "The run fails, and in CI, so does the pull request.",
-      "start": 70.544,
-      "end": 73.16
+      "start": 75.352,
+      "end": 78.136
     },
     "passes": {
       "text": "She fixes the port. It passes. One to one.",
-      "start": 74.36,
-      "end": 77.024
+      "start": 79.336,
+      "end": 82.168
     },
     "end": {
       "text": "Veridelta. Compare two datasets under rules you declare.",
-      "start": 77.924,
-      "end": 81.044
+      "start": 83.068,
+      "end": 86.38
     }
   }
 };

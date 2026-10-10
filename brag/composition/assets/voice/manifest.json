@@ -1,217 +1,217 @@
 {
   "style": "AUDIO PROFILE: The narrator of a 90-second demo video for a command-line data tool.\nTHE SCENE: A short story about a scientist whose data migration has to match exactly, watched by engineers and scientists.\nDIRECTOR'S NOTES:\n- Style: Confident and engaged, with real tension in the problem and relief at the end. Clear, never salesy.\n- Pace: Brisk and fast, like a good trailer. Crisp consonants. Short pauses inside a sentence.\n- Accent: Neutral American English.",
   "pause": 0.28,
-  "tempo": 1.04,
+  "tempo": 0.97,
   "lines": [
     {
       "id": "hook",
       "text": "Maya is moving her weather station pipeline from IDL to Python.",
-      "file": "hook-a8ca64f0f1f5.mp3",
-      "seconds": 3.384,
+      "file": "hook-8872565d3ec5.mp3",
+      "seconds": 3.624,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "2f64e333c704b4b5017d1857077db6a6aa730ea23e1ec01f649a3ce66f4eb432"
+      "sha256": "8105e329c8e45857d0be702c523f5874bbeda7f6058b9fb3389d80ff30f806da"
     },
     {
       "id": "parity",
       "text": "The new output has to match the old. One to one.",
-      "file": "parity-92ad585186c7.mp3",
-      "seconds": 2.784,
+      "file": "parity-353a3537b6d1.mp3",
+      "seconds": 2.976,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "c5df72db2b4592a1a9b9c5508807033bf3a607b1949eee280d6a6cff282eff53"
+      "sha256": "b12bb8e7d40cf6009aafd4c068d7bc719f0a9a1788d7f2706d753f0f0eed76e9"
     },
     {
       "id": "run",
       "text": "She runs both and compares. Every single row differs.",
-      "file": "run-3b609c8ab0e7.mp3",
-      "seconds": 3.336,
+      "file": "run-bbe662da9442.mp3",
+      "seconds": 3.576,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "c8bf80ef3a31abc2c0552dae65d66b0e2f739aeb98d5abb5166de84e002bdc26"
+      "sha256": "24aec5b8b3ac41343574d31058681b82ae123d4899f7423597eb2a587e8e52d4"
     },
     {
       "id": "floats",
       "text": "IDL works in 32-bit floats. Python works in 64.",
-      "file": "floats-ca1bc5c59833.mp3",
-      "seconds": 3.312,
+      "file": "floats-4a49846cfc43.mp3",
+      "seconds": 3.528,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "9ee779ddf766578251e3cf30d0d774bb233163d844b90350f889f313451a4187"
+      "sha256": "e90e8034bbbf03cb9be8817d50239308f43fb01ea15352fe5c423cf778bcc727"
     },
     {
       "id": "noise",
       "text": "So the same humidity comes out two ways.",
-      "file": "noise-3657759418a6.mp3",
-      "seconds": 1.752,
+      "file": "noise-0d860c899cae.mp3",
+      "seconds": 1.872,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "191ab05c01d800fa6dd2dad2d1d1d2560c1521f5aba8e153b42e7d8c2b792fb0"
+      "sha256": "b3ee694d48e287c744d09c7caeaf3db24e6ab632fb59a49412ce8d773af0121f"
     },
     {
       "id": "fill",
       "text": "IDL wrote minus 999 for a missing reading. Python writes nothing.",
-      "file": "fill-f8f188c63fca.mp3",
-      "seconds": 3.84,
+      "file": "fill-7052459bd4ae.mp3",
+      "seconds": 4.104,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "9fecdf9c0fca869f2cd9bfb5619482a24d9977b4155c03c99d6ab21703add35a"
+      "sha256": "05f5bf77d6aad341aa92df6f8e6dacd3e092c16dd8c339a0371427e65213b71a"
     },
     {
       "id": "rename",
       "text": "She renamed temp to temperature_c, so a match by name quietly leaves it out.",
-      "file": "rename-bf6c01bcea06.mp3",
-      "seconds": 4.368,
+      "file": "rename-fff93b08853f.mp3",
+      "seconds": 4.656,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "bef785802f269b579d85be62934af4e10e6f475155586e673acc2a0403c766a7"
+      "sha256": "05c99308a6b9d33958657c7eb00f6b229ae947fee204acc320b03f9595b4d679"
     },
     {
       "id": "fix",
       "text": "And she fixed a real IDL bug. Station S3 had the wrong elevation, so its pressure changed on purpose.",
-      "file": "fix-ae200e125ccf.mp3",
-      "seconds": 5.424,
+      "file": "fix-5660ea56dfd1.mp3",
+      "seconds": 5.784,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "751e1a3d6ecc30dfd163cb1243b2be44918c4a3717f9fe81334791dee8c2168d"
+      "sha256": "007ae45af373cd71eee85e815139008c4d609fd21ce3fd95f6b12bcce4680eed"
     },
     {
       "id": "doubt",
       "text": "Somewhere in all of that, the port has a bug of its own.",
-      "file": "doubt-9649cdaf99f0.mp3",
-      "seconds": 2.736,
+      "file": "doubt-bdf97656f944.mp3",
+      "seconds": 2.928,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "3b3dfee81c1b68a4b092a1da6753966b8b2fd6f8d1bda03b3917c2edeff57209"
+      "sha256": "63ab47234e6ecd44c520ab7a94fa6d861080a95c116abd4fa0305af3a4381c73"
     },
     {
       "id": "question",
       "text": "Which differences are fixes, and which are corruption?",
-      "file": "question-1edbb55d5ed3.mp3",
-      "seconds": 2.592,
+      "file": "question-a6f87428f647.mp3",
+      "seconds": 2.76,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "c6b64a826f751b6103dcafba6b8c69db496e450e19b9d8853105dbacabac4118"
+      "sha256": "3fe20c0f95a384544a970c58640da6abf9586dfa3a130f32c2179f1548fd0147"
     },
     {
       "id": "reveal",
       "text": "Veridelta compares two datasets on their keys, under rules you declare.",
-      "file": "reveal-7e4e44fad997.mp3",
-      "seconds": 3.672,
+      "file": "reveal-295ed8053193.mp3",
+      "seconds": 3.912,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "a66ccc0e3675ab4b8bd2f8ac80a95ec722481c7071d6c8666951adcd571cae40"
+      "sha256": "482bfc707272dd09b6a611ef4f739ffc9d62dd3294bd1d6f723a95a92a6bb92a"
     },
     {
       "id": "forgiven",
       "text": "Nothing is forgiven unless a rule says so.",
-      "file": "forgiven-2b696f1fbf96.mp3",
-      "seconds": 1.968,
+      "file": "forgiven-1bcfdc58d757.mp3",
+      "seconds": 2.088,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "21ad32ad2527754c2f29b4020dfc7b4a056eff41f114f3c144e956d55e1d5dd2"
+      "sha256": "2bc13e7becc27225276fc8db4fcb68b64009701487afb5345da9a4fcb8498792"
     },
     {
       "id": "declare",
       "text": "Maya declares the rename. Then veridelta suggest reads the data and proposes the rest.",
-      "file": "declare-aac1416f2036.mp3",
-      "seconds": 4.464,
+      "file": "declare-07b674d71eab.mp3",
+      "seconds": 4.776,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "375a36ff85ee7cade335e0a5374746639084aa3b7e3c2761017b95eec493f06b"
+      "sha256": "a4b52831febc9ab23b3e2002e119a61632bf05b5a590066b77d6b9bf0f760f0e"
     },
     {
       "id": "evidence",
       "text": "One rule for humidity: a tiny tolerance, and minus 999 as missing. It explains all 124 rows.",
-      "file": "evidence-bee8006cdb1e.mp3",
-      "seconds": 5.88,
+      "file": "evidence-4d26f79cf561.mp3",
+      "seconds": 6.288,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "fe3b4055437e469f9717823347b783cae0839a261b3b9cb1824d5d8f32a105b4"
+      "sha256": "d93249f9ddf092906394aca32b02554a5f248802412645137dd1639fee3954da"
     },
     {
       "id": "model",
       "text": "No model is called.",
-      "file": "model-70a63138804f.mp3",
-      "seconds": 0.936,
+      "file": "model-da7e02dff543.mp3",
+      "seconds": 0.96,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "f2c3af1f2f9e1799d3939acecd9bb0857d3633674e4adeb249c076d1ddf86152"
+      "sha256": "03853737f3a5662eaf93d586982dd3aedd46e918d696a53d88cb28ea2cead0d5"
     },
     {
       "id": "baseline",
       "text": "The pressure fix was on purpose, so a baseline accepts those 31 rows. Only those.",
-      "file": "baseline-e1d9b9deacf6.mp3",
-      "seconds": 4.248,
+      "file": "baseline-32dc6645d1d3.mp3",
+      "seconds": 4.536,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "b41ea2e024ce3ec028d0afbf1a76483bfb714a3bf06ad41560e14a2484173abe"
+      "sha256": "1b99a1fcddadbdb53fcf6dd0d0b4db139522bd37e4b1b3a90e2f8ef712f9f39b"
     },
     {
       "id": "left",
       "text": "What's left is the real bug. Four cold readings lost their minus sign.",
-      "file": "left-076993f510fc.mp3",
-      "seconds": 3.552,
+      "file": "left-79791eff1cf0.mp3",
+      "seconds": 3.816,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "a673462602463a7e4d7c0ba9d2ccc5943ce224d3f3be70b78812f575866ff2e5"
+      "sha256": "b5fc651990f807da6bec55b12b1cee47a070e2243398c6523d380fd358d59cda"
     },
     {
       "id": "allalong",
       "text": "They were in the first rows all along.",
-      "file": "allalong-fc576750f027.mp3",
-      "seconds": 1.296,
+      "file": "allalong-0d29bc5735c4.mp3",
+      "seconds": 1.368,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "2468e43083efad1fd78b1f3efda912ebef4265c2dbfce72127bcf6de7edc5930"
+      "sha256": "666bfd717b9cd3753030fff4188ab3cce1f6e6ea216f6df8f7c82173e5519249"
     },
     {
       "id": "fails",
       "text": "The run fails, and in CI, so does the pull request.",
-      "file": "fails-0cc307d261eb.mp3",
-      "seconds": 2.616,
+      "file": "fails-1df4a1c3f598.mp3",
+      "seconds": 2.784,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "be583eb64117cfcc64688377443259d72f97c98b2adb56d6b95905928147051c"
+      "sha256": "724561119f6707d63c801d27133f278fdbc2502f53ee002ee26b92ed529183b5"
     },
     {
       "id": "passes",
       "text": "She fixes the port. It passes. One to one.",
-      "file": "passes-f4aabf6536c5.mp3",
-      "seconds": 2.664,
+      "file": "passes-dd133f5e0702.mp3",
+      "seconds": 2.832,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "e86206e0e62606552c7c44c6a5cb72d7a4d427cda4104d437a5170d5850bb8c1"
+      "sha256": "d62e9db4d4d00d66533e03030ad617365c6cd226a5cae23587e6dac12e3eea3f"
     },
     {
       "id": "end",
       "text": "Veridelta. Compare two datasets under rules you declare.",
-      "file": "end-30c3666603f4.mp3",
-      "seconds": 3.12,
+      "file": "end-d780c9319396.mp3",
+      "seconds": 3.312,
       "engine": "gemini",
       "voice": "Orus",
       "take": "f5e9a51e595b",
-      "sha256": "83df0d43a66fde0132a8fed98e119e24f3306dece32b9f024ba310fee1bcfbca"
+      "sha256": "3eb162bbf3a6b21a5bec87e76faaacd16d1fde33bc031eb1415d85307fd39484"
     }
   ]
 }

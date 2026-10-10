@@ -28,11 +28,11 @@ const SCENE = 0.9;
 /** Seconds a scene enters before the end of the scene before it, plus that one's hold. */
 const ENTER = 0.15;
 /** Seconds held after a line, beyond the gap, where the story should land. */
-const HOLD: Record<string, number> = { question: 1.1, forgiven: 0.4, model: 0.4, fails: 0.3 };
+const HOLD: Record<string, number> = { question: 1.9, forgiven: 0.4, model: 0.4, fails: 0.3 };
 /** Seconds the end card holds after the last line. */
 const END = 4.2;
 /** The music's level under the voice, in the hush before its drop, on the drop, and alone on the end card. */
-const BED = 0.18;
+const BED = 0.12;
 const HUSH = 0.02;
 const LIFT = 0.4;
 const ALONE = 0.5;

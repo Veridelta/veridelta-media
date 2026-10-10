@@ -1,4 +1,4 @@
-# The 85-second demo
+# The 91-second demo
 
 A short story for people who have not heard of Veridelta. Maya, an atmospheric scientist, ports her weather station pipeline from IDL to Python, and the new output has to match the old one to one. It does not: every row differs. Some differences are float noise, some are a fill value or a renamed column, one is a bug she fixed on purpose, and one is a new bug. Veridelta sorts them under rules she declares, and only the new bug fails the run. It is narrated, with captions and music, and replaces both the 30-second cut and the three-minute walkthrough on the release.
 
@@ -20,7 +20,7 @@ It was made with [brag](https://github.com/latent-spaces/brag), an agent skill f
 
 ## The voice and its timing
 
-`npm run voice -- --brag` speaks `narration.json` in one Gemini take, as `scripts/voice.ts` speaks a narrated cut, with `GEMINI_API_KEY` set. Whisper finds each line in the take, the take is cut between lines, and each line has its inner pauses capped at `pause` seconds and plays at `tempo` times its speed, at the same pitch, so the story moves fast without a word changing. The clips and their manifest go to `composition/assets/voice/`. The take is spoken again only when a line, the voice, the style, the pause, or the tempo changes.
+`npm run voice -- --brag` speaks `narration.json` in one Gemini take, as `scripts/voice.ts` speaks a narrated cut, with `GEMINI_API_KEY` set. Whisper finds each line in the take, the take is cut between lines, and each line has its inner pauses capped at `pause` seconds and plays at `tempo` times its speed, at the same pitch, so the story keeps its pace without a word changing. The clips and their manifest go to `composition/assets/voice/`. The take is spoken again only when a line, the voice, the style, or the pause changes. When only `tempo` changes, the clips already spoken play again at the new speed, with no key and no request, so the voice stays the one heard.
 
 `npm run brag-timing` then times the video by the voice:
 

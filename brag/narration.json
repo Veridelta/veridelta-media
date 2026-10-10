@@ -3,7 +3,7 @@
   "music": { "file": "happy-beats-business-moves-vol-1-by-ende-dot-app.mp3", "drop": 48.02, "on": "veridelta" },
   "style": "AUDIO PROFILE: The narrator of a 90-second demo video for a command-line data tool.\nTHE SCENE: A short story about a scientist whose data migration has to match exactly, watched by engineers and scientists.\nDIRECTOR'S NOTES:\n- Style: Confident and engaged, with real tension in the problem and relief at the end. Clear, never salesy.\n- Pace: Brisk and fast, like a good trailer. Crisp consonants. Short pauses inside a sentence.\n- Accent: Neutral American English.",
   "pause": 0.28,
-  "tempo": 1.04,
+  "tempo": 0.97,
   "sfx": [
     { "line": "run", "word": "Every", "file": "impact/impactSoft_medium_001.ogg", "volume": 0.6 },
     { "line": "floats", "file": "casino/card-slide-1.ogg", "volume": 0.35 },
