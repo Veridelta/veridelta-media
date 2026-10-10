@@ -1,0 +1,81 @@
+name: Release the Demo
+
+# Renders the demo in brag/ from the commit it runs on and publishes it as a release, with the
+# video and its captions as the assets. Run it by hand after the render is reviewed and merged.
+#
+# A new release gets brag/release-notes.md as its description. A release that exists keeps its
+# description, so the inline player dragged into it by hand stays: GitHub plays a video inline only
+# when it was uploaded through its web editor.
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: The release to publish, named for the demo's length
+        required: true
+        default: demo-60
+      replaces:
+        description: A release this one replaces, deleted with its tag once this one is up
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-demo
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Render and Publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      HYPERFRAMES_TELEMETRY_DISABLED: "1"
+      HYPERFRAMES_SKIP_SKILLS: "1"
+      DO_NOT_TRACK: "1"
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+
+      - name: Install ffmpeg
+        timeout-minutes: 10
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ffmpeg
+
+      - name: Find or Download Chrome
+        run: npx --yes hyperframes@0.8.143 browser ensure
+
+      - name: Check the Composition
+        working-directory: brag/composition
+        run: npx --yes hyperframes@0.8.143 check
+
+      - name: Render and Finish
+        run: brag/finish.sh
+
+      - name: Publish the Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ inputs.tag }}
+          REPLACES: ${{ inputs.replaces }}
+        run: |
+          cp brag/brag.mp4 veridelta-demo.mp4
+          cp brag/demo.srt veridelta-demo.srt
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            gh release upload "$TAG" veridelta-demo.mp4 veridelta-demo.srt --clobber
+          else
+            gh release create "$TAG" veridelta-demo.mp4 veridelta-demo.srt \
+              --title "Demo" --notes-file brag/release-notes.md --target "$GITHUB_SHA" --latest
+          fi
+          if [ -n "$REPLACES" ] && [ "$REPLACES" != "$TAG" ] && gh release view "$REPLACES" > /dev/null 2>&1; then
+            gh release delete "$REPLACES" --cleanup-tag --yes
+          fi
