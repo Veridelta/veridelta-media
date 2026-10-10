@@ -1,4 +1,4 @@
-# The 59-second demo
+# The 60-second demo
 
 A short pitch for people who have not heard of Veridelta: data parity is the problem, and Veridelta is the answer. Maya, an atmospheric scientist, ports her weather pipeline from IDL to Python, and the new output has to match the old one to one. It does not: every row differs. Float precision, a renamed column, and a bug she fixed on purpose hide one real bug. Veridelta's rules, `suggest`, and a baseline leave only that bug, which fails CI, and the video ends on the six tutorials in the docs. It is narrated, with captions and music, and replaces both the 30-second cut and the three-minute walkthrough on the release.
 

@@ -1,6 +1,6 @@
 # Brag plan: Veridelta
 
-Written by `/brag --full --format landscape --voice`, with [brag](https://github.com/latent-spaces/brag) at commit `8531ccb`, from Veridelta at commit `b8669bc`, which runs release 0.35.1. It replaces the 30-second cut, which git history keeps. The maintainer's group found the three-minute walkthrough too slow and the 30-second cut too fast, and said people did not understand the problem. A 95-second story fixed that, and the maintainer then asked for 45 to 60 seconds that sell rather than explain: once people reach the docs, the tutorials take over. This cut runs 59 seconds, past brag's 15 to 25, to tell the problem before the answer. The voice is Gemini's in place of brag's Kokoro, as the maintainer asked.
+Written by `/brag --full --format landscape --voice`, with [brag](https://github.com/latent-spaces/brag) at commit `8531ccb`, from Veridelta at commit `b8669bc`, which runs release 0.35.1. It replaces the 30-second cut, which git history keeps. The maintainer's group found the three-minute walkthrough too slow and the 30-second cut too fast, and said people did not understand the problem. A 95-second story fixed that, and the maintainer then asked for 45 to 60 seconds that sell rather than explain: once people reach the docs, the tutorials take over. This cut runs 60 seconds, past brag's 15 to 25, to tell the problem before the answer. The maintainer then asked for the opening and the end card to hold longer, for smooth transitions with no white flash, and for accessible contrast. The voice is Gemini's in place of brag's Kokoro, as the maintainer asked.
 
 ## What is this app?
 
@@ -12,9 +12,9 @@ Data parity is the problem, and Veridelta is the answer. The maintainer's own st
 
 Maya, an atmospheric scientist, tells it with a made-up weather station dataset, written for the video in Veridelta's `demo/stations.py` so every number is real. The video sells the answer in three moves (declare, suggest, accept), shows the real bug failing CI, and hands the viewer to the six tutorials.
 
-## Hook (first 7.5 seconds)
+## Hook (first 8 seconds)
 
-"Maya is moving her weather pipeline from IDL to Python. It has to match the old one. One to one." On screen, IDL to Python, word by word, then "Must match, 1:1".
+"Maya is moving her weather pipeline from IDL to Python. It has to match the old one. One to one." On screen from the first frame, "Maya's weather station pipeline" and IDL to Python, each word lighting as it is said, then "Must match, 1:1".
 
 ## Key moments
 
@@ -34,16 +34,18 @@ The logo, the PyPI summary, `pip install veridelta`, and the six tutorials at th
 - Preset: `default`.
 - Creative direction: fast, plain, real output. Tension in the problem, relief at the end. No hype.
 - Interpretation: nine scenes on a light canvas in the logo's colors. Push slides between them, orange for what is wrong, blue for the answer, and a caption band with every spoken line.
+- Transitions: the next scene is always on screen as the last one leaves, so the frame never shows the bare canvas. A push brings the next scene in a moment ahead of the last one leaving; Veridelta and the end card dissolve in over the scene before. Each scene's layout is in place as it enters, and only what the voice names animates in. Captions switch at once, never fading through a low contrast frame.
 
 ## Format: landscape, 1920 by 1080, 30 fps
 
-## Duration: 59 seconds
+## Duration: 60 seconds
 
 ## Visual identity (from the project)
 
 - Background: `#f5f7fa`, the media repository's `mist` tinted toward the navy.
-- Text: navy `#0d2f5a`.
-- Accent: orange `#de5807`, for the alarm and the differences; blue `#2054b2`, for a rule and the answer.
+- Text: navy `#0d2f5a`; secondary text slate `#3f5068`.
+- Accent: orange `#de5807` for large text and shapes, and the deeper `#b24606` for small orange text and behind small white text; blue `#2054b2`, for a rule and the answer.
+- Contrast: every line of text meets WCAG AA, as `npx hyperframes check` measures it on each frame. Small text is about 7:1 or more: navy, slate at 7.65:1, and code at 7.46:1 on the terminal. The captions are 11.31:1.
 - Display and body font: Inter, as the media repository ships it.
 - Data font: DejaVu Sans Mono.
 - Strongest visual element: the `0.0%` and `100.0%` mirror, and the four ringed minus signs.
@@ -63,7 +65,7 @@ Porting a pipeline, every row differed. Float precision, a renamed column, a fix
 
 - Role: a bed under the voice, with sparse accents.
 - Music: `happy-beats-business-moves-vol-1-by-ende-dot-app.mp3`, a beat every half second, the most energetic of brag's tracks, by Sascha Ende, under CC BY 4.0.
-- Music treatment: under the voice at 0.12, about 20 dB below it. It plays from 22.02 seconds into the track, so its drop at 48.02 lands as Veridelta enters, and every scene enters on one of its beats. It hushes to 0.02 after "Which differences are fixes, and which are corruption?", lifts to 0.4 on the drop until the next line, and rises to 0.5 on the end card before it fades out.
+- Music treatment: under the voice at 0.12, about 20 dB below it. It plays from 22.52 seconds into the track, so its drop at 48.02 lands as Veridelta enters, and every scene enters on one of its beats. It hushes to 0.02 after "Which differences are fixes, and which are corruption?", lifts to 0.4 on the drop until the next line, and rises to 0.5 on the end card before it fades out.
 - Audio-reactive treatment: subtle. The glow behind each scene breathes with the music's level. No waveforms.
 - SFX posture: sparse. A soft thud under `0.0%`, a card slide for each doubt, a thud on "corruption", one bell on the drop, a light tap for each rule card, a thud on the failure, a thud and a tap on the pass, and a thud on the end card.
 - Restraint rule: the voice leads. Nothing louder than the bed for more than a moment.
@@ -79,17 +81,17 @@ Every element lands on the word, as Whisper heard it said, that the "Lands on" c
 
 | Scene | Seconds | Lead, tail | Narration | On screen | Lands on |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| Hook | 0 to 7.5 | 0.5, 0.6 | "Maya is moving her weather pipeline from IDL to Python. It has to match the old one. One to one." | "Maya's weather station pipeline", IDL to Python, "Must match, 1:1" | "Maya"; "IDL"; "Python"; "match" |
-| Run | 7.5 to 12.0 | 0.4, 0.8 | "She compares them. Every single row differs." | The command, match rate FAILED, `0.0%`, the top column drifts, and "124 rows. 124 changed." | `0.0%` on "Every"; drifts on "row"; the count on "differs" |
-| Doubts | 12.0 to 18.5 | 0.4, 1.0 | "Float precision. A renamed column. A bug she fixed on purpose." | "Why does every row differ?" `91.900002` to `91.9`; `temp` to `temperature_c`; `998.6` to `1010.7`, "On purpose" | Rows on "Float", "renamed", "bug"; the chip on "purpose" |
-| Pain | 18.5 to 26.0 | 0.4, 1.8 | "Somewhere in there hides a real bug. Which differences are fixes, and which are corruption?" | "124 changed rows: four stations, 31 days each", a cell for each, a scan across them, then "Fix or corruption?" held in a hush | The scan on "Somewhere"; "Fix" on "fixes"; "or corruption?" on "corruption" |
-| Veridelta | 26.0 to 33.5 | 0.75, 0.6 | "Veridelta compares two datasets under rules you declare. Nothing is forgiven unless a rule says so." | The logo, "Two datasets", "Rules you declare", then the line | The logo on the drop; chips on "two" and "rules"; the line on "Nothing" |
-| Rules | 33.5 to 41.0 | 0.4, 1.2 | "Declare the rename. Let Veridelta suggest the rest from your data. Accept the fix with a baseline." | Declare: the `rename_to` lines of `stations_rules.yaml`. Suggest: the evidence line, 124 of 124 underlined. Accept: the baseline run's `Accepted: 31`. | Each card on "Declare", "suggest", "Accept"; the underline on "data" |
-| Left | 41.0 to 48.5 | 0.4, 0.8 | "What's left is the real bug. Four readings lost their minus sign, and CI fails the pull request." | "What's left is real." The first rows of both files, the four temperatures ringed, the run's status, its 4 changes, `temperature_c: 4 mismatches`, exit code 1, and FAILED | The rows in the lead; the line on "real"; rings on "Four" and "minus"; the run on "CI"; FAILED on "fails" |
-| Pass | 48.5 to 53.0 | 0.4, 1.5 | "Fix it, and it passes. One to one." | The command, match rate PASSED, `100.0%`, `exit code 0`, "Accepted: 31, the pressure fix made on purpose." | `100.0%` on "passes"; the exit code on "One" |
-| End | 53.0 to 59.3 | 0.4, 2.0 | "Porting a pipeline of your own? Start with Veridelta's six tutorials." | The logo, "Compare two datasets on their primary keys under rules you declare.", `pip install veridelta`, "Six tutorials at veridelta.github.io/veridelta" | The summary on "pipeline"; the install on "Start"; the tutorials on "tutorials" |
+| Hook | 0 to 8.0 | 0.5, 1.5 | "Maya is moving her weather pipeline from IDL to Python. It has to match the old one. One to one." | "Maya's weather station pipeline", IDL to Python, "Must match, 1:1" | All but the last on screen from the first frame; "IDL" and "Python" light on their words; "match" |
+| Run | 8.0 to 12.5 | 0.4, 0.8 | "She compares them. Every single row differs." | The command, match rate FAILED, `0.0%`, the top column drifts, and "124 rows. 124 changed." | `0.0%` on "Every"; drifts on "row"; the count on "differs" |
+| Doubts | 12.5 to 18.5 | 0.4, 0.8 | "Float precision. A renamed column. A bug she fixed on purpose." | "Why does every row differ?" `91.900002` to `91.9`; `temp` to `temperature_c`; `998.6` to `1010.7`, "On purpose" | Rows on "Float", "renamed", "bug"; the chip on "purpose" |
+| Pain | 18.5 to 25.5 | 0.4, 1.5 | "Somewhere in there hides a real bug. Which differences are fixes, and which are corruption?" | "124 changed rows: four stations, 31 days each", a cell for each, a scan across them, then "Fix or corruption?" held in a hush | The scan on "Somewhere"; "Fix" on "fixes"; "or corruption?" on "corruption" |
+| Veridelta | 25.5 to 33.0 | 0.75, 0.6 | "Veridelta compares two datasets under rules you declare. Nothing is forgiven unless a rule says so." | The logo, "Two datasets", "Rules you declare", then the line | The logo on the drop; chips on "two" and "rules"; the line on "Nothing" |
+| Rules | 33.0 to 40.5 | 0.4, 1.0 | "Declare the rename. Let Veridelta suggest the rest from your data. Accept the fix with a baseline." | Declare: the `rename_to` lines of `stations_rules.yaml`. Suggest: the evidence line, 124 of 124 underlined. Accept: the baseline run's `Accepted: 31`. | Each card on "Declare", "suggest", "Accept"; the underline on "data" |
+| Left | 40.5 to 48.0 | 0.4, 0.8 | "What's left is the real bug. Four readings lost their minus sign, and CI fails the pull request." | "What's left is real." The first rows of both files, the four temperatures ringed, the run's status, its 4 changes, `temperature_c: 4 mismatches`, exit code 1, and FAILED | The rows in the lead; the line on "real"; rings on "Four" and "minus"; the run on "CI"; FAILED on "fails" |
+| Pass | 48.0 to 52.5 | 0.4, 1.3 | "Fix it, and it passes. One to one." | The command, match rate PASSED, `100.0%`, `exit code 0`, "Accepted: 31, the pressure fix made on purpose." | `100.0%` on "passes"; the exit code on "One" |
+| End | 52.5 to 60.0 | 0.4, 3.2 | "Porting a pipeline of your own? Start with Veridelta's six tutorials." | The logo, "Compare two datasets on their primary keys under rules you declare.", `pip install veridelta`, "Six tutorials at veridelta.github.io/veridelta" | The summary on "pipeline"; the install on "Start"; the tutorials on "tutorials" |
 
-The tails follow brag's reading floor, held after whatever lands last: about 0.8 seconds for a label, and about 0.3 seconds a word for a sentence.
+The tails follow brag's reading floor, held after whatever lands last: about 0.8 seconds for a label, and about 0.3 seconds a word for a sentence. The opening and the end card hold longer, as the maintainer asked: the hook for 1.5 seconds after its last line, and the end card for 3.2.
 
 ## Claims and their sources
 
