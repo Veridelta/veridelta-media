@@ -1,151 +1,141 @@
 {
-  "style": "AUDIO PROFILE: The narrator of a 90-second demo video for a command-line data tool.\nTHE SCENE: A short story about a scientist whose data migration has to match exactly, watched by engineers and scientists.\nDIRECTOR'S NOTES:\n- Style: Confident and engaged, with real tension in the problem and relief at the end. Clear, never salesy.\n- Pace: Brisk and fast, like a good trailer. Crisp consonants. Short pauses inside a sentence.\n- Accent: Neutral American English.",
+  "style": "AUDIO PROFILE: The narrator of a one-minute demo video for a command-line data tool.\nTHE SCENE: A short story about a scientist whose data migration has to match exactly, watched by engineers and scientists.\nDIRECTOR'S NOTES:\n- Style: Confident and engaged, with real tension in the problem and relief at the end. Clear, never salesy.\n- Pace: Brisk and fast, like a good trailer. Crisp consonants. Short pauses inside a sentence.\n- Accent: Neutral American English.",
   "pause": 0.28,
   "tempo": 0.97,
   "lines": [
     {
       "id": "hook",
-      "text": "Maya is moving her weather station pipeline from IDL to Python.",
-      "file": "hook-8872565d3ec5.mp3",
-      "seconds": 3.624,
+      "text": "Maya is moving her weather pipeline from IDL to Python.",
+      "file": "hook-69d6aca8a0a5.mp3",
+      "seconds": 3.384,
       "engine": "gemini",
       "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "8105e329c8e45857d0be702c523f5874bbeda7f6058b9fb3389d80ff30f806da",
+      "take": "b60da1ca3704",
+      "sha256": "eeb75b52d48524bf038e55d7d9e69d08149a727307e690b7807084dfb9428ca2",
       "words": [
         {
           "word": "Maya",
           "start": 0,
-          "end": 0.36
+          "end": 0.2
         },
         {
           "word": "is",
-          "start": 0,
-          "end": 0.36
+          "start": 0.2,
+          "end": 0.42
         },
         {
           "word": "moving",
-          "start": 0.36,
-          "end": 0.54
+          "start": 0.42,
+          "end": 0.66
         },
         {
           "word": "her",
-          "start": 0.54,
-          "end": 0.74
+          "start": 0.66,
+          "end": 0.82
         },
         {
           "word": "weather",
-          "start": 0.74,
-          "end": 0.94
-        },
-        {
-          "word": "station",
-          "start": 0.94,
-          "end": 1.28
-        },
-        {
-          "word": "pipeline",
-          "start": 1.28,
-          "end": 1.7
-        },
-        {
-          "word": "from",
-          "start": 1.7,
-          "end": 2.26
-        },
-        {
-          "word": "IDL",
-          "start": 2.26,
-          "end": 2.94
-        },
-        {
-          "word": "to",
-          "start": 2.94,
-          "end": 3.06
-        },
-        {
-          "word": "Python.",
-          "start": 3.06,
-          "end": 3.24
-        }
-      ]
-    },
-    {
-      "id": "parity",
-      "text": "The new output has to match the old. One to one.",
-      "file": "parity-353a3537b6d1.mp3",
-      "seconds": 2.976,
-      "engine": "gemini",
-      "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "b12bb8e7d40cf6009aafd4c068d7bc719f0a9a1788d7f2706d753f0f0eed76e9",
-      "words": [
-        {
-          "word": "The",
-          "start": 0,
-          "end": 0.1
-        },
-        {
-          "word": "new",
-          "start": 0.1,
-          "end": 0.22
-        },
-        {
-          "word": "output",
-          "start": 0.22,
-          "end": 0.5
-        },
-        {
-          "word": "has",
-          "start": 0.5,
+          "start": 0.82,
           "end": 1
         },
         {
-          "word": "to",
+          "word": "pipeline",
           "start": 1,
-          "end": 1.22
+          "end": 1.5
         },
         {
-          "word": "match",
-          "start": 1.22,
-          "end": 1.38
+          "word": "from",
+          "start": 1.5,
+          "end": 1.82
         },
         {
-          "word": "the",
-          "start": 1.38,
-          "end": 1.56
-        },
-        {
-          "word": "old.",
-          "start": 1.56,
-          "end": 1.78
-        },
-        {
-          "word": "One",
-          "start": 2.32,
+          "word": "IDL",
+          "start": 1.82,
           "end": 2.48
         },
         {
           "word": "to",
           "start": 2.48,
-          "end": 2.62
+          "end": 2.74
+        },
+        {
+          "word": "Python.",
+          "start": 2.74,
+          "end": 2.98
+        }
+      ]
+    },
+    {
+      "id": "parity",
+      "text": "It has to match the old one. One to one.",
+      "file": "parity-109d1481f64d.mp3",
+      "seconds": 2.496,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "b60da1ca3704",
+      "sha256": "7e2f180a04c3e69a5245fc0cfab08b0475c40ac38530e32ac5d74df245a3513c",
+      "words": [
+        {
+          "word": "It",
+          "start": 0,
+          "end": 0.08
+        },
+        {
+          "word": "has",
+          "start": 0.08,
+          "end": 0.26
+        },
+        {
+          "word": "to",
+          "start": 0.26,
+          "end": 0.44
+        },
+        {
+          "word": "match",
+          "start": 0.44,
+          "end": 0.58
+        },
+        {
+          "word": "the",
+          "start": 0.58,
+          "end": 0.82
+        },
+        {
+          "word": "old",
+          "start": 0.82,
+          "end": 0.98
         },
         {
           "word": "one.",
-          "start": 2.62,
-          "end": 2.82
+          "start": 0.98,
+          "end": 1.22
+        },
+        {
+          "word": "One",
+          "start": 1.44,
+          "end": 1.68
+        },
+        {
+          "word": "to",
+          "start": 1.68,
+          "end": 2.04
+        },
+        {
+          "word": "one.",
+          "start": 2.04,
+          "end": 2.3
         }
       ]
     },
     {
       "id": "run",
-      "text": "She runs both and compares. Every single row differs.",
-      "file": "run-bbe662da9442.mp3",
-      "seconds": 3.576,
+      "text": "She compares them. Every single row differs.",
+      "file": "run-57f903d19338.mp3",
+      "seconds": 3.336,
       "engine": "gemini",
       "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "24aec5b8b3ac41343574d31058681b82ae123d4899f7423597eb2a587e8e52d4",
+      "take": "b60da1ca3704",
+      "sha256": "f560ec7d50c6f4177f91a9aa527e19d8344eb792d1da24026a8e6e6eedba6ffd",
       "words": [
         {
           "word": "She",
@@ -153,498 +143,160 @@
           "end": 0.1
         },
         {
-          "word": "runs",
+          "word": "compares",
           "start": 0.1,
-          "end": 0.26
+          "end": 0.36
         },
         {
-          "word": "both",
-          "start": 0.26,
-          "end": 0.56
-        },
-        {
-          "word": "and",
-          "start": 0.56,
-          "end": 0.76
-        },
-        {
-          "word": "compares.",
-          "start": 0.76,
-          "end": 1.06
+          "word": "them.",
+          "start": 0.36,
+          "end": 0.7
         },
         {
           "word": "Every",
-          "start": 1.86,
-          "end": 2.2
+          "start": 1.34,
+          "end": 1.64
         },
         {
           "word": "single",
-          "start": 2.2,
-          "end": 2.66
+          "start": 1.64,
+          "end": 2.18
         },
         {
           "word": "row",
-          "start": 2.66,
-          "end": 2.98
+          "start": 2.18,
+          "end": 2.62
         },
         {
           "word": "differs.",
-          "start": 2.98,
-          "end": 3.26
+          "start": 2.62,
+          "end": 2.98
         }
       ]
     },
     {
-      "id": "floats",
-      "text": "IDL works in 32-bit floats. Python works in 64.",
-      "file": "floats-4a49846cfc43.mp3",
-      "seconds": 3.528,
+      "id": "doubts",
+      "text": "Float precision. A renamed column. A bug she fixed on purpose.",
+      "file": "doubts-7d4d9ae91a20.mp3",
+      "seconds": 4.824,
       "engine": "gemini",
       "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "e90e8034bbbf03cb9be8817d50239308f43fb01ea15352fe5c423cf778bcc727",
+      "take": "b60da1ca3704",
+      "sha256": "5a3102a133abe683998b5c29fc27ac68b2fe55b39030dea36ed702da564a517f",
       "words": [
         {
-          "word": "IDL",
+          "word": "Float",
           "start": 0,
-          "end": 0.46
+          "end": 0.6
         },
         {
-          "word": "works",
-          "start": 0.46,
-          "end": 0.66
+          "word": "precision.",
+          "start": 0.6,
+          "end": 1
         },
         {
-          "word": "in",
-          "start": 0.66,
-          "end": 0.84
-        },
-        {
-          "word": "32-bit",
-          "start": 0.84,
-          "end": 1.38
-        },
-        {
-          "word": "floats.",
-          "start": 1.38,
-          "end": 1.58
-        },
-        {
-          "word": "Python",
-          "start": 2.4,
-          "end": 2.4
-        },
-        {
-          "word": "works",
-          "start": 2.4,
-          "end": 2.68
-        },
-        {
-          "word": "in",
-          "start": 2.68,
-          "end": 2.86
-        },
-        {
-          "word": "64.",
-          "start": 2.86,
-          "end": 3.14
-        }
-      ]
-    },
-    {
-      "id": "noise",
-      "text": "So the same humidity comes out two ways.",
-      "file": "noise-0d860c899cae.mp3",
-      "seconds": 1.872,
-      "engine": "gemini",
-      "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "b3ee694d48e287c744d09c7caeaf3db24e6ab632fb59a49412ce8d773af0121f",
-      "words": [
-        {
-          "word": "So",
-          "start": 0,
-          "end": 0.1
-        },
-        {
-          "word": "the",
-          "start": 0.1,
-          "end": 0.18
-        },
-        {
-          "word": "same",
-          "start": 0.18,
-          "end": 0.34
-        },
-        {
-          "word": "humidity",
-          "start": 0.34,
-          "end": 0.66
-        },
-        {
-          "word": "comes",
-          "start": 0.66,
-          "end": 1.06
-        },
-        {
-          "word": "out",
-          "start": 1.06,
-          "end": 1.26
-        },
-        {
-          "word": "two",
-          "start": 1.26,
-          "end": 1.42
-        },
-        {
-          "word": "ways.",
-          "start": 1.42,
-          "end": 1.66
-        }
-      ]
-    },
-    {
-      "id": "fill",
-      "text": "IDL wrote minus 999 for a missing reading. Python writes nothing.",
-      "file": "fill-7052459bd4ae.mp3",
-      "seconds": 4.104,
-      "engine": "gemini",
-      "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "05f5bf77d6aad341aa92df6f8e6dacd3e092c16dd8c339a0371427e65213b71a",
-      "words": [
-        {
-          "word": "IDL",
-          "start": 0,
-          "end": 0.4
-        },
-        {
-          "word": "wrote",
-          "start": 0.4,
-          "end": 0.56
-        },
-        {
-          "word": "minus",
-          "start": 0.56,
-          "end": 0.84
-        },
-        {
-          "word": "999",
-          "start": 0.84,
-          "end": 1.26
-        },
-        {
-          "word": "for",
-          "start": 1.26,
+          "word": "A",
+          "start": 1.6,
           "end": 1.72
         },
         {
-          "word": "a",
-          "start": 1.72,
-          "end": 1.78
-        },
-        {
-          "word": "missing",
-          "start": 1.78,
-          "end": 1.92
-        },
-        {
-          "word": "reading.",
-          "start": 1.92,
-          "end": 2.28
-        },
-        {
-          "word": "Python",
-          "start": 3.18,
-          "end": 3.18
-        },
-        {
-          "word": "writes",
-          "start": 3.18,
-          "end": 3.56
-        },
-        {
-          "word": "nothing.",
-          "start": 3.56,
-          "end": 3.96
-        }
-      ]
-    },
-    {
-      "id": "rename",
-      "text": "She renamed temp to temperature_c, so a match by name quietly leaves it out.",
-      "file": "rename-fff93b08853f.mp3",
-      "seconds": 4.656,
-      "engine": "gemini",
-      "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "05c99308a6b9d33958657c7eb00f6b229ae947fee204acc320b03f9595b4d679",
-      "words": [
-        {
-          "word": "She",
-          "start": 0,
-          "end": 0.12
-        },
-        {
           "word": "renamed",
-          "start": 0.12,
-          "end": 0.34
+          "start": 1.72,
+          "end": 1.96
         },
         {
-          "word": "temp",
-          "start": 0.34,
-          "end": 0.68
+          "word": "column.",
+          "start": 1.96,
+          "end": 2.4
         },
         {
-          "word": "to",
-          "start": 0.68,
-          "end": 0.98
-        },
-        {
-          "word": "temperature_c,",
-          "start": 0.98,
-          "end": 2.04
-        },
-        {
-          "word": "so",
-          "start": 2.58,
-          "end": 2.72
-        },
-        {
-          "word": "a",
-          "start": 2.72,
-          "end": 2.9
-        },
-        {
-          "word": "match",
-          "start": 2.9,
-          "end": 3.08
-        },
-        {
-          "word": "by",
-          "start": 3.08,
+          "word": "A",
+          "start": 3.14,
           "end": 3.26
         },
         {
-          "word": "name",
+          "word": "bug",
           "start": 3.26,
-          "end": 3.46
+          "end": 3.44
         },
         {
-          "word": "quietly",
-          "start": 3.46,
+          "word": "she",
+          "start": 3.44,
+          "end": 3.64
+        },
+        {
+          "word": "fixed",
+          "start": 3.64,
           "end": 3.84
         },
         {
-          "word": "leaves",
+          "word": "on",
           "start": 3.84,
-          "end": 4.2
+          "end": 4.14
         },
         {
-          "word": "it",
-          "start": 4.2,
-          "end": 4.36
-        },
-        {
-          "word": "out.",
-          "start": 4.36,
+          "word": "purpose.",
+          "start": 4.14,
           "end": 4.5
         }
       ]
     },
     {
-      "id": "fix",
-      "text": "And she fixed a real IDL bug. Station S3 had the wrong elevation, so its pressure changed on purpose.",
-      "file": "fix-5660ea56dfd1.mp3",
-      "seconds": 5.784,
+      "id": "hidden",
+      "text": "Somewhere in there hides a real bug.",
+      "file": "hidden-31ba38e5854f.mp3",
+      "seconds": 2.448,
       "engine": "gemini",
       "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "007ae45af373cd71eee85e815139008c4d609fd21ce3fd95f6b12bcce4680eed",
-      "words": [
-        {
-          "word": "And",
-          "start": 0,
-          "end": 0.08
-        },
-        {
-          "word": "she",
-          "start": 0.08,
-          "end": 0.18
-        },
-        {
-          "word": "fixed",
-          "start": 0.18,
-          "end": 0.42
-        },
-        {
-          "word": "a",
-          "start": 0.42,
-          "end": 0.66
-        },
-        {
-          "word": "real",
-          "start": 0.66,
-          "end": 0.94
-        },
-        {
-          "word": "IDL",
-          "start": 0.94,
-          "end": 1.52
-        },
-        {
-          "word": "bug.",
-          "start": 1.52,
-          "end": 1.66
-        },
-        {
-          "word": "Station",
-          "start": 2.62,
-          "end": 2.62
-        },
-        {
-          "word": "S3",
-          "start": 2.62,
-          "end": 3.02
-        },
-        {
-          "word": "had",
-          "start": 3.02,
-          "end": 3.18
-        },
-        {
-          "word": "the",
-          "start": 3.18,
-          "end": 3.26
-        },
-        {
-          "word": "wrong",
-          "start": 3.26,
-          "end": 3.42
-        },
-        {
-          "word": "elevation,",
-          "start": 3.42,
-          "end": 3.76
-        },
-        {
-          "word": "so",
-          "start": 4.24,
-          "end": 4.36
-        },
-        {
-          "word": "its",
-          "start": 4.36,
-          "end": 4.48
-        },
-        {
-          "word": "pressure",
-          "start": 4.48,
-          "end": 4.68
-        },
-        {
-          "word": "changed",
-          "start": 4.68,
-          "end": 5.04
-        },
-        {
-          "word": "on",
-          "start": 5.04,
-          "end": 5.24
-        },
-        {
-          "word": "purpose.",
-          "start": 5.24,
-          "end": 5.5
-        }
-      ]
-    },
-    {
-      "id": "doubt",
-      "text": "Somewhere in all of that, the port has a bug of its own.",
-      "file": "doubt-bdf97656f944.mp3",
-      "seconds": 2.928,
-      "engine": "gemini",
-      "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "63ab47234e6ecd44c520ab7a94fa6d861080a95c116abd4fa0305af3a4381c73",
+      "take": "b60da1ca3704",
+      "sha256": "ac2720902947804b8c58eb3788c1f73be469a441ebac27fce3f732ce25e07124",
       "words": [
         {
           "word": "Somewhere",
           "start": 0,
-          "end": 0.32
+          "end": 0.3
         },
         {
           "word": "in",
-          "start": 0.32,
-          "end": 0.56
+          "start": 0.3,
+          "end": 0.62
         },
         {
-          "word": "all",
-          "start": 0.56,
+          "word": "there",
+          "start": 0.62,
           "end": 0.8
         },
         {
-          "word": "of",
+          "word": "hides",
           "start": 0.8,
-          "end": 0.96
-        },
-        {
-          "word": "that,",
-          "start": 0.96,
-          "end": 1.24
-        },
-        {
-          "word": "the",
-          "start": 1.58,
-          "end": 1.74
-        },
-        {
-          "word": "port",
-          "start": 1.74,
-          "end": 1.92
-        },
-        {
-          "word": "has",
-          "start": 1.92,
-          "end": 2.14
+          "end": 1.28
         },
         {
           "word": "a",
-          "start": 2.14,
-          "end": 2.24
+          "start": 1.28,
+          "end": 1.54
         },
         {
-          "word": "bug",
-          "start": 2.24,
-          "end": 2.38
+          "word": "real",
+          "start": 1.54,
+          "end": 1.86
         },
         {
-          "word": "of",
-          "start": 2.38,
-          "end": 2.5
-        },
-        {
-          "word": "its",
-          "start": 2.5,
-          "end": 2.6
-        },
-        {
-          "word": "own.",
-          "start": 2.6,
-          "end": 2.76
+          "word": "bug.",
+          "start": 1.86,
+          "end": 2.2
         }
       ]
     },
     {
       "id": "question",
       "text": "Which differences are fixes, and which are corruption?",
-      "file": "question-a6f87428f647.mp3",
-      "seconds": 2.76,
+      "file": "question-39ae9bd88ff7.mp3",
+      "seconds": 2.568,
       "engine": "gemini",
       "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "3fe20c0f95a384544a970c58640da6abf9586dfa3a130f32c2179f1548fd0147",
+      "take": "b60da1ca3704",
+      "sha256": "bbfcc1005f00f026e3689f35c5aa9533791d524fb052d31eda867b885950bc2a",
       "words": [
         {
           "word": "Which",
@@ -654,49 +306,49 @@
         {
           "word": "differences",
           "start": 0.16,
-          "end": 0.5
+          "end": 0.46
         },
         {
           "word": "are",
-          "start": 0.5,
+          "start": 0.46,
           "end": 0.74
         },
         {
           "word": "fixes,",
           "start": 0.74,
-          "end": 0.98
+          "end": 1.04
         },
         {
           "word": "and",
-          "start": 1.58,
-          "end": 1.82
+          "start": 1.44,
+          "end": 1.6
         },
         {
           "word": "which",
-          "start": 1.82,
-          "end": 2.08
+          "start": 1.6,
+          "end": 1.76
         },
         {
           "word": "are",
-          "start": 2.08,
-          "end": 2.24
+          "start": 1.76,
+          "end": 1.9
         },
         {
           "word": "corruption?",
-          "start": 2.24,
-          "end": 2.48
+          "start": 1.9,
+          "end": 2.08
         }
       ]
     },
     {
       "id": "reveal",
-      "text": "Veridelta compares two datasets on their keys, under rules you declare.",
-      "file": "reveal-295ed8053193.mp3",
-      "seconds": 3.912,
+      "text": "Veridelta compares two datasets under rules you declare.",
+      "file": "reveal-97b289374bce.mp3",
+      "seconds": 3.528,
       "engine": "gemini",
       "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "482bfc707272dd09b6a611ef4f739ffc9d62dd3294bd1d6f723a95a92a6bb92a",
+      "take": "b60da1ca3704",
+      "sha256": "48efe468e627e58eb7ff8781a94e601c5c1b49fccbd6974fa8e6e94301d50938",
       "words": [
         {
           "word": "Veridelta",
@@ -706,707 +358,407 @@
         {
           "word": "compares",
           "start": 0.44,
-          "end": 0.82
+          "end": 0.86
         },
         {
           "word": "two",
-          "start": 0.82,
+          "start": 0.86,
           "end": 1.16
         },
         {
           "word": "datasets",
           "start": 1.16,
-          "end": 1.68
-        },
-        {
-          "word": "on",
-          "start": 1.68,
-          "end": 1.9
-        },
-        {
-          "word": "their",
-          "start": 1.9,
-          "end": 2.02
-        },
-        {
-          "word": "keys,",
-          "start": 2.02,
-          "end": 2.22
+          "end": 1.7
         },
         {
           "word": "under",
-          "start": 2.96,
-          "end": 2.96
+          "start": 1.7,
+          "end": 2.02
         },
         {
           "word": "rules",
-          "start": 2.96,
-          "end": 3.22
+          "start": 2.02,
+          "end": 2.34
         },
         {
           "word": "you",
-          "start": 3.22,
-          "end": 3.42
+          "start": 2.34,
+          "end": 2.66
         },
         {
           "word": "declare.",
-          "start": 3.42,
-          "end": 3.64
+          "start": 2.66,
+          "end": 2.94
         }
       ]
     },
     {
       "id": "forgiven",
       "text": "Nothing is forgiven unless a rule says so.",
-      "file": "forgiven-1bcfdc58d757.mp3",
-      "seconds": 2.088,
+      "file": "forgiven-ed23ea47f23b.mp3",
+      "seconds": 2.256,
       "engine": "gemini",
       "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "2bc13e7becc27225276fc8db4fcb68b64009701487afb5345da9a4fcb8498792",
+      "take": "b60da1ca3704",
+      "sha256": "34c39ef2cdef222936563ebc4f101b61f9b58f70dbf081185a268011f63fd058",
       "words": [
         {
           "word": "Nothing",
           "start": 0,
-          "end": 0.3
+          "end": 0.26
         },
         {
           "word": "is",
-          "start": 0.3,
-          "end": 0.44
+          "start": 0.26,
+          "end": 0.38
         },
         {
           "word": "forgiven",
-          "start": 0.44,
+          "start": 0.38,
           "end": 0.7
         },
         {
           "word": "unless",
           "start": 0.7,
-          "end": 1.06
-        },
-        {
-          "word": "a",
-          "start": 1.06,
           "end": 1.2
         },
         {
-          "word": "rule",
+          "word": "a",
           "start": 1.2,
-          "end": 1.36
+          "end": 1.38
         },
         {
-          "word": "says",
-          "start": 1.36,
+          "word": "rule",
+          "start": 1.38,
           "end": 1.6
         },
         {
-          "word": "so.",
+          "word": "says",
           "start": 1.6,
-          "end": 1.82
+          "end": 1.88
+        },
+        {
+          "word": "so.",
+          "start": 1.88,
+          "end": 2.12
         }
       ]
     },
     {
-      "id": "declare",
-      "text": "Maya declares the rename. Then veridelta suggest reads the data and proposes the rest.",
-      "file": "declare-07b674d71eab.mp3",
-      "seconds": 4.776,
+      "id": "rules",
+      "text": "Declare the rename. Let Veridelta suggest the rest from your data. Accept the fix with a baseline.",
+      "file": "rules-00b5916553aa.mp3",
+      "seconds": 6,
       "engine": "gemini",
       "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "a4b52831febc9ab23b3e2002e119a61632bf05b5a590066b77d6b9bf0f760f0e",
+      "take": "b60da1ca3704",
+      "sha256": "fabfdef803b6a7a81dae5b2d4fe3b968659a96ed74b4233f88da15559d1a8e90",
       "words": [
         {
-          "word": "Maya",
+          "word": "Declare",
           "start": 0,
-          "end": 0.14
-        },
-        {
-          "word": "declares",
-          "start": 0.14,
-          "end": 0.46
-        },
-        {
-          "word": "the",
-          "start": 0.46,
-          "end": 0.7
-        },
-        {
-          "word": "rename.",
-          "start": 0.7,
-          "end": 0.94
-        },
-        {
-          "word": "Then",
-          "start": 1.62,
-          "end": 1.78
-        },
-        {
-          "word": "veridelta",
-          "start": 1.78,
-          "end": 2.32
-        },
-        {
-          "word": "suggest",
-          "start": 2.32,
-          "end": 2.72
-        },
-        {
-          "word": "reads",
-          "start": 2.72,
-          "end": 3.18
-        },
-        {
-          "word": "the",
-          "start": 3.18,
-          "end": 3.44
-        },
-        {
-          "word": "data",
-          "start": 3.44,
-          "end": 3.64
-        },
-        {
-          "word": "and",
-          "start": 3.64,
-          "end": 3.88
-        },
-        {
-          "word": "proposes",
-          "start": 3.88,
-          "end": 4.12
-        },
-        {
-          "word": "the",
-          "start": 4.12,
-          "end": 4.4
-        },
-        {
-          "word": "rest.",
-          "start": 4.4,
-          "end": 4.56
-        }
-      ]
-    },
-    {
-      "id": "evidence",
-      "text": "One rule for humidity: a tiny tolerance, and minus 999 as missing. It explains all 124 rows.",
-      "file": "evidence-4d26f79cf561.mp3",
-      "seconds": 6.288,
-      "engine": "gemini",
-      "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "d93249f9ddf092906394aca32b02554a5f248802412645137dd1639fee3954da",
-      "words": [
-        {
-          "word": "One",
-          "start": 0,
-          "end": 0.18
-        },
-        {
-          "word": "rule",
-          "start": 0.18,
-          "end": 0.38
-        },
-        {
-          "word": "for",
-          "start": 0.38,
-          "end": 0.52
-        },
-        {
-          "word": "humidity:",
-          "start": 0.52,
-          "end": 0.78
-        },
-        {
-          "word": "a",
-          "start": 1.38,
-          "end": 1.48
-        },
-        {
-          "word": "tiny",
-          "start": 1.48,
-          "end": 1.7
-        },
-        {
-          "word": "tolerance,",
-          "start": 1.7,
-          "end": 2.08
-        },
-        {
-          "word": "and",
-          "start": 2.08,
-          "end": 2.5
-        },
-        {
-          "word": "minus",
-          "start": 2.5,
-          "end": 2.78
-        },
-        {
-          "word": "999",
-          "start": 2.78,
-          "end": 3.3
-        },
-        {
-          "word": "as",
-          "start": 3.3,
-          "end": 3.72
-        },
-        {
-          "word": "missing.",
-          "start": 3.72,
-          "end": 3.94
-        },
-        {
-          "word": "It",
-          "start": 4.58,
-          "end": 4.6
-        },
-        {
-          "word": "explains",
-          "start": 4.6,
-          "end": 4.86
-        },
-        {
-          "word": "all",
-          "start": 4.86,
-          "end": 5.16
-        },
-        {
-          "word": "124",
-          "start": 5.16,
-          "end": 5.56
-        },
-        {
-          "word": "rows.",
-          "start": 5.56,
-          "end": 6.08
-        }
-      ]
-    },
-    {
-      "id": "model",
-      "text": "No model is called.",
-      "file": "model-da7e02dff543.mp3",
-      "seconds": 0.96,
-      "engine": "gemini",
-      "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "03853737f3a5662eaf93d586982dd3aedd46e918d696a53d88cb28ea2cead0d5",
-      "words": [
-        {
-          "word": "No",
-          "start": 0,
-          "end": 0.16
-        },
-        {
-          "word": "model",
-          "start": 0.16,
-          "end": 0.44
-        },
-        {
-          "word": "is",
-          "start": 0.44,
-          "end": 0.62
-        },
-        {
-          "word": "called.",
-          "start": 0.62,
-          "end": 0.76
-        }
-      ]
-    },
-    {
-      "id": "baseline",
-      "text": "The pressure fix was on purpose, so a baseline accepts those 31 rows. Only those.",
-      "file": "baseline-32dc6645d1d3.mp3",
-      "seconds": 4.536,
-      "engine": "gemini",
-      "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "1b99a1fcddadbdb53fcf6dd0d0b4db139522bd37e4b1b3a90e2f8ef712f9f39b",
-      "words": [
-        {
-          "word": "The",
-          "start": 0,
-          "end": 0.04
-        },
-        {
-          "word": "pressure",
-          "start": 0.04,
-          "end": 0.2
-        },
-        {
-          "word": "fix",
-          "start": 0.2,
-          "end": 0.5
-        },
-        {
-          "word": "was",
-          "start": 0.5,
-          "end": 0.68
-        },
-        {
-          "word": "on",
-          "start": 0.68,
-          "end": 0.8
-        },
-        {
-          "word": "purpose,",
-          "start": 0.8,
-          "end": 1.12
-        },
-        {
-          "word": "so",
-          "start": 1.58,
-          "end": 1.72
-        },
-        {
-          "word": "a",
-          "start": 1.72,
-          "end": 1.82
-        },
-        {
-          "word": "baseline",
-          "start": 1.82,
-          "end": 2.08
-        },
-        {
-          "word": "accepts",
-          "start": 2.08,
-          "end": 2.48
-        },
-        {
-          "word": "those",
-          "start": 2.48,
-          "end": 2.72
-        },
-        {
-          "word": "31",
-          "start": 2.72,
-          "end": 3.02
-        },
-        {
-          "word": "rows.",
-          "start": 3.02,
-          "end": 3.32
-        },
-        {
-          "word": "Only",
-          "start": 3.74,
-          "end": 4
-        },
-        {
-          "word": "those.",
-          "start": 4,
-          "end": 4.24
-        }
-      ]
-    },
-    {
-      "id": "left",
-      "text": "What's left is the real bug. Four cold readings lost their minus sign.",
-      "file": "left-79791eff1cf0.mp3",
-      "seconds": 3.816,
-      "engine": "gemini",
-      "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "b5fc651990f807da6bec55b12b1cee47a070e2243398c6523d380fd358d59cda",
-      "words": [
-        {
-          "word": "What's",
-          "start": 0,
-          "end": 0.2
-        },
-        {
-          "word": "left",
-          "start": 0.2,
-          "end": 0.42
-        },
-        {
-          "word": "is",
-          "start": 0.42,
-          "end": 0.68
-        },
-        {
-          "word": "the",
-          "start": 0.68,
-          "end": 0.8
-        },
-        {
-          "word": "real",
-          "start": 0.8,
-          "end": 0.98
-        },
-        {
-          "word": "bug.",
-          "start": 0.98,
-          "end": 1.28
-        },
-        {
-          "word": "Four",
-          "start": 1.98,
-          "end": 2.14
-        },
-        {
-          "word": "cold",
-          "start": 2.14,
-          "end": 2.42
-        },
-        {
-          "word": "readings",
-          "start": 2.42,
-          "end": 2.66
-        },
-        {
-          "word": "lost",
-          "start": 2.66,
-          "end": 2.98
-        },
-        {
-          "word": "their",
-          "start": 2.98,
-          "end": 3.2
-        },
-        {
-          "word": "minus",
-          "start": 3.2,
-          "end": 3.34
-        },
-        {
-          "word": "sign.",
-          "start": 3.48,
-          "end": 3.64
-        }
-      ]
-    },
-    {
-      "id": "allalong",
-      "text": "They were in the first rows all along.",
-      "file": "allalong-0d29bc5735c4.mp3",
-      "seconds": 1.368,
-      "engine": "gemini",
-      "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "666bfd717b9cd3753030fff4188ab3cce1f6e6ea216f6df8f7c82173e5519249",
-      "words": [
-        {
-          "word": "They",
-          "start": 0,
-          "end": 0.08
-        },
-        {
-          "word": "were",
-          "start": 0.08,
-          "end": 0.2
-        },
-        {
-          "word": "in",
-          "start": 0.2,
           "end": 0.3
         },
         {
           "word": "the",
           "start": 0.3,
-          "end": 0.36
+          "end": 0.4
         },
         {
-          "word": "first",
-          "start": 0.36,
-          "end": 0.52
+          "word": "rename.",
+          "start": 0.4,
+          "end": 0.62
         },
         {
-          "word": "rows",
-          "start": 0.52,
-          "end": 0.74
+          "word": "Let",
+          "start": 1.5,
+          "end": 1.5
         },
         {
-          "word": "all",
-          "start": 0.74,
-          "end": 0.96
+          "word": "Veridelta",
+          "start": 1.5,
+          "end": 1.96
         },
         {
-          "word": "along.",
-          "start": 0.96,
-          "end": 1.16
+          "word": "suggest",
+          "start": 1.96,
+          "end": 2.3
+        },
+        {
+          "word": "the",
+          "start": 2.3,
+          "end": 2.7
+        },
+        {
+          "word": "rest",
+          "start": 2.7,
+          "end": 2.86
+        },
+        {
+          "word": "from",
+          "start": 2.86,
+          "end": 3.1
+        },
+        {
+          "word": "your",
+          "start": 3.1,
+          "end": 3.2
+        },
+        {
+          "word": "data.",
+          "start": 3.2,
+          "end": 3.42
+        },
+        {
+          "word": "Accept",
+          "start": 4.5,
+          "end": 4.5
+        },
+        {
+          "word": "the",
+          "start": 4.5,
+          "end": 4.72
+        },
+        {
+          "word": "fix",
+          "start": 4.72,
+          "end": 4.92
+        },
+        {
+          "word": "with",
+          "start": 4.92,
+          "end": 5.26
+        },
+        {
+          "word": "a",
+          "start": 5.26,
+          "end": 5.36
+        },
+        {
+          "word": "baseline.",
+          "start": 5.36,
+          "end": 5.56
         }
       ]
     },
     {
-      "id": "fails",
-      "text": "The run fails, and in CI, so does the pull request.",
-      "file": "fails-1df4a1c3f598.mp3",
-      "seconds": 2.784,
+      "id": "left",
+      "text": "What's left is the real bug. Four readings lost their minus sign, and CI fails the pull request.",
+      "file": "left-e1f37aa641d0.mp3",
+      "seconds": 6.24,
       "engine": "gemini",
       "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "724561119f6707d63c801d27133f278fdbc2502f53ee002ee26b92ed529183b5",
+      "take": "b60da1ca3704",
+      "sha256": "db9e20fc23666d480638d4e5460d62bce0467b6338bdee128535834c3e93fa61",
       "words": [
         {
-          "word": "The",
-          "start": null,
-          "end": null
-        },
-        {
-          "word": "run",
+          "word": "What's",
           "start": 0,
-          "end": 0.18
+          "end": 0.14
         },
         {
-          "word": "fails,",
-          "start": 0.18,
-          "end": 0.46
+          "word": "left",
+          "start": 0.14,
+          "end": 0.36
         },
         {
-          "word": "and",
-          "start": 0.9,
-          "end": 1.16
-        },
-        {
-          "word": "in",
-          "start": 1.16,
-          "end": 1.74
-        },
-        {
-          "word": "CI,",
-          "start": 1.16,
-          "end": 1.74
-        },
-        {
-          "word": "so",
-          "start": 1.74,
-          "end": 1.94
-        },
-        {
-          "word": "does",
-          "start": 1.94,
-          "end": 2.06
+          "word": "is",
+          "start": 0.36,
+          "end": 0.88
         },
         {
           "word": "the",
-          "start": 2.06,
-          "end": 2.18
+          "start": 0.88,
+          "end": 1.02
+        },
+        {
+          "word": "real",
+          "start": 1.02,
+          "end": 1.18
+        },
+        {
+          "word": "bug.",
+          "start": 1.18,
+          "end": 1.48
+        },
+        {
+          "word": "Four",
+          "start": 2.18,
+          "end": 2.32
+        },
+        {
+          "word": "readings",
+          "start": 2.32,
+          "end": 2.64
+        },
+        {
+          "word": "lost",
+          "start": 2.64,
+          "end": 3.14
+        },
+        {
+          "word": "their",
+          "start": 3.14,
+          "end": 3.4
+        },
+        {
+          "word": "minus",
+          "start": 3.4,
+          "end": 3.58
+        },
+        {
+          "word": "sign,",
+          "start": 3.58,
+          "end": 4
+        },
+        {
+          "word": "and",
+          "start": 4.32,
+          "end": 4.44
+        },
+        {
+          "word": "CI",
+          "start": 4.44,
+          "end": 4.68
+        },
+        {
+          "word": "fails",
+          "start": 4.68,
+          "end": 5.18
+        },
+        {
+          "word": "the",
+          "start": 5.18,
+          "end": 5.42
         },
         {
           "word": "pull",
-          "start": 2.18,
-          "end": 2.28
+          "start": 5.42,
+          "end": 5.58
         },
         {
           "word": "request.",
-          "start": 2.28,
-          "end": 2.48
+          "start": 5.58,
+          "end": 5.86
         }
       ]
     },
     {
       "id": "passes",
-      "text": "She fixes the port. It passes. One to one.",
-      "file": "passes-dd133f5e0702.mp3",
-      "seconds": 2.832,
+      "text": "Fix it, and it passes. One to one.",
+      "file": "passes-2d6cd5ca0aaa.mp3",
+      "seconds": 2.688,
       "engine": "gemini",
       "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "d62e9db4d4d00d66533e03030ad617365c6cd226a5cae23587e6dac12e3eea3f",
+      "take": "b60da1ca3704",
+      "sha256": "6f56da7d99d0b13e2cc8ba5c86450498ecbbb6e303686e7fdf6e02fb90ce7e87",
       "words": [
         {
-          "word": "She",
+          "word": "Fix",
           "start": 0,
-          "end": 0.1
+          "end": 0.16
         },
         {
-          "word": "fixes",
-          "start": 0.1,
-          "end": 0.26
+          "word": "it,",
+          "start": 0.16,
+          "end": 0.34
         },
         {
-          "word": "the",
-          "start": 0.26,
-          "end": 0.46
+          "word": "and",
+          "start": 0.34,
+          "end": 0.78
         },
         {
-          "word": "port.",
-          "start": 0.46,
-          "end": 0.66
-        },
-        {
-          "word": "It",
-          "start": 1.18,
-          "end": 1.26
+          "word": "it",
+          "start": 0.78,
+          "end": 0.86
         },
         {
           "word": "passes.",
-          "start": 1.26,
-          "end": 1.58
+          "start": 0.86,
+          "end": 1.12
         },
         {
           "word": "One",
-          "start": 2.2,
-          "end": 2.36
+          "start": 1.94,
+          "end": 2.14
         },
         {
           "word": "to",
-          "start": 2.36,
-          "end": 2.5
+          "start": 2.14,
+          "end": 2.32
         },
         {
           "word": "one.",
-          "start": 2.5,
-          "end": 2.68
+          "start": 2.32,
+          "end": 2.52
         }
       ]
     },
     {
       "id": "end",
-      "text": "Veridelta. Compare two datasets under rules you declare.",
-      "file": "end-d780c9319396.mp3",
-      "seconds": 3.312,
+      "text": "Porting a pipeline of your own? Start with Veridelta's six tutorials.",
+      "file": "end-6346b38ac868.mp3",
+      "seconds": 3.888,
       "engine": "gemini",
       "voice": "Orus",
-      "take": "f5e9a51e595b",
-      "sha256": "3eb162bbf3a6b21a5bec87e76faaacd16d1fde33bc031eb1415d85307fd39484",
+      "take": "b60da1ca3704",
+      "sha256": "d661628950954c609b2fdbd46087d06a819bcf0171887987cdc7be35b27e1d63",
       "words": [
         {
-          "word": "Veridelta.",
+          "word": "Porting",
           "start": 0,
-          "end": 0.52
+          "end": 0.22
         },
         {
-          "word": "Compare",
-          "start": 0.94,
-          "end": 1.3
+          "word": "a",
+          "start": 0.22,
+          "end": 0.36
         },
         {
-          "word": "two",
-          "start": 1.3,
-          "end": 1.52
+          "word": "pipeline",
+          "start": 0.36,
+          "end": 0.6
         },
         {
-          "word": "datasets",
-          "start": 1.52,
-          "end": 2.08
+          "word": "of",
+          "start": 0.6,
+          "end": 0.9
         },
         {
-          "word": "under",
-          "start": 2.08,
-          "end": 2.32
+          "word": "your",
+          "start": 0.9,
+          "end": 1.02
         },
         {
-          "word": "rules",
-          "start": 2.32,
-          "end": 2.6
+          "word": "own?",
+          "start": 1.02,
+          "end": 1.24
         },
         {
-          "word": "you",
-          "start": 2.6,
-          "end": 2.82
+          "word": "Start",
+          "start": 1.7,
+          "end": 1.9
         },
         {
-          "word": "declare.",
-          "start": 2.82,
-          "end": 3.04
+          "word": "with",
+          "start": 1.9,
+          "end": 2.1
+        },
+        {
+          "word": "Veridelta's",
+          "start": 2.1,
+          "end": 2.78
+        },
+        {
+          "word": "six",
+          "start": 2.78,
+          "end": 3
+        },
+        {
+          "word": "tutorials.",
+          "start": 3,
+          "end": 3.44
         }
       ]
     }

@@ -1,6 +1,6 @@
-# The 95-second demo
+# The 59-second demo
 
-A short story for people who have not heard of Veridelta. Maya, an atmospheric scientist, ports her weather station pipeline from IDL to Python, and the new output has to match the old one to one. It does not: every row differs. Some differences are float noise, some are a fill value or a renamed column, one is a bug she fixed on purpose, and one is a new bug. Veridelta sorts them under rules she declares, and only the new bug fails the run. It is narrated, with captions and music, and replaces both the 30-second cut and the three-minute walkthrough on the release.
+A short pitch for people who have not heard of Veridelta: data parity is the problem, and Veridelta is the answer. Maya, an atmospheric scientist, ports her weather pipeline from IDL to Python, and the new output has to match the old one to one. It does not: every row differs. Float precision, a renamed column, and a bug she fixed on purpose hide one real bug. Veridelta's rules, `suggest`, and a baseline leave only that bug, which fails CI, and the video ends on the six tutorials in the docs. It is narrated, with captions and music, and replaces both the 30-second cut and the three-minute walkthrough on the release.
 
 It was made with [brag](https://github.com/latent-spaces/brag), an agent skill for short launch videos, at commit `8531ccb`, with brag's full workflow, which builds the video with [Hyperframes](https://hyperframes.heygen.com/) 0.8.143. The voice is Gemini's, as in the narrated Remotion cuts, in place of brag's own. The Remotion cuts in `src/` do not use Hyperframes.
 
@@ -11,7 +11,7 @@ It was made with [brag](https://github.com/latent-spaces/brag), an agent skill f
 | [brag-plan.md](brag-plan.md) | The angle, the story, the audio, and a table of every spoken line and every line on screen with its source |
 | [composition-brief.md](composition-brief.md) | What brag handed to Hyperframes |
 | [narration.json](narration.json) | The narration, line by line and scene by scene, the voice and how it reads, the music and where its drop lands, and the sound effects |
-| `composition/index.html` | The video: eleven scenes on one GSAP timeline |
+| `composition/index.html` | The video: nine scenes on one GSAP timeline |
 | `composition/assets/` | The fonts, the logo, the music, the sound effects, the voice, each line's time, and the music's level for each frame |
 | `demo.srt` | The captions, word for word, for the release |
 | [finish.sh](finish.sh) | Renders the video and finishes it |

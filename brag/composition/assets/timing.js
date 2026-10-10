@@ -1,1385 +1,768 @@
 // Written by scripts/brag-timing.ts from the voice's words; edit brag/narration.json instead.
 window.TIMING = {
-  "duration": 94.912,
+  "duration": 59.288,
   "scenes": {
     "hook": {
       "enter": 0,
       "start": 0.5,
-      "end": 4.124,
+      "end": 6.63,
       "lead": 0.5,
-      "tail": 0.4
-    },
-    "files": {
-      "enter": 4.5,
-      "start": 5.3,
-      "end": 8.276,
-      "lead": 0.8,
-      "tail": 1.4
+      "tail": 0.6
     },
     "run": {
-      "enter": 9.5,
-      "start": 10,
-      "end": 13.576,
-      "lead": 0.5,
-      "tail": 1
-    },
-    "questions": {
-      "enter": 14.5,
-      "start": 15,
-      "end": 35.944,
-      "lead": 0.5,
+      "enter": 7.5,
+      "start": 7.9,
+      "end": 11.236,
+      "lead": 0.4,
       "tail": 0.8
     },
+    "doubts": {
+      "enter": 12,
+      "start": 12.4,
+      "end": 17.224,
+      "lead": 0.4,
+      "tail": 1
+    },
     "pain": {
-      "enter": 37,
-      "start": 37.5,
-      "end": 43.438,
-      "lead": 0.5,
-      "tail": 2
+      "enter": 18.5,
+      "start": 18.9,
+      "end": 24.166,
+      "lead": 0.4,
+      "tail": 1.8
     },
     "veridelta": {
-      "enter": 45.5,
-      "start": 46.25,
-      "end": 52.5,
+      "enter": 26,
+      "start": 26.75,
+      "end": 32.784,
       "lead": 0.75,
       "tail": 0.6
     },
-    "suggest": {
-      "enter": 53.5,
-      "start": 54,
-      "end": 66.524,
-      "lead": 0.5,
-      "tail": 0.8
-    },
-    "baseline": {
-      "enter": 67.5,
-      "start": 68.3,
-      "end": 72.836,
-      "lead": 0.8,
+    "rules": {
+      "enter": 33.5,
+      "start": 33.9,
+      "end": 39.9,
+      "lead": 0.4,
       "tail": 1.2
     },
     "left": {
-      "enter": 74,
-      "start": 74.5,
-      "end": 82.968,
-      "lead": 0.5,
-      "tail": 0.6
+      "enter": 41,
+      "start": 41.4,
+      "end": 47.64,
+      "lead": 0.4,
+      "tail": 0.8
     },
     "pass": {
-      "enter": 83.5,
-      "start": 84,
-      "end": 86.832,
-      "lead": 0.5,
-      "tail": 1.8
+      "enter": 48.5,
+      "start": 48.9,
+      "end": 51.588,
+      "lead": 0.4,
+      "tail": 1.5
     },
     "end": {
-      "enter": 88.5,
-      "start": 89,
-      "end": 92.312,
-      "lead": 0.5,
-      "tail": 2.6
+      "enter": 53,
+      "start": 53.4,
+      "end": 57.288,
+      "lead": 0.4,
+      "tail": 2
     }
   },
   "lines": {
     "hook": {
-      "text": "Maya is moving her weather station pipeline from IDL to Python.",
+      "text": "Maya is moving her weather pipeline from IDL to Python.",
       "start": 0.5,
-      "end": 4.124,
+      "end": 3.884,
       "words": [
         {
           "word": "Maya",
           "start": 0.5,
-          "end": 0.86
+          "end": 0.7
         },
         {
           "word": "is",
-          "start": 0.5,
-          "end": 0.86
+          "start": 0.7,
+          "end": 0.92
         },
         {
           "word": "moving",
-          "start": 0.86,
-          "end": 1.04
+          "start": 0.92,
+          "end": 1.16
         },
         {
           "word": "her",
-          "start": 1.04,
-          "end": 1.24
+          "start": 1.16,
+          "end": 1.32
         },
         {
           "word": "weather",
-          "start": 1.24,
-          "end": 1.44
-        },
-        {
-          "word": "station",
-          "start": 1.44,
-          "end": 1.78
+          "start": 1.32,
+          "end": 1.5
         },
         {
           "word": "pipeline",
-          "start": 1.78,
-          "end": 2.2
+          "start": 1.5,
+          "end": 2
         },
         {
           "word": "from",
-          "start": 2.2,
-          "end": 2.76
+          "start": 2,
+          "end": 2.32
         },
         {
           "word": "IDL",
-          "start": 2.76,
-          "end": 3.44
+          "start": 2.32,
+          "end": 2.98
         },
         {
           "word": "to",
-          "start": 3.44,
-          "end": 3.56
+          "start": 2.98,
+          "end": 3.24
         },
         {
           "word": "Python.",
-          "start": 3.56,
-          "end": 3.74
+          "start": 3.24,
+          "end": 3.48
         }
       ]
     },
     "parity": {
-      "text": "The new output has to match the old. One to one.",
-      "start": 5.3,
-      "end": 8.276,
+      "text": "It has to match the old one. One to one.",
+      "start": 4.134,
+      "end": 6.63,
       "words": [
         {
-          "word": "The",
-          "start": 5.3,
-          "end": 5.4
-        },
-        {
-          "word": "new",
-          "start": 5.4,
-          "end": 5.52
-        },
-        {
-          "word": "output",
-          "start": 5.52,
-          "end": 5.8
+          "word": "It",
+          "start": 4.134,
+          "end": 4.214
         },
         {
           "word": "has",
-          "start": 5.8,
-          "end": 6.3
+          "start": 4.214,
+          "end": 4.394
         },
         {
           "word": "to",
-          "start": 6.3,
-          "end": 6.52
+          "start": 4.394,
+          "end": 4.574
         },
         {
           "word": "match",
-          "start": 6.52,
-          "end": 6.68
+          "start": 4.574,
+          "end": 4.714
         },
         {
           "word": "the",
-          "start": 6.68,
-          "end": 6.86
+          "start": 4.714,
+          "end": 4.954
         },
         {
-          "word": "old.",
-          "start": 6.86,
-          "end": 7.08
-        },
-        {
-          "word": "One",
-          "start": 7.62,
-          "end": 7.78
-        },
-        {
-          "word": "to",
-          "start": 7.78,
-          "end": 7.92
+          "word": "old",
+          "start": 4.954,
+          "end": 5.114
         },
         {
           "word": "one.",
-          "start": 7.92,
-          "end": 8.12
+          "start": 5.114,
+          "end": 5.354
+        },
+        {
+          "word": "One",
+          "start": 5.574,
+          "end": 5.814
+        },
+        {
+          "word": "to",
+          "start": 5.814,
+          "end": 6.174
+        },
+        {
+          "word": "one.",
+          "start": 6.174,
+          "end": 6.434
         }
       ]
     },
     "run": {
-      "text": "She runs both and compares. Every single row differs.",
-      "start": 10,
-      "end": 13.576,
+      "text": "She compares them. Every single row differs.",
+      "start": 7.9,
+      "end": 11.236,
       "words": [
         {
           "word": "She",
-          "start": 10,
-          "end": 10.1
+          "start": 7.9,
+          "end": 8
         },
         {
-          "word": "runs",
-          "start": 10.1,
-          "end": 10.26
+          "word": "compares",
+          "start": 8,
+          "end": 8.26
         },
         {
-          "word": "both",
-          "start": 10.26,
-          "end": 10.56
-        },
-        {
-          "word": "and",
-          "start": 10.56,
-          "end": 10.76
-        },
-        {
-          "word": "compares.",
-          "start": 10.76,
-          "end": 11.06
+          "word": "them.",
+          "start": 8.26,
+          "end": 8.6
         },
         {
           "word": "Every",
-          "start": 11.86,
-          "end": 12.2
+          "start": 9.24,
+          "end": 9.54
         },
         {
           "word": "single",
-          "start": 12.2,
-          "end": 12.66
+          "start": 9.54,
+          "end": 10.08
         },
         {
           "word": "row",
-          "start": 12.66,
-          "end": 12.98
+          "start": 10.08,
+          "end": 10.52
         },
         {
           "word": "differs.",
-          "start": 12.98,
-          "end": 13.26
+          "start": 10.52,
+          "end": 10.88
         }
       ]
     },
-    "floats": {
-      "text": "IDL works in 32-bit floats. Python works in 64.",
-      "start": 15,
-      "end": 18.528,
+    "doubts": {
+      "text": "Float precision. A renamed column. A bug she fixed on purpose.",
+      "start": 12.4,
+      "end": 17.224,
       "words": [
         {
-          "word": "IDL",
-          "start": 15,
-          "end": 15.46
+          "word": "Float",
+          "start": 12.4,
+          "end": 13
         },
         {
-          "word": "works",
-          "start": 15.46,
+          "word": "precision.",
+          "start": 13,
+          "end": 13.4
+        },
+        {
+          "word": "A",
+          "start": 14,
+          "end": 14.12
+        },
+        {
+          "word": "renamed",
+          "start": 14.12,
+          "end": 14.36
+        },
+        {
+          "word": "column.",
+          "start": 14.36,
+          "end": 14.8
+        },
+        {
+          "word": "A",
+          "start": 15.54,
           "end": 15.66
         },
         {
-          "word": "in",
+          "word": "bug",
           "start": 15.66,
           "end": 15.84
         },
         {
-          "word": "32-bit",
-          "start": 15.84,
-          "end": 16.38
-        },
-        {
-          "word": "floats.",
-          "start": 16.38,
-          "end": 16.58
-        },
-        {
-          "word": "Python",
-          "start": 17.4,
-          "end": 17.4
-        },
-        {
-          "word": "works",
-          "start": 17.4,
-          "end": 17.68
-        },
-        {
-          "word": "in",
-          "start": 17.68,
-          "end": 17.86
-        },
-        {
-          "word": "64.",
-          "start": 17.86,
-          "end": 18.14
-        }
-      ]
-    },
-    "noise": {
-      "text": "So the same humidity comes out two ways.",
-      "start": 18.778,
-      "end": 20.65,
-      "words": [
-        {
-          "word": "So",
-          "start": 18.778,
-          "end": 18.878
-        },
-        {
-          "word": "the",
-          "start": 18.878,
-          "end": 18.958
-        },
-        {
-          "word": "same",
-          "start": 18.958,
-          "end": 19.118
-        },
-        {
-          "word": "humidity",
-          "start": 19.118,
-          "end": 19.438
-        },
-        {
-          "word": "comes",
-          "start": 19.438,
-          "end": 19.838
-        },
-        {
-          "word": "out",
-          "start": 19.838,
-          "end": 20.038
-        },
-        {
-          "word": "two",
-          "start": 20.038,
-          "end": 20.198
-        },
-        {
-          "word": "ways.",
-          "start": 20.198,
-          "end": 20.438
-        }
-      ]
-    },
-    "fill": {
-      "text": "IDL wrote minus 999 for a missing reading. Python writes nothing.",
-      "start": 20.9,
-      "end": 25.004,
-      "words": [
-        {
-          "word": "IDL",
-          "start": 20.9,
-          "end": 21.3
-        },
-        {
-          "word": "wrote",
-          "start": 21.3,
-          "end": 21.46
-        },
-        {
-          "word": "minus",
-          "start": 21.46,
-          "end": 21.74
-        },
-        {
-          "word": "999",
-          "start": 21.74,
-          "end": 22.16
-        },
-        {
-          "word": "for",
-          "start": 22.16,
-          "end": 22.62
-        },
-        {
-          "word": "a",
-          "start": 22.62,
-          "end": 22.68
-        },
-        {
-          "word": "missing",
-          "start": 22.68,
-          "end": 22.82
-        },
-        {
-          "word": "reading.",
-          "start": 22.82,
-          "end": 23.18
-        },
-        {
-          "word": "Python",
-          "start": 24.08,
-          "end": 24.08
-        },
-        {
-          "word": "writes",
-          "start": 24.08,
-          "end": 24.46
-        },
-        {
-          "word": "nothing.",
-          "start": 24.46,
-          "end": 24.86
-        }
-      ]
-    },
-    "rename": {
-      "text": "She renamed temp to temperature_c, so a match by name quietly leaves it out.",
-      "start": 25.254,
-      "end": 29.91,
-      "words": [
-        {
-          "word": "She",
-          "start": 25.254,
-          "end": 25.374
-        },
-        {
-          "word": "renamed",
-          "start": 25.374,
-          "end": 25.594
-        },
-        {
-          "word": "temp",
-          "start": 25.594,
-          "end": 25.934
-        },
-        {
-          "word": "to",
-          "start": 25.934,
-          "end": 26.234
-        },
-        {
-          "word": "temperature_c,",
-          "start": 26.234,
-          "end": 27.294
-        },
-        {
-          "word": "so",
-          "start": 27.834,
-          "end": 27.974
-        },
-        {
-          "word": "a",
-          "start": 27.974,
-          "end": 28.154
-        },
-        {
-          "word": "match",
-          "start": 28.154,
-          "end": 28.334
-        },
-        {
-          "word": "by",
-          "start": 28.334,
-          "end": 28.514
-        },
-        {
-          "word": "name",
-          "start": 28.514,
-          "end": 28.714
-        },
-        {
-          "word": "quietly",
-          "start": 28.714,
-          "end": 29.094
-        },
-        {
-          "word": "leaves",
-          "start": 29.094,
-          "end": 29.454
-        },
-        {
-          "word": "it",
-          "start": 29.454,
-          "end": 29.614
-        },
-        {
-          "word": "out.",
-          "start": 29.614,
-          "end": 29.754
-        }
-      ]
-    },
-    "fix": {
-      "text": "And she fixed a real IDL bug. Station S3 had the wrong elevation, so its pressure changed on purpose.",
-      "start": 30.16,
-      "end": 35.944,
-      "words": [
-        {
-          "word": "And",
-          "start": 30.16,
-          "end": 30.24
-        },
-        {
           "word": "she",
-          "start": 30.24,
-          "end": 30.34
+          "start": 15.84,
+          "end": 16.04
         },
         {
           "word": "fixed",
-          "start": 30.34,
-          "end": 30.58
-        },
-        {
-          "word": "a",
-          "start": 30.58,
-          "end": 30.82
-        },
-        {
-          "word": "real",
-          "start": 30.82,
-          "end": 31.1
-        },
-        {
-          "word": "IDL",
-          "start": 31.1,
-          "end": 31.68
-        },
-        {
-          "word": "bug.",
-          "start": 31.68,
-          "end": 31.82
-        },
-        {
-          "word": "Station",
-          "start": 32.78,
-          "end": 32.78
-        },
-        {
-          "word": "S3",
-          "start": 32.78,
-          "end": 33.18
-        },
-        {
-          "word": "had",
-          "start": 33.18,
-          "end": 33.34
-        },
-        {
-          "word": "the",
-          "start": 33.34,
-          "end": 33.42
-        },
-        {
-          "word": "wrong",
-          "start": 33.42,
-          "end": 33.58
-        },
-        {
-          "word": "elevation,",
-          "start": 33.58,
-          "end": 33.92
-        },
-        {
-          "word": "so",
-          "start": 34.4,
-          "end": 34.52
-        },
-        {
-          "word": "its",
-          "start": 34.52,
-          "end": 34.64
-        },
-        {
-          "word": "pressure",
-          "start": 34.64,
-          "end": 34.84
-        },
-        {
-          "word": "changed",
-          "start": 34.84,
-          "end": 35.2
+          "start": 16.04,
+          "end": 16.24
         },
         {
           "word": "on",
-          "start": 35.2,
-          "end": 35.4
+          "start": 16.24,
+          "end": 16.54
         },
         {
           "word": "purpose.",
-          "start": 35.4,
-          "end": 35.66
+          "start": 16.54,
+          "end": 16.9
         }
       ]
     },
-    "doubt": {
-      "text": "Somewhere in all of that, the port has a bug of its own.",
-      "start": 37.5,
-      "end": 40.428,
+    "hidden": {
+      "text": "Somewhere in there hides a real bug.",
+      "start": 18.9,
+      "end": 21.348,
       "words": [
         {
           "word": "Somewhere",
-          "start": 37.5,
-          "end": 37.82
+          "start": 18.9,
+          "end": 19.2
         },
         {
           "word": "in",
-          "start": 37.82,
-          "end": 38.06
+          "start": 19.2,
+          "end": 19.52
         },
         {
-          "word": "all",
-          "start": 38.06,
-          "end": 38.3
+          "word": "there",
+          "start": 19.52,
+          "end": 19.7
         },
         {
-          "word": "of",
-          "start": 38.3,
-          "end": 38.46
-        },
-        {
-          "word": "that,",
-          "start": 38.46,
-          "end": 38.74
-        },
-        {
-          "word": "the",
-          "start": 39.08,
-          "end": 39.24
-        },
-        {
-          "word": "port",
-          "start": 39.24,
-          "end": 39.42
-        },
-        {
-          "word": "has",
-          "start": 39.42,
-          "end": 39.64
+          "word": "hides",
+          "start": 19.7,
+          "end": 20.18
         },
         {
           "word": "a",
-          "start": 39.64,
-          "end": 39.74
+          "start": 20.18,
+          "end": 20.44
         },
         {
-          "word": "bug",
-          "start": 39.74,
-          "end": 39.88
+          "word": "real",
+          "start": 20.44,
+          "end": 20.76
         },
         {
-          "word": "of",
-          "start": 39.88,
-          "end": 40
-        },
-        {
-          "word": "its",
-          "start": 40,
-          "end": 40.1
-        },
-        {
-          "word": "own.",
-          "start": 40.1,
-          "end": 40.26
+          "word": "bug.",
+          "start": 20.76,
+          "end": 21.1
         }
       ]
     },
     "question": {
       "text": "Which differences are fixes, and which are corruption?",
-      "start": 40.678,
-      "end": 43.438,
+      "start": 21.598,
+      "end": 24.166,
       "words": [
         {
           "word": "Which",
-          "start": 40.678,
-          "end": 40.838
+          "start": 21.598,
+          "end": 21.758
         },
         {
           "word": "differences",
-          "start": 40.838,
-          "end": 41.178
+          "start": 21.758,
+          "end": 22.058
         },
         {
           "word": "are",
-          "start": 41.178,
-          "end": 41.418
+          "start": 22.058,
+          "end": 22.338
         },
         {
           "word": "fixes,",
-          "start": 41.418,
-          "end": 41.658
+          "start": 22.338,
+          "end": 22.638
         },
         {
           "word": "and",
-          "start": 42.258,
-          "end": 42.498
+          "start": 23.038,
+          "end": 23.198
         },
         {
           "word": "which",
-          "start": 42.498,
-          "end": 42.758
+          "start": 23.198,
+          "end": 23.358
         },
         {
           "word": "are",
-          "start": 42.758,
-          "end": 42.918
+          "start": 23.358,
+          "end": 23.498
         },
         {
           "word": "corruption?",
-          "start": 42.918,
-          "end": 43.158
+          "start": 23.498,
+          "end": 23.678
         }
       ]
     },
     "reveal": {
-      "text": "Veridelta compares two datasets on their keys, under rules you declare.",
-      "start": 46.25,
-      "end": 50.162,
+      "text": "Veridelta compares two datasets under rules you declare.",
+      "start": 26.75,
+      "end": 30.278,
       "words": [
         {
           "word": "Veridelta",
-          "start": 46.25,
-          "end": 46.69
+          "start": 26.75,
+          "end": 27.19
         },
         {
           "word": "compares",
-          "start": 46.69,
-          "end": 47.07
+          "start": 27.19,
+          "end": 27.61
         },
         {
           "word": "two",
-          "start": 47.07,
-          "end": 47.41
+          "start": 27.61,
+          "end": 27.91
         },
         {
           "word": "datasets",
-          "start": 47.41,
-          "end": 47.93
-        },
-        {
-          "word": "on",
-          "start": 47.93,
-          "end": 48.15
-        },
-        {
-          "word": "their",
-          "start": 48.15,
-          "end": 48.27
-        },
-        {
-          "word": "keys,",
-          "start": 48.27,
-          "end": 48.47
+          "start": 27.91,
+          "end": 28.45
         },
         {
           "word": "under",
-          "start": 49.21,
-          "end": 49.21
+          "start": 28.45,
+          "end": 28.77
         },
         {
           "word": "rules",
-          "start": 49.21,
-          "end": 49.47
+          "start": 28.77,
+          "end": 29.09
         },
         {
           "word": "you",
-          "start": 49.47,
-          "end": 49.67
+          "start": 29.09,
+          "end": 29.41
         },
         {
           "word": "declare.",
-          "start": 49.67,
-          "end": 49.89
+          "start": 29.41,
+          "end": 29.69
         }
       ]
     },
     "forgiven": {
       "text": "Nothing is forgiven unless a rule says so.",
-      "start": 50.412,
-      "end": 52.5,
+      "start": 30.528,
+      "end": 32.784,
       "words": [
         {
           "word": "Nothing",
-          "start": 50.412,
-          "end": 50.712
+          "start": 30.528,
+          "end": 30.788
         },
         {
           "word": "is",
-          "start": 50.712,
-          "end": 50.852
+          "start": 30.788,
+          "end": 30.908
         },
         {
           "word": "forgiven",
-          "start": 50.852,
-          "end": 51.112
+          "start": 30.908,
+          "end": 31.228
         },
         {
           "word": "unless",
-          "start": 51.112,
-          "end": 51.472
+          "start": 31.228,
+          "end": 31.728
         },
         {
           "word": "a",
-          "start": 51.472,
-          "end": 51.612
+          "start": 31.728,
+          "end": 31.908
         },
         {
           "word": "rule",
-          "start": 51.612,
-          "end": 51.772
+          "start": 31.908,
+          "end": 32.128
         },
         {
           "word": "says",
-          "start": 51.772,
-          "end": 52.012
+          "start": 32.128,
+          "end": 32.408
         },
         {
           "word": "so.",
-          "start": 52.012,
-          "end": 52.232
+          "start": 32.408,
+          "end": 32.648
         }
       ]
     },
-    "declare": {
-      "text": "Maya declares the rename. Then veridelta suggest reads the data and proposes the rest.",
-      "start": 54,
-      "end": 58.776,
+    "rules": {
+      "text": "Declare the rename. Let Veridelta suggest the rest from your data. Accept the fix with a baseline.",
+      "start": 33.9,
+      "end": 39.9,
       "words": [
         {
-          "word": "Maya",
-          "start": 54,
-          "end": 54.14
-        },
-        {
-          "word": "declares",
-          "start": 54.14,
-          "end": 54.46
+          "word": "Declare",
+          "start": 33.9,
+          "end": 34.2
         },
         {
           "word": "the",
-          "start": 54.46,
-          "end": 54.7
+          "start": 34.2,
+          "end": 34.3
         },
         {
           "word": "rename.",
-          "start": 54.7,
-          "end": 54.94
+          "start": 34.3,
+          "end": 34.52
         },
         {
-          "word": "Then",
-          "start": 55.62,
-          "end": 55.78
+          "word": "Let",
+          "start": 35.4,
+          "end": 35.4
         },
         {
-          "word": "veridelta",
-          "start": 55.78,
-          "end": 56.32
+          "word": "Veridelta",
+          "start": 35.4,
+          "end": 35.86
         },
         {
           "word": "suggest",
-          "start": 56.32,
-          "end": 56.72
-        },
-        {
-          "word": "reads",
-          "start": 56.72,
-          "end": 57.18
+          "start": 35.86,
+          "end": 36.2
         },
         {
           "word": "the",
-          "start": 57.18,
-          "end": 57.44
+          "start": 36.2,
+          "end": 36.6
         },
         {
-          "word": "data",
-          "start": 57.44,
-          "end": 57.64
+          "word": "rest",
+          "start": 36.6,
+          "end": 36.76
         },
         {
-          "word": "and",
-          "start": 57.64,
-          "end": 57.88
+          "word": "from",
+          "start": 36.76,
+          "end": 37
         },
         {
-          "word": "proposes",
-          "start": 57.88,
-          "end": 58.12
+          "word": "your",
+          "start": 37,
+          "end": 37.1
+        },
+        {
+          "word": "data.",
+          "start": 37.1,
+          "end": 37.32
+        },
+        {
+          "word": "Accept",
+          "start": 38.4,
+          "end": 38.4
         },
         {
           "word": "the",
-          "start": 58.12,
-          "end": 58.4
-        },
-        {
-          "word": "rest.",
-          "start": 58.4,
-          "end": 58.56
-        }
-      ]
-    },
-    "evidence": {
-      "text": "One rule for humidity: a tiny tolerance, and minus 999 as missing. It explains all 124 rows.",
-      "start": 59.026,
-      "end": 65.314,
-      "words": [
-        {
-          "word": "One",
-          "start": 59.026,
-          "end": 59.206
-        },
-        {
-          "word": "rule",
-          "start": 59.206,
-          "end": 59.406
-        },
-        {
-          "word": "for",
-          "start": 59.406,
-          "end": 59.546
-        },
-        {
-          "word": "humidity:",
-          "start": 59.546,
-          "end": 59.806
-        },
-        {
-          "word": "a",
-          "start": 60.406,
-          "end": 60.506
-        },
-        {
-          "word": "tiny",
-          "start": 60.506,
-          "end": 60.726
-        },
-        {
-          "word": "tolerance,",
-          "start": 60.726,
-          "end": 61.106
-        },
-        {
-          "word": "and",
-          "start": 61.106,
-          "end": 61.526
-        },
-        {
-          "word": "minus",
-          "start": 61.526,
-          "end": 61.806
-        },
-        {
-          "word": "999",
-          "start": 61.806,
-          "end": 62.326
-        },
-        {
-          "word": "as",
-          "start": 62.326,
-          "end": 62.746
-        },
-        {
-          "word": "missing.",
-          "start": 62.746,
-          "end": 62.966
-        },
-        {
-          "word": "It",
-          "start": 63.606,
-          "end": 63.626
-        },
-        {
-          "word": "explains",
-          "start": 63.626,
-          "end": 63.886
-        },
-        {
-          "word": "all",
-          "start": 63.886,
-          "end": 64.186
-        },
-        {
-          "word": "124",
-          "start": 64.186,
-          "end": 64.586
-        },
-        {
-          "word": "rows.",
-          "start": 64.586,
-          "end": 65.106
-        }
-      ]
-    },
-    "model": {
-      "text": "No model is called.",
-      "start": 65.564,
-      "end": 66.524,
-      "words": [
-        {
-          "word": "No",
-          "start": 65.564,
-          "end": 65.724
-        },
-        {
-          "word": "model",
-          "start": 65.724,
-          "end": 66.004
-        },
-        {
-          "word": "is",
-          "start": 66.004,
-          "end": 66.184
-        },
-        {
-          "word": "called.",
-          "start": 66.184,
-          "end": 66.324
-        }
-      ]
-    },
-    "baseline": {
-      "text": "The pressure fix was on purpose, so a baseline accepts those 31 rows. Only those.",
-      "start": 68.3,
-      "end": 72.836,
-      "words": [
-        {
-          "word": "The",
-          "start": 68.3,
-          "end": 68.34
-        },
-        {
-          "word": "pressure",
-          "start": 68.34,
-          "end": 68.5
+          "start": 38.4,
+          "end": 38.62
         },
         {
           "word": "fix",
-          "start": 68.5,
-          "end": 68.8
+          "start": 38.62,
+          "end": 38.82
         },
         {
-          "word": "was",
-          "start": 68.8,
-          "end": 68.98
-        },
-        {
-          "word": "on",
-          "start": 68.98,
-          "end": 69.1
-        },
-        {
-          "word": "purpose,",
-          "start": 69.1,
-          "end": 69.42
-        },
-        {
-          "word": "so",
-          "start": 69.88,
-          "end": 70.02
+          "word": "with",
+          "start": 38.82,
+          "end": 39.16
         },
         {
           "word": "a",
-          "start": 70.02,
-          "end": 70.12
+          "start": 39.16,
+          "end": 39.26
         },
         {
-          "word": "baseline",
-          "start": 70.12,
-          "end": 70.38
-        },
-        {
-          "word": "accepts",
-          "start": 70.38,
-          "end": 70.78
-        },
-        {
-          "word": "those",
-          "start": 70.78,
-          "end": 71.02
-        },
-        {
-          "word": "31",
-          "start": 71.02,
-          "end": 71.32
-        },
-        {
-          "word": "rows.",
-          "start": 71.32,
-          "end": 71.62
-        },
-        {
-          "word": "Only",
-          "start": 72.04,
-          "end": 72.3
-        },
-        {
-          "word": "those.",
-          "start": 72.3,
-          "end": 72.54
+          "word": "baseline.",
+          "start": 39.26,
+          "end": 39.46
         }
       ]
     },
     "left": {
-      "text": "What's left is the real bug. Four cold readings lost their minus sign.",
-      "start": 74.5,
-      "end": 78.316,
+      "text": "What's left is the real bug. Four readings lost their minus sign, and CI fails the pull request.",
+      "start": 41.4,
+      "end": 47.64,
       "words": [
         {
           "word": "What's",
-          "start": 74.5,
-          "end": 74.7
+          "start": 41.4,
+          "end": 41.54
         },
         {
           "word": "left",
-          "start": 74.7,
-          "end": 74.92
+          "start": 41.54,
+          "end": 41.76
         },
         {
           "word": "is",
-          "start": 74.92,
-          "end": 75.18
+          "start": 41.76,
+          "end": 42.28
         },
         {
           "word": "the",
-          "start": 75.18,
-          "end": 75.3
+          "start": 42.28,
+          "end": 42.42
         },
         {
           "word": "real",
-          "start": 75.3,
-          "end": 75.48
+          "start": 42.42,
+          "end": 42.58
         },
         {
           "word": "bug.",
-          "start": 75.48,
-          "end": 75.78
+          "start": 42.58,
+          "end": 42.88
         },
         {
           "word": "Four",
-          "start": 76.48,
-          "end": 76.64
-        },
-        {
-          "word": "cold",
-          "start": 76.64,
-          "end": 76.92
+          "start": 43.58,
+          "end": 43.72
         },
         {
           "word": "readings",
-          "start": 76.92,
-          "end": 77.16
+          "start": 43.72,
+          "end": 44.04
         },
         {
           "word": "lost",
-          "start": 77.16,
-          "end": 77.48
+          "start": 44.04,
+          "end": 44.54
         },
         {
           "word": "their",
-          "start": 77.48,
-          "end": 77.7
+          "start": 44.54,
+          "end": 44.8
         },
         {
           "word": "minus",
-          "start": 77.7,
-          "end": 77.84
+          "start": 44.8,
+          "end": 44.98
         },
         {
-          "word": "sign.",
-          "start": 77.98,
-          "end": 78.14
-        }
-      ]
-    },
-    "allalong": {
-      "text": "They were in the first rows all along.",
-      "start": 78.566,
-      "end": 79.934,
-      "words": [
-        {
-          "word": "They",
-          "start": 78.566,
-          "end": 78.646
-        },
-        {
-          "word": "were",
-          "start": 78.646,
-          "end": 78.766
-        },
-        {
-          "word": "in",
-          "start": 78.766,
-          "end": 78.866
-        },
-        {
-          "word": "the",
-          "start": 78.866,
-          "end": 78.926
-        },
-        {
-          "word": "first",
-          "start": 78.926,
-          "end": 79.086
-        },
-        {
-          "word": "rows",
-          "start": 79.086,
-          "end": 79.306
-        },
-        {
-          "word": "all",
-          "start": 79.306,
-          "end": 79.526
-        },
-        {
-          "word": "along.",
-          "start": 79.526,
-          "end": 79.726
-        }
-      ]
-    },
-    "fails": {
-      "text": "The run fails, and in CI, so does the pull request.",
-      "start": 80.184,
-      "end": 82.968,
-      "words": [
-        {
-          "word": "The",
-          "start": null,
-          "end": null
-        },
-        {
-          "word": "run",
-          "start": 80.184,
-          "end": 80.364
-        },
-        {
-          "word": "fails,",
-          "start": 80.364,
-          "end": 80.644
+          "word": "sign,",
+          "start": 44.98,
+          "end": 45.4
         },
         {
           "word": "and",
-          "start": 81.084,
-          "end": 81.344
+          "start": 45.72,
+          "end": 45.84
         },
         {
-          "word": "in",
-          "start": 81.344,
-          "end": 81.924
+          "word": "CI",
+          "start": 45.84,
+          "end": 46.08
         },
         {
-          "word": "CI,",
-          "start": 81.344,
-          "end": 81.924
-        },
-        {
-          "word": "so",
-          "start": 81.924,
-          "end": 82.124
-        },
-        {
-          "word": "does",
-          "start": 82.124,
-          "end": 82.244
+          "word": "fails",
+          "start": 46.08,
+          "end": 46.58
         },
         {
           "word": "the",
-          "start": 82.244,
-          "end": 82.364
+          "start": 46.58,
+          "end": 46.82
         },
         {
           "word": "pull",
-          "start": 82.364,
-          "end": 82.464
+          "start": 46.82,
+          "end": 46.98
         },
         {
           "word": "request.",
-          "start": 82.464,
-          "end": 82.664
+          "start": 46.98,
+          "end": 47.26
         }
       ]
     },
     "passes": {
-      "text": "She fixes the port. It passes. One to one.",
-      "start": 84,
-      "end": 86.832,
+      "text": "Fix it, and it passes. One to one.",
+      "start": 48.9,
+      "end": 51.588,
       "words": [
         {
-          "word": "She",
-          "start": 84,
-          "end": 84.1
+          "word": "Fix",
+          "start": 48.9,
+          "end": 49.06
         },
         {
-          "word": "fixes",
-          "start": 84.1,
-          "end": 84.26
+          "word": "it,",
+          "start": 49.06,
+          "end": 49.24
         },
         {
-          "word": "the",
-          "start": 84.26,
-          "end": 84.46
+          "word": "and",
+          "start": 49.24,
+          "end": 49.68
         },
         {
-          "word": "port.",
-          "start": 84.46,
-          "end": 84.66
-        },
-        {
-          "word": "It",
-          "start": 85.18,
-          "end": 85.26
+          "word": "it",
+          "start": 49.68,
+          "end": 49.76
         },
         {
           "word": "passes.",
-          "start": 85.26,
-          "end": 85.58
+          "start": 49.76,
+          "end": 50.02
         },
         {
           "word": "One",
-          "start": 86.2,
-          "end": 86.36
+          "start": 50.84,
+          "end": 51.04
         },
         {
           "word": "to",
-          "start": 86.36,
-          "end": 86.5
+          "start": 51.04,
+          "end": 51.22
         },
         {
           "word": "one.",
-          "start": 86.5,
-          "end": 86.68
+          "start": 51.22,
+          "end": 51.42
         }
       ]
     },
     "end": {
-      "text": "Veridelta. Compare two datasets under rules you declare.",
-      "start": 89,
-      "end": 92.312,
+      "text": "Porting a pipeline of your own? Start with Veridelta's six tutorials.",
+      "start": 53.4,
+      "end": 57.288,
       "words": [
         {
-          "word": "Veridelta.",
-          "start": 89,
-          "end": 89.52
+          "word": "Porting",
+          "start": 53.4,
+          "end": 53.62
         },
         {
-          "word": "Compare",
-          "start": 89.94,
-          "end": 90.3
+          "word": "a",
+          "start": 53.62,
+          "end": 53.76
         },
         {
-          "word": "two",
-          "start": 90.3,
-          "end": 90.52
+          "word": "pipeline",
+          "start": 53.76,
+          "end": 54
         },
         {
-          "word": "datasets",
-          "start": 90.52,
-          "end": 91.08
+          "word": "of",
+          "start": 54,
+          "end": 54.3
         },
         {
-          "word": "under",
-          "start": 91.08,
-          "end": 91.32
+          "word": "your",
+          "start": 54.3,
+          "end": 54.42
         },
         {
-          "word": "rules",
-          "start": 91.32,
-          "end": 91.6
+          "word": "own?",
+          "start": 54.42,
+          "end": 54.64
         },
         {
-          "word": "you",
-          "start": 91.6,
-          "end": 91.82
+          "word": "Start",
+          "start": 55.1,
+          "end": 55.3
         },
         {
-          "word": "declare.",
-          "start": 91.82,
-          "end": 92.04
+          "word": "with",
+          "start": 55.3,
+          "end": 55.5
+        },
+        {
+          "word": "Veridelta's",
+          "start": 55.5,
+          "end": 56.18
+        },
+        {
+          "word": "six",
+          "start": 56.18,
+          "end": 56.4
+        },
+        {
+          "word": "tutorials.",
+          "start": 56.4,
+          "end": 56.84
         }
       ]
     }
