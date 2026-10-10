@@ -9,7 +9,7 @@ Create a short narrated story for Veridelta that makes its problem felt before i
 - Composition directory: `brag/composition/`
 - Rendered video: `brag/brag.mp4`, which git ignores
 - Format: landscape, 1920 by 1080, 30 fps
-- Duration: set by the voice, 90.6 seconds
+- Duration: set by the voice and each scene's lead and tail, 94.9 seconds
 
 ## Source material
 
@@ -46,23 +46,24 @@ Create a short narrated story for Veridelta that makes its problem felt before i
 
 ## Storyboard
 
-`brag-plan.md` is the creative contract, with each scene's narration and picture. The times come from `assets/timing.js`, which `npm run brag-timing` writes from the voice: a scene enters as the last line of the one before it ends, and each animation lands on the word it shows, estimated from where the word falls in its line.
+`brag-plan.md` is the creative contract, with each scene's narration and picture. The times come from `assets/timing.js`, which `npm run brag-timing` writes from the voice: each scene enters on a beat of the music, holds its picture for its lead, and holds what landed last for its tail. Each animation settles on the word it shows, at the time Whisper heard it, through one helper, `hit`, in three kinds: `slam`, `rise`, and `pop`.
 
-1. Hook: the pipeline, IDL to Python, the first rows of both files, "Must match, 1:1".
-2. Run: the command, `0.0%`, "124 rows. 124 changed.", the top column drifts.
-3. Questions: four value pairs, each with its question.
-4. Pain: a cell for each changed row, then "Fix or corruption?" in a hush.
-5. Veridelta: the logo on the drop, three chips, the line.
-6. Suggest: the declared rename, then the suggest output, its evidence underlined.
-7. Baseline: the baseline file, `31`, `Accepted: 31`.
-8. Left: the first rows again with the four temperatures ringed, the failed run.
-9. Pass: `100.0%`, `exit code 0`.
-10. End: the logo, the summary, the install command, the address.
+1. Hook: the pipeline, IDL to Python, word by word.
+2. Files: the first rows of both files, "Must match, 1:1".
+3. Run: the command, `0.0%`, "124 rows. 124 changed.", the top column drifts.
+4. Questions: four value pairs, each with its question.
+5. Pain: a cell for each changed row, then "Fix or corruption?" in a hush.
+6. Veridelta: the logo on the drop, three chips, the line.
+7. Suggest: the declared rename, then the suggest output, its evidence underlined.
+8. Baseline: the baseline file, `31`, `Accepted: 31`.
+9. Left: the first rows again with the four temperatures ringed, the failed run.
+10. Pass: `100.0%`, `exit code 0`.
+11. End: the logo, the summary, the install command, the address.
 
 ## Audio
 
 - Voice: 21 lines in `assets/voice/`, Gemini's Orus, one take, on tracks 30 and 31.
-- Music: `assets/music/happy-beats-business-moves-vol-1-by-ende-dot-app.mp3` at 0.12 under the voice, from 5.66 seconds into the track so its drop at 48.02, from brag's cue preset, lands as Veridelta enters. A volume lane hushes it before the drop, lifts it on the drop, and raises it on the end card.
+- Music: `assets/music/happy-beats-business-moves-vol-1-by-ende-dot-app.mp3` at 0.12 under the voice, from 2.52 seconds into the track so its drop at 48.02, from brag's cue preset, lands as Veridelta enters. A volume lane hushes it before the drop, lifts it on the drop, and raises it on the end card.
 - Audio-reactive: subtle. The glow behind the content breathes with the music's level, from `assets/audio-levels.js`, made by Hyperframes' `extract-audio-data.py` from the part of the track the video plays.
 - SFX: Kenney's, under CC0, from brag's `assets/sfx/`, placed by `narration.json` on a scene or a word.
 

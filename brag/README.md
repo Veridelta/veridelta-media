@@ -1,4 +1,4 @@
-# The 91-second demo
+# The 95-second demo
 
 A short story for people who have not heard of Veridelta. Maya, an atmospheric scientist, ports her weather station pipeline from IDL to Python, and the new output has to match the old one to one. It does not: every row differs. Some differences are float noise, some are a fill value or a renamed column, one is a bug she fixed on purpose, and one is a new bug. Veridelta sorts them under rules she declares, and only the new bug fails the run. It is narrated, with captions and music, and replaces both the 30-second cut and the three-minute walkthrough on the release.
 
@@ -11,7 +11,7 @@ It was made with [brag](https://github.com/latent-spaces/brag), an agent skill f
 | [brag-plan.md](brag-plan.md) | The angle, the story, the audio, and a table of every spoken line and every line on screen with its source |
 | [composition-brief.md](composition-brief.md) | What brag handed to Hyperframes |
 | [narration.json](narration.json) | The narration, line by line and scene by scene, the voice and how it reads, the music and where its drop lands, and the sound effects |
-| `composition/index.html` | The video: ten scenes on one GSAP timeline |
+| `composition/index.html` | The video: eleven scenes on one GSAP timeline |
 | `composition/assets/` | The fonts, the logo, the music, the sound effects, the voice, each line's time, and the music's level for each frame |
 | `demo.srt` | The captions, word for word, for the release |
 | [finish.sh](finish.sh) | Renders the video and finishes it |
@@ -20,14 +20,16 @@ It was made with [brag](https://github.com/latent-spaces/brag), an agent skill f
 
 ## The voice and its timing
 
-`npm run voice -- --brag` speaks `narration.json` in one Gemini take, as `scripts/voice.ts` speaks a narrated cut, with `GEMINI_API_KEY` set. Whisper finds each line in the take, the take is cut between lines, and each line has its inner pauses capped at `pause` seconds and plays at `tempo` times its speed, at the same pitch, so the story keeps its pace without a word changing. The clips and their manifest go to `composition/assets/voice/`. The take is spoken again only when a line, the voice, the style, or the pause changes. When only `tempo` changes, the clips already spoken play again at the new speed, with no key and no request, so the voice stays the one heard.
+`npm run voice -- --brag` speaks `narration.json` in one Gemini take, as `scripts/voice.ts` speaks a narrated cut, with `GEMINI_API_KEY` set. Whisper finds each line in the take, the take is cut between lines, and each line has its inner pauses capped at `pause` seconds and plays at `tempo` times its speed, at the same pitch, so the story keeps its pace without a word changing. The clips and their manifest go to `composition/assets/voice/`. The take is spoken again only when a line, the voice, the style, or the pause changes. When only `tempo` changes, the clips already spoken play again at the new speed, with no key and no request, so the voice stays the one heard. Then `scripts/align.py --words` times every word of each clip with Whisper, matching its words to the line letter by letter, and the manifest keeps each word's start and end.
 
 `npm run brag-timing` then times the video by the voice:
 
-- each line starts a fifth of a second after the one before it, or nine tenths where the scene changes, so the picture moves first, with a longer hold where the story should land;
-- it writes each line's and each scene's times to `composition/assets/timing.js`, which the timeline reads;
+- each scene holds its picture for its `lead` before its first line, plays its lines `gap` seconds apart, and holds for its `tail` after its last line, long enough to read what landed last;
+- each scene enters on a beat of the music, the nearest one that keeps most of the tail before it;
+- it writes each scene's, line's, and word's times to `composition/assets/timing.js`, and the timeline lands every element on the word that names it;
 - it writes the music, each line's audio and caption, and the sound effects between the `narration` markers in `composition/index.html`, and the root's length;
 - it places the music so its drop lands as Veridelta enters, after a hush on "Which differences are fixes, and which are corruption?";
+- it plays each sound effect as a scene enters, as a line starts, or on a word Whisper heard;
 - it writes `demo.srt`.
 
 Change the words in `narration.json`, never in the generated block.
