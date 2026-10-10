@@ -42,7 +42,7 @@ Create a one-minute narrated pitch for Veridelta that makes the data parity prob
 - Display and body font: Inter, from `assets/fonts/`.
 - Data font: DejaVu Sans Mono, from `assets/fonts/`.
 - Logo: `assets/images/veridelta-symbol.png` and `veridelta-wordmark.png`, from Veridelta's `docs/assets/`.
-- Captions: a navy band at the bottom, white Inter at 44 pixels, one spoken line at a time, switched at once rather than faded, each held until the next line of its scene or until its scene leaves.
+- Captions: a navy band at the bottom, white Inter at 44 pixels, one spoken line at a time, switched at once rather than faded, each held until the next one, so the band stays put from the first line to the last.
 - Contrast: every line of text meets WCAG AA, which `npx hyperframes check` measures; small text is about 7:1 or more.
 
 ## Storyboard

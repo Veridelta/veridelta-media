@@ -34,7 +34,7 @@ The logo, the PyPI summary, `pip install veridelta`, and the six tutorials at th
 - Preset: `default`.
 - Creative direction: fast, plain, real output. Tension in the problem, relief at the end. No hype.
 - Interpretation: nine scenes on a light canvas in the logo's colors. Push slides between them, orange for what is wrong, blue for the answer, and a caption band with every spoken line.
-- Transitions: the next scene is always on screen as the last one leaves, so the frame never shows the bare canvas. A push moves both scenes as one strip, edge to edge, so neither covers the other; Veridelta and the end card dissolve in over the scene before. Each scene's layout is in place as it enters, and only what the voice names animates in. Captions switch at once, never fading through a low contrast frame, and each holds through its scene's tail, so the band leaves with its scene rather than blinking off in a hold.
+- Transitions: the next scene is always on screen as the last one leaves, so the frame never shows the bare canvas. A push moves both scenes as one strip, edge to edge, so neither covers the other; Veridelta and the end card dissolve in over the scene before. Each scene's layout is in place as it enters, and only what the voice names animates in. Captions switch at once, never fading through a low contrast frame, and each holds until the next one, so the band stays put from the first line to the last rather than blinking off between scenes.
 
 ## Format: landscape, 1920 by 1080, 30 fps
 

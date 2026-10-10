@@ -1005,22 +1005,16 @@
         tl.call((level) => gsap.set(".glow", { scale: 0.94 + level * 0.1 }), [levels[f]], f / window.AUDIO_LEVELS.fps);
       }
 
-      // The captions: each line shows as it is said, and stays until the next line of its scene, or
-      // through its scene's tail until the scene leaves, so the band never blinks off in a hold. The
-      // last one leaves soon after it is said, so the end card stands alone. They switch at once, as
-      // subtitles do, so a caption is never half faded and hard to read.
+      // The captions: each line shows as it is said and stays until the next one, so the band stays
+      // put from the first line to the last and never blinks off between scenes. The last one leaves
+      // soon after it is said, so the end card stands alone. They switch at once, as subtitles do, so
+      // a caption is never half faded and hard to read.
       const ids = Object.keys(T.lines);
-      const enters = Object.values(T.scenes).map((scene) => scene.enter);
       ids.forEach((id, index) => {
         const { start, end } = line(id);
         const next = T.lines[ids[index + 1]];
-        const leave = enters.find((enter) => enter > start);
-        let hide = end + 0.35;
-        if (next && leave !== undefined) {
-          hide = next.start < leave ? next.start - 0.08 : leave;
-        }
         tl.set(`#caption-${id}`, { opacity: 1 }, start - 0.08);
-        tl.set(`#caption-${id}`, { opacity: 0 }, hide);
+        tl.set(`#caption-${id}`, { opacity: 0 }, next ? next.start - 0.08 : end + 0.35);
       });
 
       // Each scene has a base, on screen as it enters, so no transition passes through an empty
