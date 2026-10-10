@@ -5,6 +5,9 @@ brag/brag.mp4
 brag/brag-inline.mp4
 brag/brag.raw.mp4
 brag/brag.jpg
+# What Hyperframes writes while it renders, and removes when it is done.
+brag/.brag.raw.hf-transaction-*/
+brag/work-*/
 
 # Music under a narrated cut, which its license may not let this repository share.
 public/music/
