@@ -12,7 +12,7 @@ It was made with [brag](https://github.com/latent-spaces/brag), an agent skill f
 | [composition-brief.md](composition-brief.md) | What brag handed to Hyperframes |
 | [narration.json](narration.json) | The narration, line by line and scene by scene, the voice and how it reads, the music and where its drop lands, and the sound effects |
 | `composition/index.html` | The video: nine scenes on one GSAP timeline |
-| `composition/assets/` | The fonts, the logo, the music, the sound effects, the voice, each line's time, and the music's level for each frame |
+| `composition/assets/` | The fonts, the logo, the music, the sound effects, the voice, and each line's time |
 | `demo.srt` | The captions, word for word, for the release |
 | [finish.sh](finish.sh) | Renders the video and finishes it |
 | [poster.html](poster.html) | The still the organization page links to the video with |
@@ -43,9 +43,10 @@ cd brag/composition && npx --yes hyperframes@0.8.143 check
 cd .. && ./finish.sh
 ```
 
-`check` runs Hyperframes' lint, a runtime pass, a layout pass, and a WCAG contrast pass on every line of text. `finish.sh` renders `brag.mp4`, then does what brag's last step asks:
+`check` runs Hyperframes' lint, a runtime pass, a layout pass, and a WCAG contrast pass on every line of text. `finish.sh` renders `brag.mp4`, then:
 
-- it takes the end card half a second before the end as `brag.jpg`, and puts it in place of frame 0, so a player's thumbnail is the end card;
+- it leaves the first frame as it is: the hook's title card, which players show before the video starts. brag's last step would put the end card there instead, which flashes for a frame as the video starts;
+- it takes the end card half a second before the end as `brag.jpg`, for the poster;
 - it sets the mix to -16 LUFS with its true peak under -1.5 dBFS, as the walkthrough's is;
 - it writes `brag-inline.mp4`, a 720p copy under the 10 MB a GitHub description plays inline;
 - it captures `poster.html`, the end card with a play button, to `../posters/demo-poster.png`.
@@ -62,8 +63,6 @@ The rules in the [README](../README.md#the-rules) hold here too:
 - Every other line is the project's own words, or traces to a transcript, Veridelta's docs, or NV5's IDL docs. [brag-plan.md](brag-plan.md#claims-and-their-sources) lists each one with its source.
 
 To change a line, change its row in that table first, then `narration.json` or `composition/index.html`.
-
-`composition/assets/audio-levels.js` holds the music's level for each frame, which the glow behind each scene follows. Hyperframes' `extract-audio-data.py`, from its `hyperframes-creative` skill, measured it on the part of the track the video plays. Measure it again when the music or the video's length changes.
 
 ## Credits and licenses
 

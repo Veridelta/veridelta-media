@@ -9,7 +9,6 @@
       integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2"
       crossorigin="anonymous"
     ></script>
-    <script src="assets/audio-levels.js"></script>
     <script src="assets/timing.js"></script>
     <style>
       @font-face {
@@ -77,38 +76,12 @@
         font-family: "DejaVu Sans Mono", monospace;
       }
 
-      /* The background every scene shares: a data grid, a glow that breathes with the music, and
-         the symbol's two halves, orange into blue, along the top, as the docs header draws them. */
+      /* The background every scene shares: a flat canvas, and the symbol's two halves, orange into
+         blue, along the top, as the docs header draws them. Nothing sits behind the content. */
       #bg {
         position: absolute;
         inset: 0;
         overflow: hidden;
-      }
-      #grid {
-        position: absolute;
-        top: -80px;
-        left: -80px;
-        width: 2160px;
-        height: 1240px;
-        background-image:
-          linear-gradient(rgba(13, 47, 90, 0.07) 2px, transparent 2px),
-          linear-gradient(90deg, rgba(13, 47, 90, 0.07) 2px, transparent 2px);
-        background-size: 80px 80px;
-      }
-      .glow {
-        position: absolute;
-        width: 1400px;
-        height: 1400px;
-        right: -420px;
-        top: -260px;
-        border-radius: 50%;
-      }
-      #glow-orange {
-        background: radial-gradient(circle, rgba(222, 88, 7, 0.22) 0%, rgba(222, 88, 7, 0) 65%);
-      }
-      #glow-blue {
-        background: radial-gradient(circle, rgba(32, 84, 178, 0.2) 0%, rgba(32, 84, 178, 0) 65%);
-        opacity: 0;
       }
       #bar {
         position: absolute;
@@ -443,19 +416,11 @@
       }
 
       /* Veridelta. */
-      .ghost {
-        position: absolute;
-        right: 40px;
-        top: 300px;
-        width: 669px;
-        height: 620px;
-        background: url("assets/images/veridelta-symbol.png") center / contain no-repeat;
-        opacity: 0.12;
-      }
       .logo {
         display: flex;
         align-items: center;
         gap: 30px;
+        transform-origin: 0% 0%;
       }
       .logo .symbol {
         width: 178px;
@@ -710,9 +675,6 @@
       data-height="1080"
     >
       <div id="bg">
-        <div id="grid" data-layout-allow-overflow></div>
-        <div id="glow-orange" class="glow" data-layout-allow-overflow></div>
-        <div id="glow-blue" class="glow" data-layout-allow-overflow></div>
         <div id="bar"></div>
         <div id="source" class="mono">Veridelta 0.35.1, the weather station demo in demo/promo at commit b8669bc</div>
       </div>
@@ -788,7 +750,6 @@
       </div>
 
       <div id="veridelta" class="scene" data-layout-allow-overflow>
-        <div class="ghost" id="vd-ghost" data-layout-allow-overflow></div>
         <div id="vd-body">
           <div class="logo" id="vd-logo">
             <div class="symbol"></div>
@@ -883,7 +844,6 @@
       </div>
 
       <div id="end" class="scene" data-layout-allow-overflow>
-        <div class="ghost" id="end-ghost" data-layout-allow-overflow></div>
         <div id="end-body">
           <div class="logo" id="end-logo">
             <div class="symbol"></div>
@@ -962,9 +922,9 @@
       };
       // How an element arrives: it starts a moment before its word and settles as it is said.
       const KINDS = {
-        slam: { before: 0.12, duration: 0.28, ease: "power4.out", from: { scale: 1.3 } },
-        rise: { before: 0.2, duration: 0.4, ease: "power3.out", from: { y: 30 } },
-        pop: { before: 0.15, duration: 0.3, ease: "back.out(2)", from: { scale: 0.6 } },
+        slam: { before: 0.12, duration: 0.32, ease: "power3.out", from: { scale: 1.12 } },
+        rise: { before: 0.2, duration: 0.4, ease: "power3.out", from: { y: 24 } },
+        pop: { before: 0.15, duration: 0.32, ease: "back.out(1.4)", from: { scale: 0.85 } },
       };
       const hit = (target, at, kind, from = KINDS[kind].from, stagger = 0) => {
         const { before, duration, ease } = KINDS[kind];
@@ -981,11 +941,6 @@
         tl.fromTo(to, { x: 1920, opacity: 1 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.inOut" }, at);
         tl.to(from, { x: -1920, duration: 0.5, ease: "power3.inOut" }, at);
       };
-      // The glow is orange while something is wrong, blue for the answer, and both on the end card.
-      const glow = (orange, blue, at) => {
-        tl.to("#glow-orange", { opacity: orange, duration: 0.6, ease: "sine.inOut" }, at);
-        tl.to("#glow-blue", { opacity: blue, duration: 0.6, ease: "sine.inOut" }, at);
-      };
 
       // The pain grid: one cell for each of the 124 changed rows, a station to a row.
       document.querySelectorAll(".pg-row").forEach((row) => {
@@ -995,15 +950,6 @@
           row.appendChild(cell);
         }
       });
-
-      // Ambient: the grid drifts the whole time.
-      tl.fromTo("#grid", { x: 0, y: 0 }, { x: -260, y: -130, duration: T.duration, ease: "none" }, 0);
-
-      // Audio-reactive: the glow breathes with the music's level, sampled once a frame.
-      const levels = window.AUDIO_LEVELS.levels;
-      for (let f = 0; f < levels.length; f++) {
-        tl.call((level) => gsap.set(".glow", { scale: 0.94 + level * 0.1 }), [levels[f]], f / window.AUDIO_LEVELS.fps);
-      }
 
       // The captions: each line shows as it is said and stays until the next one, so the band stays
       // put from the first line to the last and never blinks off between scenes. The last one leaves
@@ -1020,14 +966,9 @@
       // Each scene has a base, on screen as it enters, so no transition passes through an empty
       // frame; what the voice names lands on top of it, on its word.
 
-      // The hook: the pipeline is on screen from the first frame, and each word lights as it is said.
-      const light = (target, at) => {
-        tl.fromTo(target, { opacity: 0.22, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.28, ease: "power4.out" }, at - 0.12);
-      };
-      light("#hook-idl", word("hook", "IDL"));
-      light("#hook-arrow", word("hook", "Python") - 0.06);
-      light("#hook-py", word("hook", "Python"));
-      hit("#hook-match", word("parity", "match"), "pop");
+      // The hook: a finished title card from the first frame, which players also show before the
+      // video starts. What it must do lands on "match".
+      hit("#hook-match", word("parity", "match"), "rise");
 
       // The first run: every row differs.
       const run = scene("run").enter;
@@ -1048,7 +989,7 @@
         ["q4", word("doubts", "bug")],
       ].forEach(([row, at]) => {
         hit(`#${row} .q-cell`, at, "rise", { x: -48 }, 0.04);
-        tl.fromTo(`#${row} .q-new span`, { scale: 1.35 }, { scale: 1, duration: 0.35, ease: "back.out(2)" }, at);
+        tl.fromTo(`#${row} .q-new span`, { scale: 1.12 }, { scale: 1, duration: 0.35, ease: "power3.out" }, at);
       });
       hit("#q4 .chip", word("doubts", "purpose"), "pop");
 
@@ -1065,12 +1006,14 @@
 
       // Veridelta, on the music's drop.
       const veridelta = scene("veridelta").enter;
-      // One crossfade, the two scenes overlapping, so the frame never empties between them.
-      tl.to("#pain", { scale: 1.04, opacity: 0, duration: 0.35, ease: "power1.inOut" }, veridelta - 0.2);
-      tl.fromTo("#veridelta", { scale: 0.97, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power1.inOut" }, veridelta - 0.2);
-      glow(0, 1, veridelta - 0.2);
-      tl.to("#vd-ghost", { rotation: -4, duration: 7, ease: "none" }, veridelta);
-      tl.fromTo("#vd-logo", { scale: 1.12 }, { scale: 1, duration: 0.5, ease: "back.out(1.6)" }, veridelta);
+      // The question clears in the hush, and the logo arrives on the beat. The two never overlap,
+      // so no text shows through other text.
+      tl.to("#pain", { opacity: 0, duration: 0.3, ease: "power2.in" }, veridelta - 0.3);
+      tl.fromTo("#veridelta", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" }, veridelta);
+      // The logo lands alone, centered, on the beat, then moves up into place as the chips arrive.
+      const two = word("reveal", "two");
+      tl.fromTo("#vd-logo", { x: 376, y: 226, scale: 1.4 }, { x: 376, y: 226, scale: 1.5, duration: 0.6, ease: "power3.out" }, veridelta);
+      tl.to("#vd-logo", { x: 0, y: 0, scale: 1, duration: 0.6, ease: "power3.inOut" }, two - 0.7);
       ["two", "rules"].forEach((text, index) => {
         hit(`#vd-chips span:nth-child(${index + 1})`, word("reveal", text), "pop", { y: 30 });
       });
@@ -1084,7 +1027,6 @@
         ["#rl-suggest", word("rules", "suggest")],
         ["#rl-accept", word("rules", "Accept")],
       ].forEach(([row, at]) => {
-        tl.fromTo(`${row} .rl-label`, { opacity: 0.35 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, at - 0.15);
         hit(`${row} .term`, at, "rise", { x: 80 });
       });
       tl.fromTo("#ev-count .u", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power3.out" }, word("rules", "data") - 0.1);
@@ -1092,7 +1034,6 @@
       // What is left: the four lost minus signs, and the run that fails on them.
       const left = scene("left").enter;
       push("#rules", "#left", left);
-      glow(1, 0, left);
       hit("#lf-head", word("left", "real"), "rise", { x: 120 });
       hit("#lf-py .sign i", word("left", "Four"), "pop", { scale: 1.6 }, 0.12);
       hit("#lf-idl .sign i", word("left", "minus"), "pop", { scale: 1.6 }, 0.1);
@@ -1102,7 +1043,6 @@
       // The pass, the mirror of the first run.
       const pass = scene("pass").enter;
       push("#left", "#pass", pass);
-      glow(0, 1, pass);
       const passes = word("passes", "passes");
       hit("#ps-passed", passes, "pop");
       hit("#ps-rate", passes, "slam");
@@ -1113,13 +1053,8 @@
 
       // The end card: the summary, the install, and the tutorials.
       const end = scene("end").enter;
-      // A dissolve: the end card comes in first and the pass leaves under it, so nothing fades to blank.
-      tl.fromTo("#end", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power1.inOut" }, end - 0.2);
-      tl.to("#pass", { opacity: 0, duration: 0.4, ease: "power1.inOut" }, end);
-      tl.to("#source", { opacity: 0, duration: 0.5 }, end - 0.1);
-      glow(0.6, 0.6, end - 0.1);
-      tl.to("#end-ghost", { rotation: -4, duration: T.duration - end, ease: "none" }, end);
-      tl.fromTo("#end-logo", { scale: 1.06 }, { scale: 1, duration: 0.8, ease: "power2.out" }, end - 0.1);
+      push("#pass", "#end", end);
+      tl.to("#source", { opacity: 0, duration: 0.4, ease: "power2.out" }, end);
       hit("#end-summary", word("end", "pipeline"), "rise");
       hit("#end-install", word("end", "Start"), "pop", { scale: 0.88 });
       hit("#end-url", word("end", "tutorials"), "rise", { y: 20 });

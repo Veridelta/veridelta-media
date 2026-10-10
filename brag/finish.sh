@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
-# Renders the composition and finishes it as brag's step 4 asks: the poster becomes frame 0, so
-# every player's thumbnail is the end card, and the mix is set to -16 LUFS with its true peak
-# under -1.5 dBFS, the level of the walkthrough. Writes brag.mp4, the release asset; brag-inline.mp4,
-# a 720p copy under GitHub's 10 MB limit for a video in a release description; and brag.jpg, all
-# here, which git ignores; and ../posters/demo-poster.png. Needs Node 22, ffmpeg, and Chrome, as
-# `npx hyperframes doctor` checks.
+# Renders the composition and finishes it: the mix is set to -16 LUFS with its true peak under
+# -1.5 dBFS, the level of the walkthrough. The video starts on its own first frame, the hook's
+# title card, which players show before it plays; no other frame is put in its place.
+#
+# Writes brag.mp4, the release asset; brag-inline.mp4, a 720p copy under GitHub's 10 MB limit for a
+# video in a release description; and brag.jpg, the end card, all here, which git ignores; and
+# ../posters/demo-poster.png. Needs Node 22, ffmpeg, and Chrome, as `npx hyperframes doctor` checks.
 set -euo pipefail
 cd "$(dirname "$0")"
 
-# The end card, once everything on it has settled: half a second before the end, which
-# scripts/brag-timing.ts writes into assets/timing.js.
+# The end card, once everything on it has settled, for the organization page's poster: half a
+# second before the end, which scripts/brag-timing.ts writes into assets/timing.js.
 duration=$(sed -n 's/^  "duration": \([0-9.]*\),$/\1/p' composition/assets/timing.js)
 POSTER_AT=$(python3 -c "print(round($duration - 0.5, 2))")
 
@@ -22,9 +23,9 @@ measure=$(ffmpeg -hide_banner -nostats -i brag.raw.mp4 -af loudnorm=I=-16:TP=-1.
 field() { printf '%s' "$measure" | python3 -c "import json, sys; print(json.load(sys.stdin)['$1'])"; }
 loudnorm="loudnorm=I=-16:TP=-1.5:LRA=11:measured_I=$(field input_i):measured_TP=$(field input_tp):measured_LRA=$(field input_lra):measured_thresh=$(field input_thresh):offset=$(field target_offset)"
 
-ffmpeg -hide_banner -loglevel error -y -i brag.raw.mp4 -i brag.jpg \
-  -filter_complex "[0:v][1:v]overlay=0:0:enable='eq(n,0)'[v];[0:a]afade=t=in:d=0.05,$loudnorm,aresample=192000,alimiter=limit=0.8:attack=1:release=60:level=false,aresample=48000[a]" \
-  -map "[v]" -map "[a]" -c:v libx264 -crf 20 -preset slow -pix_fmt yuv420p \
+ffmpeg -hide_banner -loglevel error -y -i brag.raw.mp4 \
+  -filter_complex "[0:a]afade=t=in:d=0.05,$loudnorm,aresample=192000,alimiter=limit=0.8:attack=1:release=60:level=false,aresample=48000[a]" \
+  -map 0:v -map "[a]" -c:v libx264 -crf 20 -preset slow -pix_fmt yuv420p \
   -c:a aac -b:a 160k -movflags +faststart brag.mp4
 rm brag.raw.mp4
 
