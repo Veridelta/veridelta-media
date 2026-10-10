@@ -262,13 +262,30 @@ const tighten = (wav: string, out: string, pause: number, tempo: number) => {
   }
   execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-i", wav, "-af", filters.join(","), out]);
 };
-type BragVoice = VoiceLine & { id: string };
+/** A word of a line, and when it starts and ends in its clip, or null where Whisper missed it. */
+type BragWord = { word: string; start: number | null; end: number | null };
+type BragVoice = VoiceLine & { id: string; words?: BragWord[] };
+
+/**
+ * Time every word of each clip with scripts/align.py, so the demo's animation lands on the
+ * word it shows rather than on a guess.
+ */
+const timeWords = (lines: BragVoice[]): BragVoice[] => {
+  const clips = join(work, "clips.json");
+  writeFileSync(clips, JSON.stringify(lines.map((line) => ({ audio: join(BRAG_FOLDER, line.file), text: line.text }))));
+  const timed = JSON.parse(
+    execFileSync("uvx", ["--quiet", "--from", `faster-whisper==${WHISPER}`, "python", join("scripts", "align.py"), "--words", clips], {
+      maxBuffer: 64 * 1024 * 1024,
+    }).toString(),
+  ) as BragWord[][];
+  return lines.map((line, index) => ({ ...line, words: timed[index] }));
+};
 
 /**
  * Speak the demo's narration in one take, as a narrated cut is, into its own folder. Its lines
  * are spoken again only when a line's text, the voice, the style, the pause, or the engine
  * changes. When only the tempo changes, the clips already spoken play again at the new speed, so
- * the take stays the one heard, and no request is made.
+ * the take stays the one heard, and no request is made. Every clip's words are then timed.
  */
 const speakBrag = (engine: Engine, again: boolean) => {
   const narration = JSON.parse(readFileSync(BRAG, "utf8")) as BragNarration;
@@ -298,8 +315,18 @@ const speakBrag = (engine: Engine, again: boolean) => {
         existsSync(join(BRAG_FOLDER, line.file)) &&
         sha256(readFileSync(join(BRAG_FOLDER, line.file))) === line.sha256,
     );
+  const write = (kept: BragVoice[]) =>
+    writeFileSync(
+      manifestPath,
+      `${JSON.stringify({ style, pause: narration.pause, tempo: narration.tempo, lines: kept }, null, 2)}\n`,
+    );
   if (sameTake && old.tempo === narration.tempo) {
-    console.log(`${manifestPath}: all ${lines.length} lines are spoken already, in take ${old.lines[0].take}.`);
+    if (old.lines.every((line) => line.words)) {
+      console.log(`${manifestPath}: all ${lines.length} lines are spoken already, in take ${old.lines[0].take}.`);
+    } else {
+      write(timeWords(old.lines));
+      console.log(`${manifestPath}: timed the words of take ${old.lines[0].take}.`);
+    }
     return;
   }
   const name = (id: string, text: string, take: string) =>
@@ -332,10 +359,8 @@ const speakBrag = (engine: Engine, again: boolean) => {
       return keep(id, text, take, file);
     });
   }
-  writeFileSync(
-    manifestPath,
-    `${JSON.stringify({ style, pause: narration.pause, tempo: narration.tempo, lines: kept }, null, 2)}\n`,
-  );
+  kept = timeWords(kept);
+  write(kept);
   for (const name of readdirSync(BRAG_FOLDER)) {
     if (name.endsWith(".mp3") && !kept.some((line) => line.file === name)) {
       rmSync(join(BRAG_FOLDER, name));
