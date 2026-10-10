@@ -17,7 +17,7 @@ The paragraph, from the README:
 With the demo, `brag/brag.mp4`, as `brag/share-copy.txt` has it:
 
 ```text
-A rewritten export matched the old one 0.0%. Most of it was noise: case, codes, rounding, blanks. Declare those as rules in Veridelta, and what is left is real. Here, account 17's region, and CI fails the pull request on it.
+Porting a pipeline, every row differed. Float precision, a renamed column, a fix made on purpose, and one real bug. Veridelta sorts them under rules you declare, and only the bug fails CI. Six tutorials take it from there.
 
 https://veridelta.github.io/veridelta/
 ```
@@ -51,7 +51,7 @@ https://veridelta.github.io/veridelta/agents/
 
 The demo:
 
-> Two files, accounts_legacy.csv and accounts_rewrite.csv, and a match rate of 0.0%: 40 rows, 40 issues. Most of it is noise: west became WEST, active became A, 137.5 became 137.504, and a blank became N/A. Then the Veridelta logo, and veridelta suggest finds three rules, each with its evidence: 38 of 39, 13 of 13, and 7 of 7 differing rows. No model is called. The line "Nothing is forgiven unless a rule says so." and the four rules in accounts_rules.yaml. What is left is real: the GitHub Action's comment on a pull request, Veridelta: FAILED, with account 17's region changed from south to east, and the line "CI fails the pull request on it." Fix the export, and it passes: a match rate of 100.0%, exit code 0, with one removal the baseline accepts on purpose. It ends on the logo, the summary, pip install veridelta, and the docs address.
+> Maya's weather station pipeline, IDL to Python, which must match one to one. The first run fails at a match rate of 0.0%: 124 rows, 124 changed. Why does every row differ? 91.900002 became 91.9, temp became temperature_c, and S3's pressure went from 998.6 to 1010.7, a fix made on purpose. A grid of 124 changed rows asks: fix or corruption? Then the Veridelta logo: two datasets, rules you declare. Nothing is forgiven unless a rule says so. Three cards: declare the rename, let veridelta suggest explain 124 of 124 rows, and accept 31 rows with a baseline. What is left is real: four readings lost their minus sign, and the run fails with exit code 1. The fixed port passes at 100.0%, exit code 0. It ends on the logo, the summary, pip install veridelta, and six tutorials at the docs address. It is narrated, with captions.
 
 `promo-30` and `promo-square-30`:
 
@@ -69,7 +69,9 @@ The link preview card, `docs/assets/social-card.png` in the Veridelta repository
 
 | File | Size | Shape | Use |
 | :--- | :--- | :--- | :--- |
-| `brag/brag.mp4` | 1920 by 1080, 30 seconds, about 7 MB | 16:9 | The first video anyone sees: a release, a README, a post |
+| `brag/brag.mp4` | 1920 by 1080, 60 seconds | 16:9 | The first video anyone sees: a release, a README, a post |
+| `brag/brag-inline.mp4` | 1280 by 720, 60 seconds, under 10 MB | 16:9 | A release description, which plays a video under 10 MB inline |
+| `brag/demo.srt` | | | The demo's captions, beside the video on a release |
 | `renders/promo-30.mp4` | 1920 by 1080, about 30 seconds | 16:9 | A post with a wide player, or a page |
 | `renders/promo-60.mp4` | 1920 by 1080, under 60 seconds | 16:9 | A launch post, or the README of a talk |
 | `renders/promo-square-30.mp4` | 1080 by 1080, about 30 seconds | 1:1 | A feed that crops wide video |

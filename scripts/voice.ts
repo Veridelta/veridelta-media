@@ -9,6 +9,8 @@
 //   npm run voice -- --again      speak every take again, as after a change to STYLE
 //   npm run voice -- --samples    the first scene in each voice of SAMPLES, into samples/
 //   npm run voice -- --samples Orus,Sulafat    the first scene in the voices named
+//   npm run voice -- --brag       the demo in brag/: brag/narration.json, in its own voice and
+//                                 style, into brag/composition/assets/voice/
 //
 // Gemini reads a whole cut in one request, a take, with a long pause between lines, so every
 // line has the same tone. scripts/align.py hears where each line's words are, with Whisper on
@@ -20,7 +22,7 @@
 // the lines keep its levels, and each clip is trimmed of silence at both ends.
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { cuts as cutsOf, cut, duration, type Span } from "./split-lines";
@@ -111,11 +113,11 @@ const audioIn = (value: any): { data: string; type: string } | undefined => {
   return undefined;
 };
 
-/** Speak text with Gemini into a WAV file, in the STYLE given apart, waiting out a per-minute limit. */
-const gemini = (text: string, voice: string, wav: string) => {
+/** Speak text with Gemini into a WAV file, in a style given apart, waiting out a per-minute limit. */
+const gemini = (text: string, voice: string, wav: string, style = STYLE) => {
   const body = JSON.stringify({
     model: model(),
-    input: [{ type: "text", text, annotations: [{ type: "speech_metadata", style: STYLE }] }],
+    input: [{ type: "text", text, annotations: [{ type: "speech_metadata", style }] }],
     response_format: { type: "audio" },
     generation_config: { speech_config: [{ voice }] },
   });
@@ -201,7 +203,13 @@ const TRIES = 3;
 const WHISPER = "1.2.1";
 
 /** Speak a cut's lines in one take, at one level, and cut it into one WAV per line, in order. */
-const speakTake = (lines: string[], engine: Engine, voice: string, work: string): { wavs: string[]; take: string } => {
+const speakTake = (
+  lines: string[],
+  engine: Engine,
+  voice: string,
+  work: string,
+  style = STYLE,
+): { wavs: string[]; take: string } => {
   const each = lines.map((_, index) => join(work, `line-${index}.wav`));
   if (engine === "espeak") {
     lines.forEach((line, index) => espeak(line, voice, each[index]));
@@ -210,7 +218,7 @@ const speakTake = (lines: string[], engine: Engine, voice: string, work: string)
   for (let attempt = 1; attempt <= TRIES; attempt++) {
     const raw = join(work, "take-raw.wav");
     const whole = join(work, "take.wav");
-    gemini(prompt(lines), voice, raw);
+    gemini(prompt(lines), voice, raw, style);
     level(raw, whole);
     writeFileSync(join(work, "lines.json"), JSON.stringify(lines));
     const heard = execFileSync("uvx", ["--quiet", "--from", `faster-whisper==${WHISPER}`, "python", join("scripts", "align.py"), whole, join(work, "lines.json")], {
@@ -236,10 +244,137 @@ const takes = cuts
   .map((entry) => entry.scenes.flatMap((scene) => (scene.voice ?? []).map(({ text }) => text)))
   .filter((lines) => lines.length > 0);
 
+/** The demo in brag/: its narration, and where its clips and their manifest go. */
+const BRAG = join("brag", "narration.json");
+const BRAG_FOLDER = join("brag", "composition", "assets", "voice");
+
+type BragLine = { id: string; scene: string; text: string };
+type BragNarration = { voice: string; style: string; pause: number; tempo: number; lines: BragLine[] };
+
+/**
+ * Tighten a line for a fast cut: every pause inside it longer than `pause` seconds is shortened
+ * to that, and the line plays `tempo` times as fast, at the same pitch. No word changes.
+ */
+const tighten = (wav: string, out: string, pause: number, tempo: number) => {
+  const filters = [`silenceremove=stop_periods=-1:stop_duration=${pause}:stop_silence=${pause}:stop_threshold=-38dB`];
+  if (tempo !== 1) {
+    filters.push(`atempo=${tempo}`);
+  }
+  execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-i", wav, "-af", filters.join(","), out]);
+};
+/** A word of a line, and when it starts and ends in its clip, or null where Whisper missed it. */
+type BragWord = { word: string; start: number | null; end: number | null };
+type BragVoice = VoiceLine & { id: string; words?: BragWord[] };
+
+/**
+ * Time every word of each clip with scripts/align.py, so the demo's animation lands on the
+ * word it shows rather than on a guess.
+ */
+const timeWords = (lines: BragVoice[]): BragVoice[] => {
+  const clips = join(work, "clips.json");
+  writeFileSync(clips, JSON.stringify(lines.map((line) => ({ audio: join(BRAG_FOLDER, line.file), text: line.text }))));
+  const timed = JSON.parse(
+    execFileSync("uvx", ["--quiet", "--from", `faster-whisper==${WHISPER}`, "python", join("scripts", "align.py"), "--words", clips], {
+      maxBuffer: 64 * 1024 * 1024,
+    }).toString(),
+  ) as BragWord[][];
+  return lines.map((line, index) => ({ ...line, words: timed[index] }));
+};
+
+/**
+ * Speak the demo's narration in one take, as a narrated cut is, into its own folder. Its lines
+ * are spoken again only when a line's text, the voice, the style, the pause, or the engine
+ * changes. When only the tempo changes, the clips already spoken play again at the new speed, so
+ * the take stays the one heard, and no request is made. Every clip's words are then timed.
+ */
+const speakBrag = (engine: Engine, again: boolean) => {
+  const narration = JSON.parse(readFileSync(BRAG, "utf8")) as BragNarration;
+  const voice = engine === "gemini" ? narration.voice : "en-us";
+  const style = engine === "gemini" ? narration.style : "";
+  const lines = narration.lines.map(({ text }) => text);
+  mkdirSync(BRAG_FOLDER, { recursive: true });
+  const manifestPath = join(BRAG_FOLDER, "manifest.json");
+  const old: { style?: string; pause?: number; tempo?: number; lines: BragVoice[] } = (() => {
+    try {
+      return JSON.parse(readFileSync(manifestPath, "utf8"));
+    } catch {
+      return { lines: [] };
+    }
+  })();
+  const sameTake =
+    !again &&
+    old.style === style &&
+    old.pause === narration.pause &&
+    old.lines.length === lines.length &&
+    old.lines.every(
+      (line, index) =>
+        line.text === lines[index] &&
+        line.voice === voice &&
+        line.engine === engine &&
+        line.take === old.lines[0].take &&
+        existsSync(join(BRAG_FOLDER, line.file)) &&
+        sha256(readFileSync(join(BRAG_FOLDER, line.file))) === line.sha256,
+    );
+  const write = (kept: BragVoice[]) =>
+    writeFileSync(
+      manifestPath,
+      `${JSON.stringify({ style, pause: narration.pause, tempo: narration.tempo, lines: kept }, null, 2)}\n`,
+    );
+  if (sameTake && old.tempo === narration.tempo) {
+    if (old.lines.every((line) => line.words)) {
+      console.log(`${manifestPath}: all ${lines.length} lines are spoken already, in take ${old.lines[0].take}.`);
+    } else {
+      write(timeWords(old.lines));
+      console.log(`${manifestPath}: timed the words of take ${old.lines[0].take}.`);
+    }
+    return;
+  }
+  const name = (id: string, text: string, take: string) =>
+    `${id}-${sha256(`${engine}\n${voice}\n${take}\n${narration.tempo}\n${text}`).slice(0, 12)}.mp3`;
+  const keep = (id: string, text: string, take: string, file: string): BragVoice => {
+    const seconds = duration(join(BRAG_FOLDER, file));
+    console.log(`${file} ${seconds.toFixed(2)}s: ${text}`);
+    return { id, text, file, seconds, engine, voice, take, sha256: sha256(readFileSync(join(BRAG_FOLDER, file))) };
+  };
+  let kept: BragVoice[];
+  const heard = old.lines[0]?.take;
+  if (sameTake && old.tempo && heard) {
+    const take = heard;
+    const ratio = narration.tempo / old.tempo;
+    kept = old.lines.map(({ id, text, file: was }, index) => {
+      const file = name(id, text, take);
+      const replayed = join(work, `replayed-${index}.wav`);
+      execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-i", join(BRAG_FOLDER, was), "-af", `atempo=${ratio}`, replayed]);
+      finish(replayed, join(BRAG_FOLDER, file));
+      return keep(id, text, take, file);
+    });
+    console.log(`Played take ${take} again at tempo ${narration.tempo}, ${ratio.toFixed(4)} times its last speed.`);
+  } else {
+    const { wavs, take } = speakTake(lines, engine, voice, work, style);
+    kept = narration.lines.map(({ id, text }, index) => {
+      const file = name(id, text, take);
+      const tight = join(work, `tight-${index}.wav`);
+      tighten(wavs[index], tight, narration.pause, narration.tempo);
+      finish(tight, join(BRAG_FOLDER, file));
+      return keep(id, text, take, file);
+    });
+  }
+  kept = timeWords(kept);
+  write(kept);
+  for (const name of readdirSync(BRAG_FOLDER)) {
+    if (name.endsWith(".mp3") && !kept.some((line) => line.file === name)) {
+      rmSync(join(BRAG_FOLDER, name));
+    }
+  }
+  console.log(`${manifestPath}: ${kept.length} lines, spoken by ${engine} as ${voice}, ${kept.reduce((sum, line) => sum + line.seconds, 0).toFixed(1)} seconds of voice.`);
+};
+
 const args = process.argv.slice(2);
 const work = mkdtempSync(join(tmpdir(), "voice-"));
 try {
-  if (args.includes("--samples")) {
+  if (args.includes("--brag")) {
+    speakBrag(args.includes("--draft") ? "espeak" : "gemini", args.includes("--again"));
+  } else if (args.includes("--samples")) {
     mkdirSync("samples", { recursive: true });
     const named = args[args.indexOf("--samples") + 1];
     const first = takes[0].slice(0, 3);

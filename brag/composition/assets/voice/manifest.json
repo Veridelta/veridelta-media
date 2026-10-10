@@ -1,0 +1,766 @@
+{
+  "style": "AUDIO PROFILE: The narrator of a one-minute demo video for a command-line data tool.\nTHE SCENE: A short story about a scientist whose data migration has to match exactly, watched by engineers and scientists.\nDIRECTOR'S NOTES:\n- Style: Confident and engaged, with real tension in the problem and relief at the end. Clear, never salesy.\n- Pace: Brisk and fast, like a good trailer. Crisp consonants. Short pauses inside a sentence.\n- Accent: Neutral American English.",
+  "pause": 0.28,
+  "tempo": 0.97,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "Maya is moving her weather pipeline from IDL to Python.",
+      "file": "hook-69d6aca8a0a5.mp3",
+      "seconds": 3.384,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "b60da1ca3704",
+      "sha256": "eeb75b52d48524bf038e55d7d9e69d08149a727307e690b7807084dfb9428ca2",
+      "words": [
+        {
+          "word": "Maya",
+          "start": 0,
+          "end": 0.2
+        },
+        {
+          "word": "is",
+          "start": 0.2,
+          "end": 0.42
+        },
+        {
+          "word": "moving",
+          "start": 0.42,
+          "end": 0.66
+        },
+        {
+          "word": "her",
+          "start": 0.66,
+          "end": 0.82
+        },
+        {
+          "word": "weather",
+          "start": 0.82,
+          "end": 1
+        },
+        {
+          "word": "pipeline",
+          "start": 1,
+          "end": 1.5
+        },
+        {
+          "word": "from",
+          "start": 1.5,
+          "end": 1.82
+        },
+        {
+          "word": "IDL",
+          "start": 1.82,
+          "end": 2.48
+        },
+        {
+          "word": "to",
+          "start": 2.48,
+          "end": 2.74
+        },
+        {
+          "word": "Python.",
+          "start": 2.74,
+          "end": 2.98
+        }
+      ]
+    },
+    {
+      "id": "parity",
+      "text": "It has to match the old one. One to one.",
+      "file": "parity-109d1481f64d.mp3",
+      "seconds": 2.496,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "b60da1ca3704",
+      "sha256": "7e2f180a04c3e69a5245fc0cfab08b0475c40ac38530e32ac5d74df245a3513c",
+      "words": [
+        {
+          "word": "It",
+          "start": 0,
+          "end": 0.08
+        },
+        {
+          "word": "has",
+          "start": 0.08,
+          "end": 0.26
+        },
+        {
+          "word": "to",
+          "start": 0.26,
+          "end": 0.44
+        },
+        {
+          "word": "match",
+          "start": 0.44,
+          "end": 0.58
+        },
+        {
+          "word": "the",
+          "start": 0.58,
+          "end": 0.82
+        },
+        {
+          "word": "old",
+          "start": 0.82,
+          "end": 0.98
+        },
+        {
+          "word": "one.",
+          "start": 0.98,
+          "end": 1.22
+        },
+        {
+          "word": "One",
+          "start": 1.44,
+          "end": 1.68
+        },
+        {
+          "word": "to",
+          "start": 1.68,
+          "end": 2.04
+        },
+        {
+          "word": "one.",
+          "start": 2.04,
+          "end": 2.3
+        }
+      ]
+    },
+    {
+      "id": "run",
+      "text": "She compares them. Every single row differs.",
+      "file": "run-57f903d19338.mp3",
+      "seconds": 3.336,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "b60da1ca3704",
+      "sha256": "f560ec7d50c6f4177f91a9aa527e19d8344eb792d1da24026a8e6e6eedba6ffd",
+      "words": [
+        {
+          "word": "She",
+          "start": 0,
+          "end": 0.1
+        },
+        {
+          "word": "compares",
+          "start": 0.1,
+          "end": 0.36
+        },
+        {
+          "word": "them.",
+          "start": 0.36,
+          "end": 0.7
+        },
+        {
+          "word": "Every",
+          "start": 1.34,
+          "end": 1.64
+        },
+        {
+          "word": "single",
+          "start": 1.64,
+          "end": 2.18
+        },
+        {
+          "word": "row",
+          "start": 2.18,
+          "end": 2.62
+        },
+        {
+          "word": "differs.",
+          "start": 2.62,
+          "end": 2.98
+        }
+      ]
+    },
+    {
+      "id": "doubts",
+      "text": "Float precision. A renamed column. A bug she fixed on purpose.",
+      "file": "doubts-7d4d9ae91a20.mp3",
+      "seconds": 4.824,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "b60da1ca3704",
+      "sha256": "5a3102a133abe683998b5c29fc27ac68b2fe55b39030dea36ed702da564a517f",
+      "words": [
+        {
+          "word": "Float",
+          "start": 0,
+          "end": 0.6
+        },
+        {
+          "word": "precision.",
+          "start": 0.6,
+          "end": 1
+        },
+        {
+          "word": "A",
+          "start": 1.6,
+          "end": 1.72
+        },
+        {
+          "word": "renamed",
+          "start": 1.72,
+          "end": 1.96
+        },
+        {
+          "word": "column.",
+          "start": 1.96,
+          "end": 2.4
+        },
+        {
+          "word": "A",
+          "start": 3.14,
+          "end": 3.26
+        },
+        {
+          "word": "bug",
+          "start": 3.26,
+          "end": 3.44
+        },
+        {
+          "word": "she",
+          "start": 3.44,
+          "end": 3.64
+        },
+        {
+          "word": "fixed",
+          "start": 3.64,
+          "end": 3.84
+        },
+        {
+          "word": "on",
+          "start": 3.84,
+          "end": 4.14
+        },
+        {
+          "word": "purpose.",
+          "start": 4.14,
+          "end": 4.5
+        }
+      ]
+    },
+    {
+      "id": "hidden",
+      "text": "Somewhere in there hides a real bug.",
+      "file": "hidden-31ba38e5854f.mp3",
+      "seconds": 2.448,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "b60da1ca3704",
+      "sha256": "ac2720902947804b8c58eb3788c1f73be469a441ebac27fce3f732ce25e07124",
+      "words": [
+        {
+          "word": "Somewhere",
+          "start": 0,
+          "end": 0.3
+        },
+        {
+          "word": "in",
+          "start": 0.3,
+          "end": 0.62
+        },
+        {
+          "word": "there",
+          "start": 0.62,
+          "end": 0.8
+        },
+        {
+          "word": "hides",
+          "start": 0.8,
+          "end": 1.28
+        },
+        {
+          "word": "a",
+          "start": 1.28,
+          "end": 1.54
+        },
+        {
+          "word": "real",
+          "start": 1.54,
+          "end": 1.86
+        },
+        {
+          "word": "bug.",
+          "start": 1.86,
+          "end": 2.2
+        }
+      ]
+    },
+    {
+      "id": "question",
+      "text": "Which differences are fixes, and which are corruption?",
+      "file": "question-39ae9bd88ff7.mp3",
+      "seconds": 2.568,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "b60da1ca3704",
+      "sha256": "bbfcc1005f00f026e3689f35c5aa9533791d524fb052d31eda867b885950bc2a",
+      "words": [
+        {
+          "word": "Which",
+          "start": 0,
+          "end": 0.16
+        },
+        {
+          "word": "differences",
+          "start": 0.16,
+          "end": 0.46
+        },
+        {
+          "word": "are",
+          "start": 0.46,
+          "end": 0.74
+        },
+        {
+          "word": "fixes,",
+          "start": 0.74,
+          "end": 1.04
+        },
+        {
+          "word": "and",
+          "start": 1.44,
+          "end": 1.6
+        },
+        {
+          "word": "which",
+          "start": 1.6,
+          "end": 1.76
+        },
+        {
+          "word": "are",
+          "start": 1.76,
+          "end": 1.9
+        },
+        {
+          "word": "corruption?",
+          "start": 1.9,
+          "end": 2.08
+        }
+      ]
+    },
+    {
+      "id": "reveal",
+      "text": "Veridelta compares two datasets under rules you declare.",
+      "file": "reveal-97b289374bce.mp3",
+      "seconds": 3.528,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "b60da1ca3704",
+      "sha256": "48efe468e627e58eb7ff8781a94e601c5c1b49fccbd6974fa8e6e94301d50938",
+      "words": [
+        {
+          "word": "Veridelta",
+          "start": 0,
+          "end": 0.44
+        },
+        {
+          "word": "compares",
+          "start": 0.44,
+          "end": 0.86
+        },
+        {
+          "word": "two",
+          "start": 0.86,
+          "end": 1.16
+        },
+        {
+          "word": "datasets",
+          "start": 1.16,
+          "end": 1.7
+        },
+        {
+          "word": "under",
+          "start": 1.7,
+          "end": 2.02
+        },
+        {
+          "word": "rules",
+          "start": 2.02,
+          "end": 2.34
+        },
+        {
+          "word": "you",
+          "start": 2.34,
+          "end": 2.66
+        },
+        {
+          "word": "declare.",
+          "start": 2.66,
+          "end": 2.94
+        }
+      ]
+    },
+    {
+      "id": "forgiven",
+      "text": "Nothing is forgiven unless a rule says so.",
+      "file": "forgiven-ed23ea47f23b.mp3",
+      "seconds": 2.256,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "b60da1ca3704",
+      "sha256": "34c39ef2cdef222936563ebc4f101b61f9b58f70dbf081185a268011f63fd058",
+      "words": [
+        {
+          "word": "Nothing",
+          "start": 0,
+          "end": 0.26
+        },
+        {
+          "word": "is",
+          "start": 0.26,
+          "end": 0.38
+        },
+        {
+          "word": "forgiven",
+          "start": 0.38,
+          "end": 0.7
+        },
+        {
+          "word": "unless",
+          "start": 0.7,
+          "end": 1.2
+        },
+        {
+          "word": "a",
+          "start": 1.2,
+          "end": 1.38
+        },
+        {
+          "word": "rule",
+          "start": 1.38,
+          "end": 1.6
+        },
+        {
+          "word": "says",
+          "start": 1.6,
+          "end": 1.88
+        },
+        {
+          "word": "so.",
+          "start": 1.88,
+          "end": 2.12
+        }
+      ]
+    },
+    {
+      "id": "rules",
+      "text": "Declare the rename. Let Veridelta suggest the rest from your data. Accept the fix with a baseline.",
+      "file": "rules-00b5916553aa.mp3",
+      "seconds": 6,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "b60da1ca3704",
+      "sha256": "fabfdef803b6a7a81dae5b2d4fe3b968659a96ed74b4233f88da15559d1a8e90",
+      "words": [
+        {
+          "word": "Declare",
+          "start": 0,
+          "end": 0.3
+        },
+        {
+          "word": "the",
+          "start": 0.3,
+          "end": 0.4
+        },
+        {
+          "word": "rename.",
+          "start": 0.4,
+          "end": 0.62
+        },
+        {
+          "word": "Let",
+          "start": 1.5,
+          "end": 1.5
+        },
+        {
+          "word": "Veridelta",
+          "start": 1.5,
+          "end": 1.96
+        },
+        {
+          "word": "suggest",
+          "start": 1.96,
+          "end": 2.3
+        },
+        {
+          "word": "the",
+          "start": 2.3,
+          "end": 2.7
+        },
+        {
+          "word": "rest",
+          "start": 2.7,
+          "end": 2.86
+        },
+        {
+          "word": "from",
+          "start": 2.86,
+          "end": 3.1
+        },
+        {
+          "word": "your",
+          "start": 3.1,
+          "end": 3.2
+        },
+        {
+          "word": "data.",
+          "start": 3.2,
+          "end": 3.42
+        },
+        {
+          "word": "Accept",
+          "start": 4.5,
+          "end": 4.5
+        },
+        {
+          "word": "the",
+          "start": 4.5,
+          "end": 4.72
+        },
+        {
+          "word": "fix",
+          "start": 4.72,
+          "end": 4.92
+        },
+        {
+          "word": "with",
+          "start": 4.92,
+          "end": 5.26
+        },
+        {
+          "word": "a",
+          "start": 5.26,
+          "end": 5.36
+        },
+        {
+          "word": "baseline.",
+          "start": 5.36,
+          "end": 5.56
+        }
+      ]
+    },
+    {
+      "id": "left",
+      "text": "What's left is the real bug. Four readings lost their minus sign, and CI fails the pull request.",
+      "file": "left-e1f37aa641d0.mp3",
+      "seconds": 6.24,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "b60da1ca3704",
+      "sha256": "db9e20fc23666d480638d4e5460d62bce0467b6338bdee128535834c3e93fa61",
+      "words": [
+        {
+          "word": "What's",
+          "start": 0,
+          "end": 0.14
+        },
+        {
+          "word": "left",
+          "start": 0.14,
+          "end": 0.36
+        },
+        {
+          "word": "is",
+          "start": 0.36,
+          "end": 0.88
+        },
+        {
+          "word": "the",
+          "start": 0.88,
+          "end": 1.02
+        },
+        {
+          "word": "real",
+          "start": 1.02,
+          "end": 1.18
+        },
+        {
+          "word": "bug.",
+          "start": 1.18,
+          "end": 1.48
+        },
+        {
+          "word": "Four",
+          "start": 2.18,
+          "end": 2.32
+        },
+        {
+          "word": "readings",
+          "start": 2.32,
+          "end": 2.64
+        },
+        {
+          "word": "lost",
+          "start": 2.64,
+          "end": 3.14
+        },
+        {
+          "word": "their",
+          "start": 3.14,
+          "end": 3.4
+        },
+        {
+          "word": "minus",
+          "start": 3.4,
+          "end": 3.58
+        },
+        {
+          "word": "sign,",
+          "start": 3.58,
+          "end": 4
+        },
+        {
+          "word": "and",
+          "start": 4.32,
+          "end": 4.44
+        },
+        {
+          "word": "CI",
+          "start": 4.44,
+          "end": 4.68
+        },
+        {
+          "word": "fails",
+          "start": 4.68,
+          "end": 5.18
+        },
+        {
+          "word": "the",
+          "start": 5.18,
+          "end": 5.42
+        },
+        {
+          "word": "pull",
+          "start": 5.42,
+          "end": 5.58
+        },
+        {
+          "word": "request.",
+          "start": 5.58,
+          "end": 5.86
+        }
+      ]
+    },
+    {
+      "id": "passes",
+      "text": "Fix it, and it passes. One to one.",
+      "file": "passes-2d6cd5ca0aaa.mp3",
+      "seconds": 2.688,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "b60da1ca3704",
+      "sha256": "6f56da7d99d0b13e2cc8ba5c86450498ecbbb6e303686e7fdf6e02fb90ce7e87",
+      "words": [
+        {
+          "word": "Fix",
+          "start": 0,
+          "end": 0.16
+        },
+        {
+          "word": "it,",
+          "start": 0.16,
+          "end": 0.34
+        },
+        {
+          "word": "and",
+          "start": 0.34,
+          "end": 0.78
+        },
+        {
+          "word": "it",
+          "start": 0.78,
+          "end": 0.86
+        },
+        {
+          "word": "passes.",
+          "start": 0.86,
+          "end": 1.12
+        },
+        {
+          "word": "One",
+          "start": 1.94,
+          "end": 2.14
+        },
+        {
+          "word": "to",
+          "start": 2.14,
+          "end": 2.32
+        },
+        {
+          "word": "one.",
+          "start": 2.32,
+          "end": 2.52
+        }
+      ]
+    },
+    {
+      "id": "end",
+      "text": "Porting a pipeline of your own? Start with Veridelta's six tutorials.",
+      "file": "end-6346b38ac868.mp3",
+      "seconds": 3.888,
+      "engine": "gemini",
+      "voice": "Orus",
+      "take": "b60da1ca3704",
+      "sha256": "d661628950954c609b2fdbd46087d06a819bcf0171887987cdc7be35b27e1d63",
+      "words": [
+        {
+          "word": "Porting",
+          "start": 0,
+          "end": 0.22
+        },
+        {
+          "word": "a",
+          "start": 0.22,
+          "end": 0.36
+        },
+        {
+          "word": "pipeline",
+          "start": 0.36,
+          "end": 0.6
+        },
+        {
+          "word": "of",
+          "start": 0.6,
+          "end": 0.9
+        },
+        {
+          "word": "your",
+          "start": 0.9,
+          "end": 1.02
+        },
+        {
+          "word": "own?",
+          "start": 1.02,
+          "end": 1.24
+        },
+        {
+          "word": "Start",
+          "start": 1.7,
+          "end": 1.9
+        },
+        {
+          "word": "with",
+          "start": 1.9,
+          "end": 2.1
+        },
+        {
+          "word": "Veridelta's",
+          "start": 2.1,
+          "end": 2.78
+        },
+        {
+          "word": "six",
+          "start": 2.78,
+          "end": 3
+        },
+        {
+          "word": "tutorials.",
+          "start": 3,
+          "end": 3.44
+        }
+      ]
+    }
+  ]
+}

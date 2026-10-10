@@ -1,0 +1,191 @@
+{
+  "voice": "Orus",
+  "music": {
+    "file": "happy-beats-business-moves-vol-1-by-ende-dot-app.mp3",
+    "drop": 48.02,
+    "on": "veridelta",
+    "beat": 0.5
+  },
+  "style": "AUDIO PROFILE: The narrator of a one-minute demo video for a command-line data tool.\nTHE SCENE: A short story about a scientist whose data migration has to match exactly, watched by engineers and scientists.\nDIRECTOR'S NOTES:\n- Style: Confident and engaged, with real tension in the problem and relief at the end. Clear, never salesy.\n- Pace: Brisk and fast, like a good trailer. Crisp consonants. Short pauses inside a sentence.\n- Accent: Neutral American English.",
+  "pause": 0.28,
+  "tempo": 0.97,
+  "gap": 0.25,
+  "scenes": {
+    "hook": {
+      "lead": 0.5,
+      "tail": 1.5
+    },
+    "run": {
+      "lead": 0.4,
+      "tail": 0.8
+    },
+    "doubts": {
+      "lead": 0.4,
+      "tail": 0.8
+    },
+    "pain": {
+      "lead": 0.4,
+      "tail": 1.5
+    },
+    "veridelta": {
+      "lead": 0.75,
+      "tail": 0.6
+    },
+    "rules": {
+      "lead": 0.4,
+      "tail": 1.0
+    },
+    "left": {
+      "lead": 0.4,
+      "tail": 0.8
+    },
+    "pass": {
+      "lead": 0.4,
+      "tail": 1.3
+    },
+    "end": {
+      "lead": 0.4,
+      "tail": 3.2
+    }
+  },
+  "sfx": [
+    {
+      "line": "run",
+      "word": "Every",
+      "file": "impact/impactSoft_medium_001.ogg",
+      "volume": 0.6
+    },
+    {
+      "line": "doubts",
+      "word": "Float",
+      "file": "casino/card-slide-1.ogg",
+      "volume": 0.35
+    },
+    {
+      "line": "doubts",
+      "word": "renamed",
+      "file": "casino/card-slide-1.ogg",
+      "volume": 0.35
+    },
+    {
+      "line": "doubts",
+      "word": "bug",
+      "file": "casino/card-slide-1.ogg",
+      "volume": 0.35
+    },
+    {
+      "line": "question",
+      "word": "corruption",
+      "file": "impact/impactSoft_medium_003.ogg",
+      "volume": 0.6
+    },
+    {
+      "scene": "veridelta",
+      "file": "impact/impactBell_heavy_000.ogg",
+      "volume": 0.5
+    },
+    {
+      "line": "rules",
+      "word": "Declare",
+      "file": "interface/bong_001.ogg",
+      "volume": 0.4
+    },
+    {
+      "line": "rules",
+      "word": "suggest",
+      "file": "interface/bong_001.ogg",
+      "volume": 0.4
+    },
+    {
+      "line": "rules",
+      "word": "Accept",
+      "file": "interface/bong_001.ogg",
+      "volume": 0.4
+    },
+    {
+      "line": "left",
+      "word": "fails",
+      "file": "impact/impactSoft_medium_001.ogg",
+      "volume": 0.55
+    },
+    {
+      "line": "passes",
+      "word": "passes",
+      "file": "impact/impactSoft_medium_002.ogg",
+      "volume": 0.6
+    },
+    {
+      "line": "passes",
+      "word": "One to one",
+      "file": "interface/bong_001.ogg",
+      "volume": 0.45
+    },
+    {
+      "scene": "end",
+      "file": "impact/impactSoft_medium_003.ogg",
+      "volume": 0.5
+    }
+  ],
+  "lines": [
+    {
+      "id": "hook",
+      "scene": "hook",
+      "text": "Maya is moving her weather pipeline from IDL to Python."
+    },
+    {
+      "id": "parity",
+      "scene": "hook",
+      "text": "It has to match the old one. One to one."
+    },
+    {
+      "id": "run",
+      "scene": "run",
+      "text": "She compares them. Every single row differs."
+    },
+    {
+      "id": "doubts",
+      "scene": "doubts",
+      "text": "Float precision. A renamed column. A bug she fixed on purpose."
+    },
+    {
+      "id": "hidden",
+      "scene": "pain",
+      "text": "Somewhere in there hides a real bug."
+    },
+    {
+      "id": "question",
+      "scene": "pain",
+      "text": "Which differences are fixes, and which are corruption?"
+    },
+    {
+      "id": "reveal",
+      "scene": "veridelta",
+      "text": "Veridelta compares two datasets under rules you declare."
+    },
+    {
+      "id": "forgiven",
+      "scene": "veridelta",
+      "text": "Nothing is forgiven unless a rule says so."
+    },
+    {
+      "id": "rules",
+      "scene": "rules",
+      "text": "Declare the rename. Let Veridelta suggest the rest from your data. Accept the fix with a baseline."
+    },
+    {
+      "id": "left",
+      "scene": "left",
+      "text": "What's left is the real bug. Four readings lost their minus sign, and CI fails the pull request."
+    },
+    {
+      "id": "passes",
+      "scene": "pass",
+      "text": "Fix it, and it passes. One to one."
+    },
+    {
+      "id": "end",
+      "scene": "end",
+      "text": "Porting a pipeline of your own? Start with Veridelta's six tutorials."
+    }
+  ]
+}

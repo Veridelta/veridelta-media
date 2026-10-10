@@ -1,0 +1,47 @@
+1
+00:00:00,500 --> 00:00:03,884
+Maya is moving her weather pipeline from IDL to Python.
+
+2
+00:00:04,134 --> 00:00:06,630
+It has to match the old one. One to one.
+
+3
+00:00:08,400 --> 00:00:11,736
+She compares them. Every single row differs.
+
+4
+00:00:12,900 --> 00:00:17,724
+Float precision. A renamed column. A bug she fixed on purpose.
+
+5
+00:00:18,900 --> 00:00:21,348
+Somewhere in there hides a real bug.
+
+6
+00:00:21,598 --> 00:00:24,166
+Which differences are fixes, and which are corruption?
+
+7
+00:00:26,250 --> 00:00:29,778
+Veridelta compares two datasets under rules you declare.
+
+8
+00:00:30,028 --> 00:00:32,284
+Nothing is forgiven unless a rule says so.
+
+9
+00:00:33,400 --> 00:00:39,400
+Declare the rename. Let Veridelta suggest the rest from your data. Accept the fix with a baseline.
+
+10
+00:00:40,900 --> 00:00:47,140
+What's left is the real bug. Four readings lost their minus sign, and CI fails the pull request.
+
+11
+00:00:48,400 --> 00:00:51,088
+Fix it, and it passes. One to one.
+
+12
+00:00:52,900 --> 00:00:56,788
+Porting a pipeline of your own? Start with Veridelta's six tutorials.

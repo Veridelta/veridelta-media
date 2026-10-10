@@ -10,6 +10,14 @@ Usage, as scripts/voice.ts runs it:
     uvx --from faster-whisper==1.2.1 python scripts/align.py <take.wav> <lines.json>
 
 It prints a JSON list, one entry a line: {"start": s, "end": e, "heard": share}.
+
+With --words, it hears clips that are already cut, one line each, and times every word of
+each line the same way, so an animation can land on the word it shows:
+    uvx --from faster-whisper==1.2.1 python scripts/align.py --words <clips.json>
+
+clips.json lists {"audio": path, "text": line}. It prints a JSON list, one entry a clip, of
+{"word": word, "start": s, "end": e} for each word of the line, with null times for a word
+Whisper did not hear.
 """
 
 import difflib
@@ -85,17 +93,66 @@ def plain(token: str) -> str:
     return NUMBERS.get(token, token)
 
 
-def main() -> None:
-    """Print each line's start, end, and share of words heard, as JSON."""
-    wav, script = sys.argv[1], sys.argv[2]
-    lines = json.loads(open(script, encoding="utf-8").read())
-    words = heard(wav)
-    tokens = [(index, plain(token)) for index, line in enumerate(lines) for token in line.split() if plain(token)]
-    matcher = difflib.SequenceMatcher(a=[token for _, token in tokens], b=[plain(word["word"]) for word in words], autojunk=False)
+def match(tokens: list[str], words: list[dict]) -> dict[int, int]:
+    """Match the script's tokens to the words Whisper heard, in order: token index to word index."""
+    matcher = difflib.SequenceMatcher(a=tokens, b=[plain(word["word"]) for word in words], autojunk=False)
     matched = {}
     for block in matcher.get_matching_blocks():
         for offset in range(block.size):
             matched[block.a + offset] = block.b + offset
+    return matched
+
+
+def letters(tokens: list[str]) -> tuple[str, list[int]]:
+    """Join tokens' plain letters into one string, with the token each letter came from."""
+    text, owner = "", []
+    for index, token in enumerate(tokens):
+        text += plain(token)
+        owner += [index] * len(plain(token))
+    return text, owner
+
+
+def times(clips: str) -> None:
+    """Print the start and end of every word of each clip's line, as JSON.
+
+    A clip's words are matched letter by letter, not word by word, so a word Whisper splits or
+    joins, such as "datasets" heard as "data sets", still gets its time.
+    """
+    entries = json.loads(open(clips, encoding="utf-8").read())
+    timed = []
+    for entry in entries:
+        words = heard(entry["audio"])
+        script = [token for token in entry["text"].split() if plain(token)]
+        said, said_owner = letters(script)
+        spoken, spoken_owner = letters([word["word"] for word in words])
+        matcher = difflib.SequenceMatcher(a=said, b=spoken, autojunk=False)
+        found: dict[int, list[int]] = {}
+        for block in matcher.get_matching_blocks():
+            for offset in range(block.size):
+                found.setdefault(said_owner[block.a + offset], []).append(spoken_owner[block.b + offset])
+        timed.append(
+            [
+                {
+                    "word": token,
+                    "start": round(words[min(found[index])]["start"], 3) if index in found else None,
+                    "end": round(words[max(found[index])]["end"], 3) if index in found else None,
+                }
+                for index, token in enumerate(script)
+            ]
+        )
+    print(json.dumps(timed))
+
+
+def main() -> None:
+    """Print each line's start, end, and share of words heard, as JSON."""
+    if sys.argv[1] == "--words":
+        times(sys.argv[2])
+        return
+    wav, script = sys.argv[1], sys.argv[2]
+    lines = json.loads(open(script, encoding="utf-8").read())
+    words = heard(wav)
+    tokens = [(index, plain(token)) for index, line in enumerate(lines) for token in line.split() if plain(token)]
+    matched = match([token for _, token in tokens], words)
     spans = []
     for index in range(len(lines)):
         own = [position for position, (line, _) in enumerate(tokens) if line == index]

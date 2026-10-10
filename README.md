@@ -9,12 +9,12 @@ Promotional videos for [Veridelta](https://github.com/Veridelta/veridelta), made
 | `promo-30` | 1920 by 1080 | About 30 seconds | The logo and summary, the quick start's files and run, how to install |
 | `promo-60` | 1920 by 1080 | Under 60 seconds | Those, plus the HTML report, comparison inside the warehouse, and the MCP server |
 | `promo-square-30` | 1080 by 1080 | About 30 seconds | As `promo-30`, for feeds that crop wide video |
-| The demo, in [brag/](brag/README.md) | 1920 by 1080 | 30 seconds | The problem, then the answer, with music and no voice: two exports that match 0.0%, the noise behind it, `suggest` finding the rules with their evidence, the rules, the GitHub Action's comment on the one real change, the fixed export at 100.0%, and how to install |
+| The demo, in [brag/](brag/README.md) | 1920 by 1080 | 60 seconds | A narrated pitch, the problem first: Maya ports a weather pipeline from IDL to Python, and every row differs. Veridelta's rules, `suggest`, and a baseline leave only the real bug, which fails CI, the fixed port passes at 100.0%, and it ends on the six tutorials |
 | `demo-120` | 1920 by 1080 | About three minutes | The walkthrough, a narrated story on two CSV files: Sam checks the rewrite of a nightly export with the first run, how Veridelta decides, `suggest`, the rules and their limits, a baseline, the report, the GitHub Action's comment on a pull request, and the fixed export passing, then where else it runs and where the project stands |
 
 The demo is a [Hyperframes](https://hyperframes.heygen.com/) project made with [brag](https://github.com/latent-spaces/brag), not a Remotion cut. [brag/README.md](brag/README.md) says how it was made and how to render it.
 
-The Veridelta organization page shows [posters/demo-poster.png](posters/demo-poster.png), the demo's end card with a play button, links it to the demo, and links the walkthrough below it. [posters/demo-120-poster.png](posters/demo-120-poster.png) is a frame of `demo-120` with a play button.
+The Veridelta organization page shows [posters/demo-poster.png](posters/demo-poster.png), the demo's end card with a play button, and links it to the demo. [posters/demo-120-poster.png](posters/demo-120-poster.png) is a frame of `demo-120` with a play button.
 
 [storyboard.md](storyboard.md) lists every scene with its length, its picture, its captions, and the docs page that backs each claim. [launch-kit.md](launch-kit.md) holds the posts and the alt text to publish them with.
 
