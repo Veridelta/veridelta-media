@@ -266,8 +266,9 @@ type BragVoice = VoiceLine & { id: string };
 
 /**
  * Speak the demo's narration in one take, as a narrated cut is, into its own folder. Its lines
- * are spoken again only when a line's text, the voice, the style, the pause, the tempo, or the
- * engine changes.
+ * are spoken again only when a line's text, the voice, the style, the pause, or the engine
+ * changes. When only the tempo changes, the clips already spoken play again at the new speed, so
+ * the take stays the one heard, and no request is made.
  */
 const speakBrag = (engine: Engine, again: boolean) => {
   const narration = JSON.parse(readFileSync(BRAG, "utf8")) as BragNarration;
@@ -283,11 +284,10 @@ const speakBrag = (engine: Engine, again: boolean) => {
       return { lines: [] };
     }
   })();
-  const same =
+  const sameTake =
     !again &&
     old.style === style &&
     old.pause === narration.pause &&
-    old.tempo === narration.tempo &&
     old.lines.length === lines.length &&
     old.lines.every(
       (line, index) =>
@@ -298,20 +298,40 @@ const speakBrag = (engine: Engine, again: boolean) => {
         existsSync(join(BRAG_FOLDER, line.file)) &&
         sha256(readFileSync(join(BRAG_FOLDER, line.file))) === line.sha256,
     );
-  if (same) {
+  if (sameTake && old.tempo === narration.tempo) {
     console.log(`${manifestPath}: all ${lines.length} lines are spoken already, in take ${old.lines[0].take}.`);
     return;
   }
-  const { wavs, take } = speakTake(lines, engine, voice, work, style);
-  const kept: BragVoice[] = narration.lines.map(({ id, text }, index) => {
-    const file = `${id}-${sha256(`${engine}\n${voice}\n${take}\n${text}`).slice(0, 12)}.mp3`;
-    const tight = join(work, `tight-${index}.wav`);
-    tighten(wavs[index], tight, narration.pause, narration.tempo);
-    finish(tight, join(BRAG_FOLDER, file));
+  const name = (id: string, text: string, take: string) =>
+    `${id}-${sha256(`${engine}\n${voice}\n${take}\n${narration.tempo}\n${text}`).slice(0, 12)}.mp3`;
+  const keep = (id: string, text: string, take: string, file: string): BragVoice => {
     const seconds = duration(join(BRAG_FOLDER, file));
     console.log(`${file} ${seconds.toFixed(2)}s: ${text}`);
     return { id, text, file, seconds, engine, voice, take, sha256: sha256(readFileSync(join(BRAG_FOLDER, file))) };
-  });
+  };
+  let kept: BragVoice[];
+  const heard = old.lines[0]?.take;
+  if (sameTake && old.tempo && heard) {
+    const take = heard;
+    const ratio = narration.tempo / old.tempo;
+    kept = old.lines.map(({ id, text, file: was }, index) => {
+      const file = name(id, text, take);
+      const replayed = join(work, `replayed-${index}.wav`);
+      execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-i", join(BRAG_FOLDER, was), "-af", `atempo=${ratio}`, replayed]);
+      finish(replayed, join(BRAG_FOLDER, file));
+      return keep(id, text, take, file);
+    });
+    console.log(`Played take ${take} again at tempo ${narration.tempo}, ${ratio.toFixed(4)} times its last speed.`);
+  } else {
+    const { wavs, take } = speakTake(lines, engine, voice, work, style);
+    kept = narration.lines.map(({ id, text }, index) => {
+      const file = name(id, text, take);
+      const tight = join(work, `tight-${index}.wav`);
+      tighten(wavs[index], tight, narration.pause, narration.tempo);
+      finish(tight, join(BRAG_FOLDER, file));
+      return keep(id, text, take, file);
+    });
+  }
   writeFileSync(
     manifestPath,
     `${JSON.stringify({ style, pause: narration.pause, tempo: narration.tempo, lines: kept }, null, 2)}\n`,
