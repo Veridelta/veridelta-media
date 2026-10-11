@@ -1,5 +1,6 @@
 node_modules/
-# Renders are reviewed, then published by hand; git keeps their sources, not the videos.
+# Renders are reviewed, then published by hand or, for the demo, by a workflow; git keeps their
+# sources, not the videos.
 renders/
 brag/brag.mp4
 brag/brag-inline.mp4

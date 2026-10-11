@@ -16,6 +16,7 @@ It was made with [brag](https://github.com/latent-spaces/brag), an agent skill f
 | `demo.srt` | The captions, word for word, for the release |
 | [finish.sh](finish.sh) | Renders the video and finishes it |
 | [poster.html](poster.html) | The still the organization page links to the video with |
+| [release-notes.md](release-notes.md) | The description of the demo's release |
 | [share-copy.txt](share-copy.txt) | The caption to post the video with |
 
 ## The voice and its timing
@@ -52,6 +53,19 @@ cd .. && ./finish.sh
 - it captures `poster.html`, the end card with a play button, to `../posters/demo-poster.png`.
 
 Git ignores `brag.mp4`, `brag-inline.mp4`, and `brag.jpg`, as it ignores `renders/`.
+
+## Publishing
+
+Once a render is reviewed and merged, the Release the Demo workflow publishes it. Run it from the Actions tab, or through GitHub's API, on `main`. It renders the demo from that commit with `finish.sh` and publishes it as the release named in its `tag` input, `demo-60` by default, named for the demo's length:
+
+- the assets are `veridelta-demo.mp4` and `veridelta-demo.srt`;
+- a new release gets [release-notes.md](release-notes.md) as its description, and becomes the latest release;
+- a release that exists gets the new assets and keeps its description;
+- its `replaces` input names an older release to delete, with its tag, once the new one is up.
+
+One step stays by hand: GitHub plays a video inline in a description only when it was uploaded through its web editor. Edit the release once, and drag `brag-inline.mp4` to the top of the description.
+
+Link to the demo as https://github.com/Veridelta/veridelta-media/releases/latest, which follows the release when its name changes.
 
 ## The rules
 

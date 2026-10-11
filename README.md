@@ -14,7 +14,7 @@ Promotional videos for [Veridelta](https://github.com/Veridelta/veridelta), made
 
 The demo is a [Hyperframes](https://hyperframes.heygen.com/) project made with [brag](https://github.com/latent-spaces/brag), not a Remotion cut. [brag/README.md](brag/README.md) says how it was made and how to render it.
 
-The Veridelta organization page shows [posters/demo-poster.png](posters/demo-poster.png), the demo's end card with a play button, and links it to the demo. [posters/demo-120-poster.png](posters/demo-120-poster.png) is a frame of `demo-120` with a play button.
+The demo is the release [`demo-60`](https://github.com/Veridelta/veridelta-media/releases/latest), which a workflow publishes, as [brag/README.md](brag/README.md#publishing) says. The Veridelta organization page shows [posters/demo-poster.png](posters/demo-poster.png), the demo's end card with a play button, and links it to `releases/latest`. [posters/demo-120-poster.png](posters/demo-120-poster.png) is a frame of `demo-120` with a play button.
 
 [storyboard.md](storyboard.md) lists every scene with its length, its picture, its captions, and the docs page that backs each claim. [launch-kit.md](launch-kit.md) holds the posts and the alt text to publish them with.
 

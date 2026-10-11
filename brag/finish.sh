@@ -36,9 +36,10 @@ ffmpeg -hide_banner -loglevel error -y -i brag.mp4 -vf scale=1280:720:flags=lanc
 
 # The organization page's poster: the poster frame with a play button.
 chrome=$(cd composition && npx --yes hyperframes@0.8.143 browser path | tail -n 1)
-# Chrome refuses to run as root with its sandbox, as in a container; the page is a local file.
+# Chrome refuses its sandbox as root, as in a container, and on some CI runners; the page is a
+# local file.
 sandbox=()
-if [ "$(id -u)" = 0 ]; then sandbox=(--no-sandbox); fi
+if [ "$(id -u)" = 0 ] || [ -n "${CI:-}" ]; then sandbox=(--no-sandbox); fi
 "$chrome" "${sandbox[@]}" --headless --hide-scrollbars --force-device-scale-factor=1 --window-size=1920,1080 \
   --screenshot="$PWD/../posters/demo-poster.png" "file://$PWD/poster.html" 2>/dev/null
 
