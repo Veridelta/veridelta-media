@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Veridelta in 15 seconds</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"
+      integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      @font-face {
+        font-family: "Inter";
+        font-weight: 400;
+        src: url("assets/fonts/Inter-Regular.otf") format("opentype");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 600;
+        src: url("assets/fonts/Inter-SemiBold.otf") format("opentype");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 700;
+        src: url("assets/fonts/Inter-Bold.otf") format("opentype");
+      }
+      @font-face {
+        font-family: "DejaVu Sans Mono";
+        font-weight: 400;
+        src: url("assets/fonts/DejaVuSansMono.ttf") format("truetype");
+      }
+
+      /* The logo's colors, as the 60-second demo and the docs use them. */
+      :root {
+        --navy: #0d2f5a;
+        --orange: #de5807;
+        --orange-deep: #b24606;
+        --blue: #2054b2;
+        --canvas: #f5f7fa;
+        --slate: #3f5068;
+        --code: #e8eef6;
+        --code-dim: #b4c3d6;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--canvas);
+        color: var(--navy);
+        font-family: "Inter", sans-serif;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      .mono {
+        font-family: "DejaVu Sans Mono", monospace;
+      }
+      #bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1920px;
+        height: 12px;
+        background: linear-gradient(90deg, var(--orange) 0%, var(--orange) 45%, var(--blue) 55%, var(--blue) 100%);
+      }
+
+      .scene {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+      }
+      .scene + .scene {
+        opacity: 0;
+      }
+
+      .term {
+        border-radius: 18px;
+        background: var(--navy);
+        box-shadow: 0 30px 80px rgba(13, 47, 90, 0.26);
+        overflow: hidden;
+      }
+      .term .tl {
+        padding: 0 32px;
+        color: var(--code);
+        white-space: pre;
+        font-size: 30px;
+        line-height: 1.5;
+      }
+      .term .tl.dim {
+        color: var(--code-dim);
+      }
+      .badge {
+        display: inline-block;
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: #ffffff;
+        padding: 10px 28px;
+        border-radius: 12px;
+        font-size: 44px;
+      }
+      .badge.orange {
+        background: var(--orange-deep);
+      }
+      .badge.blue {
+        background: var(--blue);
+      }
+
+      /* The rate scenes: the first run and the last, mirrors of each other. */
+      .rate-cmd {
+        position: absolute;
+        left: 140px;
+        top: 130px;
+        padding: 22px 0;
+      }
+      .rate-head {
+        position: absolute;
+        left: 150px;
+        top: 330px;
+        display: flex;
+        align-items: center;
+        gap: 34px;
+        font-size: 52px;
+        font-weight: 600;
+        color: var(--slate);
+      }
+      .rate {
+        position: absolute;
+        left: 128px;
+        top: 400px;
+        font-size: 330px;
+        font-weight: 700;
+        letter-spacing: -12px;
+        line-height: 1;
+        transform-origin: 0% 50%;
+      }
+      #hook-rate {
+        color: var(--orange-deep);
+      }
+      #pass-rate {
+        color: var(--blue);
+      }
+      .rate-line {
+        position: absolute;
+        left: 150px;
+        top: 790px;
+        font-size: 72px;
+        font-weight: 700;
+      }
+
+      /* The reveal: the logo, and what it does. */
+      .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+      }
+      .logo .symbol {
+        width: 267px;
+        height: 248px;
+        background: url("assets/images/veridelta-symbol.png") center / contain no-repeat;
+      }
+      .logo .wordmark {
+        width: 576px;
+        height: 120px;
+        background: url("assets/images/veridelta-wordmark.png") center / contain no-repeat;
+      }
+      #vd-logo {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 300px;
+      }
+      #vd-line {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 650px;
+        text-align: center;
+        font-size: 64px;
+        font-weight: 600;
+        color: var(--navy);
+      }
+      #vd-line b {
+        color: var(--blue);
+        font-weight: 700;
+      }
+
+      /* Declare, suggest, accept: one word each, with the real line behind it. */
+      #rules-body {
+        position: absolute;
+        left: 140px;
+        top: 270px;
+        width: 1640px;
+        display: flex;
+        flex-direction: column;
+        gap: 56px;
+      }
+      .rl-row {
+        display: flex;
+        align-items: center;
+        gap: 56px;
+      }
+      .rl-label {
+        width: 420px;
+        font-size: 96px;
+        font-weight: 700;
+        letter-spacing: -2px;
+      }
+      .rl-row .term {
+        flex: 1;
+        padding: 26px 0;
+      }
+
+      /* The end card. */
+      #end-logo {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 230px;
+      }
+      #end-install {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        width: fit-content;
+        top: 580px;
+        font-size: 64px;
+        color: var(--code);
+        background: var(--navy);
+        padding: 24px 48px;
+        border-radius: 18px;
+        white-space: pre;
+      }
+      #end-url {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 790px;
+        text-align: center;
+        font-size: 48px;
+        font-weight: 600;
+        color: var(--slate);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="15" data-width="1920" data-height="1080">
+      <div id="bar"></div>
+
+      <div id="hook" class="scene" data-layout-allow-overflow>
+        <div class="rate-cmd term">
+          <div class="tl mono">&gt; veridelta run stations_idl.csv stations_python.csv --key station --key obs_date</div>
+        </div>
+        <div class="rate-head"><span>Match rate</span><span id="hook-badge" class="badge orange">FAILED</span></div>
+        <div id="hook-rate" class="rate">0.0%</div>
+        <div id="hook-line" class="rate-line">Every row differs.</div>
+      </div>
+
+      <div id="reveal" class="scene" data-layout-allow-overflow>
+        <div id="vd-logo" class="logo">
+          <div class="symbol"></div>
+          <div class="wordmark"></div>
+        </div>
+        <div id="vd-line">Compare two datasets under <b>rules you declare</b>.</div>
+      </div>
+
+      <div id="rules" class="scene" data-layout-allow-overflow>
+        <div id="rules-body">
+          <div class="rl-row" id="rl-declare">
+            <div class="rl-label">Declare</div>
+            <div class="term"><div class="tl mono">- column_names: [temp]</div><div class="tl mono">  rename_to: temperature_c</div></div>
+          </div>
+          <div class="rl-row" id="rl-suggest">
+            <div class="rl-label">Suggest</div>
+            <div class="term"><div class="tl mono">humidity: relative_tolerance 5e-08,</div><div class="tl mono">  null_values [-999.0] explains 124 of 124</div></div>
+          </div>
+          <div class="rl-row" id="rl-accept">
+            <div class="rl-label">Accept</div>
+            <div class="term"><div class="tl mono">--baseline stations_accepted.json</div><div class="tl mono dim">Accepted:      31</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="pass" class="scene" data-layout-allow-overflow>
+        <div class="rate-cmd term">
+          <div class="tl mono">&gt; veridelta run -c stations_fixed.yaml --baseline stations_accepted.json</div>
+        </div>
+        <div class="rate-head"><span>Match rate</span><span id="pass-badge" class="badge blue">PASSED</span></div>
+        <div id="pass-rate" class="rate">100.0%</div>
+        <div id="pass-line" class="rate-line">Only real bugs fail CI.</div>
+      </div>
+
+      <div id="end" class="scene" data-layout-allow-overflow>
+        <div id="end-logo" class="logo">
+          <div class="symbol"></div>
+          <div class="wordmark"></div>
+        </div>
+        <div id="end-install" class="mono">pip install veridelta</div>
+        <div id="end-url">veridelta.github.io/veridelta</div>
+      </div>
+
+      <!-- Music: Sascha Ende, "Happy Beats / Business Moves, Vol. 1", ende.app, CC BY 4.0. Its drop lands with the logo. -->
+      <audio id="music" data-start="0" data-duration="15" data-media-start="44.77" data-track-index="10" src="assets/music/happy-beats-business-moves-vol-1-by-ende-dot-app.mp3" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.15,"v":0.32},{"t":2.75,"v":0.32},{"t":3.0,"v":0.06},{"t":3.23,"v":0.06},{"t":3.25,"v":0.55},{"t":4.2,"v":0.42},{"t":13.6,"v":0.42},{"t":15,"v":0}]}]}'></audio>
+      <audio id="sfx-fail" data-start="0.3" data-duration="0.183" data-track-index="11" data-volume="0.45" src="assets/sfx/impactSoft_medium_001.ogg"></audio>
+      <audio id="sfx-drop" data-start="3.25" data-duration="1.48" data-track-index="12" data-volume="0.35" src="assets/sfx/impactBell_heavy_000.ogg"></audio>
+      <audio id="sfx-r1" data-start="6.7" data-duration="0.601" data-track-index="13" data-volume="0.25" src="assets/sfx/card-slide-1.ogg"></audio>
+      <audio id="sfx-r2" data-start="7.3" data-duration="0.601" data-track-index="14" data-volume="0.25" src="assets/sfx/card-slide-1.ogg"></audio>
+      <audio id="sfx-r3" data-start="7.9" data-duration="0.601" data-track-index="13" data-volume="0.25" src="assets/sfx/card-slide-1.ogg"></audio>
+      <audio id="sfx-pass" data-start="10.2" data-duration="0.123" data-track-index="11" data-volume="0.35" src="assets/sfx/bong_001.ogg"></audio>
+      <audio id="sfx-end" data-start="12.65" data-duration="0.14" data-track-index="12" data-volume="0.4" src="assets/sfx/impactSoft_medium_003.ogg"></audio>
+    </div>
+
+    <script>
+      // Five scenes, pushed edge to edge: the failed run, the logo, declare suggest accept, the passed
+      // run, and the end card. No voice; the music's drop lands with the logo.
+      const tl = gsap.timeline({ paused: true });
+      const KINDS = {
+        slam: { duration: 0.34, ease: "power3.out", from: { scale: 1.12 } },
+        rise: { duration: 0.42, ease: "power3.out", from: { y: 28 } },
+        pop: { duration: 0.34, ease: "back.out(1.5)", from: { scale: 0.85 } },
+        slide: { duration: 0.45, ease: "power3.out", from: { x: 80 } },
+      };
+      const hit = (target, at, kind) => {
+        const { duration, ease, from } = KINDS[kind];
+        tl.fromTo(target, { ...from, opacity: 0 }, { x: 0, y: 0, scale: 1, opacity: 1, duration, ease }, at);
+      };
+      const push = (from, to, at) => {
+        tl.fromTo(to, { x: 1920, opacity: 1 }, { x: 0, opacity: 1, duration: 0.5, ease: "power3.inOut" }, at);
+        tl.to(from, { x: -1920, duration: 0.5, ease: "power3.inOut" }, at);
+      };
+
+      // The failed run: the hook.
+      hit("#hook-rate", 0.15, "slam");
+      hit("#hook-badge", 0.3, "pop");
+      hit("#hook-line", 0.65, "rise");
+      tl.to("#hook-rate", { scale: 1.03, duration: 2.2, ease: "none" }, 0.5);
+
+      // The logo, alone, on the drop. The hook clears in the hush before it.
+      tl.to("#hook", { opacity: 0, duration: 0.25, ease: "power2.in" }, 2.95);
+      tl.set("#reveal", { opacity: 1 }, 3.2);
+      hit("#vd-logo", 3.25, "pop");
+      hit("#vd-line", 3.75, "rise");
+
+      // Declare, suggest, accept.
+      push("#reveal", "#rules", 6.3);
+      hit("#rl-declare", 6.7, "slide");
+      hit("#rl-suggest", 7.3, "slide");
+      hit("#rl-accept", 7.9, "slide");
+
+      // The passed run, the hook's mirror.
+      push("#rules", "#pass", 9.8);
+      hit("#pass-rate", 10.15, "slam");
+      hit("#pass-badge", 10.2, "pop");
+      hit("#pass-line", 10.55, "rise");
+
+      // The end card.
+      push("#pass", "#end", 12.3);
+      hit("#end-logo", 12.65, "pop");
+      hit("#end-install", 12.95, "rise");
+      hit("#end-url", 13.2, "rise");
+      tl.set({}, {}, 15);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

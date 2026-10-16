@@ -14,3 +14,7 @@ brag/work-*/
 public/music/
 # Voice samples to choose from, made by `npm run voice -- --samples`.
 samples/
+# The 15-second cut: its render, poster, and stills.
+brag-15/brag.mp4
+brag-15/brag.jpg
+brag-15/work/

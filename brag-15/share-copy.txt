@@ -1,0 +1,1 @@
+Every row differs. Which ones matter? Veridelta compares two datasets under rules you declare, so only real bugs fail CI. pip install veridelta
