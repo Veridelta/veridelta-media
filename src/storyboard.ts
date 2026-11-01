@@ -79,7 +79,7 @@ const title = (seconds: number): Scene => ({
 
 // The quick start, recorded for video in a large font, in two clips. The caption times
 // follow the tapes: the configuration shows at 1 second and the first file by 4.25; the
-// summary shows at 1.75 seconds and the exit code at 6.75. No caption names what is not
+// summary shows by 1.9 seconds and the exit code by 6.9. No caption names what is not
 // on screen yet.
 const data: Scene = (() => {
   const seconds = clip("promo-data").seconds;
@@ -105,8 +105,8 @@ const run: Scene = (() => {
     picture: { kind: "clip", clip: "promo-run" },
     seconds,
     captions: [
-      { from: 0, to: 6.75, text: "veridelta run compares them: 1 row added, 1 removed, and 1 changed." },
-      { from: 6.75, to: seconds, text: "The exit code, 1, tells CI that the datasets differ." },
+      { from: 0, to: 7, text: "veridelta run compares them: 1 row added, 1 removed, and 1 changed." },
+      { from: 7, to: seconds, text: "The exit code, 1, tells CI that the datasets differ." },
     ],
     backedBy: `${DOCS}cli/#exit-codes`,
   };
@@ -121,7 +121,7 @@ const report: Scene = {
     {
       from: 0,
       to: 7,
-      text: "veridelta run --html writes a standalone report that opens offline, with changed rows side by side.",
+      text: "veridelta run --html writes a standalone report that opens offline. It leads with the verdict, then each column's drift and rules.",
     },
   ],
   backedBy: `${DOCS}results/#html-report`,

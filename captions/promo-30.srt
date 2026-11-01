@@ -11,13 +11,13 @@ The smallest configuration names a source, a target, and the primary key, id.
 Two exports that should match, with three rows each.
 
 4
-00:00:14,233 --> 00:00:20,983
+00:00:14,233 --> 00:00:21,233
 veridelta run compares them: 1 row added, 1 removed, and 1 changed.
 
 5
-00:00:20,983 --> 00:00:24,967
+00:00:21,233 --> 00:00:24,933
 The exit code, 1, tells CI that the datasets differ.
 
 6
-00:00:24,967 --> 00:00:28,967
+00:00:24,933 --> 00:00:28,933
 pip install veridelta. The docs are at veridelta.github.io/veridelta.
