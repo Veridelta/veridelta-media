@@ -421,7 +421,10 @@ const demo: Scene[] = [
     description: "The HTML report of the baseline run: account 17, south in the legacy file and east in the rewrite.",
     picture: { kind: "screenshot", image: "promo-report", label: "6 · The HTML report" },
     beats: [
-      { say: "The report shows that row side by side. Account 17 is in the south in the old export, and in the east in the rewrite." },
+      {
+        say: "The report shows that row side by side. Account 17 is in the south in the old export, and in the east in the rewrite.",
+        scroll: true,
+      },
       { say: "That is the real bug, one among 40 differences." },
     ],
     backedBy: `${DOCS}results/#html-report`,

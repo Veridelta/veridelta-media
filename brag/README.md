@@ -71,7 +71,7 @@ Link to the demo as https://github.com/Veridelta/veridelta-media/releases/latest
 
 The rules in the [README](../README.md#the-rules) hold here too:
 
-- Every number on screen and in the voice comes from the weather station demo in Veridelta's `demo/promo/`, at commit `b8669bc`, which runs release 0.35.1. The top of every scene says so.
+- Every number on screen and in the voice comes from the weather station demo in Veridelta's `demo/promo/`, at commit `a2776a9`, which runs release 0.42.1. The top of every scene says so.
 - Every terminal card shows lines from a transcript in `public/transcripts/`, unchanged and in order. A line too long for its card wraps at a space.
 - The captions carry every spoken line, word for word.
 - Every other line is the project's own words, or traces to a transcript, Veridelta's docs, or NV5's IDL docs. [brag-plan.md](brag-plan.md#claims-and-their-sources) lists each one with its source.

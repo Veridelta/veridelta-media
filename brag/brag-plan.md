@@ -95,7 +95,7 @@ The tails follow brag's reading floor, held after whatever lands last: about 0.8
 
 ## Claims and their sources
 
-Every spoken line and every line on screen, and where it comes from. The transcripts are Veridelta's `demo/promo/stations-*.txt` at commit `b8669bc`, which the media repository copies to `public/transcripts/`. The data files are Veridelta's `demo/stations_*.csv` at that commit, which `demo/stations.py` writes.
+Every spoken line and every line on screen, and where it comes from. The transcripts are Veridelta's `demo/promo/stations-*.txt` at commit `a2776a9`, which runs release 0.42.1 and which the media repository copies to `public/transcripts/`. The data files are Veridelta's `demo/stations_*.csv` at that commit, which `demo/stations.py` writes. Both are byte for byte the ones at commit `b8669bc`, release 0.35.1, which the demo was first made from.
 
 | Claim | Source |
 | :--- | :--- |
@@ -120,4 +120,4 @@ Every spoken line and every line on screen, and where it comes from. The transcr
 | "Compare two datasets on their primary keys under rules you declare." | `pyproject.toml`'s description, its first clause |
 | "Start with Veridelta's six tutorials.", "Six tutorials at veridelta.github.io/veridelta" | Veridelta's `mkdocs.yml`: the Tutorials section lists six, `examples/01` to `06` |
 | `pip install veridelta` | Veridelta's README |
-| "Veridelta 0.35.1, the weather station demo in demo/promo at commit b8669bc", on every scene but the end card | `public/transcripts/manifest.json`: release `v0.35.1`, commit `b8669bc` |
+| "Veridelta 0.42.1, the weather station demo in demo/promo at commit a2776a9", on every scene but the end card | `public/transcripts/manifest.json`: release `v0.42.1`, commit `a2776a9` |
