@@ -1,7 +1,7 @@
 {
   "source": "https://github.com/Veridelta/veridelta",
-  "release": "v0.27.1",
-  "commit": "6375e5b7f13d4b808b013ff5240f378adbe1658c",
+  "release": "v0.42.1",
+  "commit": "5f180861f51170d797c2994508b2b8250bb0c688",
   "renderedWith": "make demo-video and vhs v0.12.1",
   "clips": [
     {
@@ -10,8 +10,8 @@
       "tape": "demo/crosswalk.tape",
       "width": 900,
       "height": 580,
-      "seconds": 12.84,
-      "sha256": "6bda104d974a141cf22b26686e71c8b357c4c57fab6285819e57bd508d5f8895"
+      "seconds": 12.88,
+      "sha256": "c7a2ae1e1c0e0ece03a8941d31195cc81973ad7e042a267a2f24b1d894f760f6"
     },
     {
       "name": "mcp",
@@ -19,8 +19,71 @@
       "tape": "demo/mcp.tape",
       "width": 900,
       "height": 820,
-      "seconds": 12.56,
-      "sha256": "4c5dbab603a79c9eac2dcca040f329583a250918d8056633c9b81fea7ba218ec"
+      "seconds": 12.8,
+      "sha256": "03158a812beb7ee6354660f2533a4fa256c7565d2af15e944cac8241f11efe97"
+    },
+    {
+      "name": "promo-accounts-baseline",
+      "file": "promo-accounts-baseline.mp4",
+      "tape": "demo/promo/accounts-baseline.tape",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 13.12,
+      "sha256": "92378b7dfe704f8ac1458bbb4d6dd843909ad8f01ab1bdfd8b3cfd51dcb4e039"
+    },
+    {
+      "name": "promo-accounts-crosswalk",
+      "file": "promo-accounts-crosswalk.mp4",
+      "tape": "demo/promo/accounts-crosswalk.tape",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 6.92,
+      "sha256": "197022872ddc5cffb7e45b562e5b96ff5f4dfd7b5f66c0cf23a6611c782808d3"
+    },
+    {
+      "name": "promo-accounts-data",
+      "file": "promo-accounts-data.mp4",
+      "tape": "demo/promo/accounts-data.tape",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 6.64,
+      "sha256": "220a9b4f4b72f4c3bcfac901384317778246e2608f0b0157cbae814d5bd11666"
+    },
+    {
+      "name": "promo-accounts-fixed",
+      "file": "promo-accounts-fixed.mp4",
+      "tape": "demo/promo/accounts-fixed.tape",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 10.76,
+      "sha256": "869f1bc6e53c78deeaa62af64a627124ba0fa4c7fb99ffea1993d4222b5c44ea"
+    },
+    {
+      "name": "promo-accounts-rules",
+      "file": "promo-accounts-rules.mp4",
+      "tape": "demo/promo/accounts-rules.tape",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 9.24,
+      "sha256": "bc57bfbe31fd39ee642acede02eb3c3dcaeeff3c9274590bdb908869704533b4"
+    },
+    {
+      "name": "promo-accounts-run",
+      "file": "promo-accounts-run.mp4",
+      "tape": "demo/promo/accounts-run.tape",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 10.6,
+      "sha256": "43f6055cc7310aaf8a0c849ff5d149b0bd74e9b0ffa25f83c249d6d0939783a0"
+    },
+    {
+      "name": "promo-accounts-suggest",
+      "file": "promo-accounts-suggest.mp4",
+      "tape": "demo/promo/accounts-suggest.tape",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 9.76,
+      "sha256": "2bce9b780596ec297edf29aed0e1ff7f6cfd0c592ab21fd68c23a49f35c8476b"
     },
     {
       "name": "promo-data",
@@ -29,7 +92,7 @@
       "width": 700,
       "height": 780,
       "seconds": 11.24,
-      "sha256": "a0a81945418508cc192dc8ca338885ad6c3c6f7b88fd9591c4a4141fc3a36edd"
+      "sha256": "c32076d124b155e7d187d259ed4352f638ba5befc74962bbccd65a044db4b403"
     },
     {
       "name": "promo-mcp",
@@ -37,8 +100,8 @@
       "tape": "demo/promo/mcp.tape",
       "width": 900,
       "height": 1080,
-      "seconds": 13.52,
-      "sha256": "df2b12c0234151b398c2013d21f865ec10793764a2a021c95fcd3d1fdd798c0c"
+      "seconds": 13.48,
+      "sha256": "2128c525d86fbaaceddcc43bbfa56ce84a3088da06c39e8c85ef831dd98f6f4f"
     },
     {
       "name": "promo-run",
@@ -46,8 +109,62 @@
       "tape": "demo/promo/run.tape",
       "width": 700,
       "height": 1080,
-      "seconds": 10.76,
-      "sha256": "c186086808b11f15c1f1029fae80b547379fe2e4b25cc438dff37923a646e75d"
+      "seconds": 10.72,
+      "sha256": "1588b9231083eaec4f995044fcabce41c89176e9f61cc625113e03cf9b6991aa"
+    },
+    {
+      "name": "promo-stations-baseline",
+      "file": "promo-stations-baseline.mp4",
+      "tape": "demo/promo/stations-baseline.tape",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 13.44,
+      "sha256": "65ec810e0ca4ecab954702988e8e82b8ca74e142318f4163a80523ce3c66eff4"
+    },
+    {
+      "name": "promo-stations-data",
+      "file": "promo-stations-data.mp4",
+      "tape": "demo/promo/stations-data.tape",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 7.32,
+      "sha256": "4b0a4c9fd30f474eac384b7b00e340ffcf66b4f915a8c812340ecd37c625399e"
+    },
+    {
+      "name": "promo-stations-fixed",
+      "file": "promo-stations-fixed.mp4",
+      "tape": "demo/promo/stations-fixed.tape",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 9.92,
+      "sha256": "18960d76a7964f8e920a14cc14f91c71940f923382a224d9913db7058c4be4b9"
+    },
+    {
+      "name": "promo-stations-rules",
+      "file": "promo-stations-rules.mp4",
+      "tape": "demo/promo/stations-rules.tape",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 11.36,
+      "sha256": "5eabec253a6796cea4558f8dd887fa258b3a7256691bdf21e9a5297db2f4febc"
+    },
+    {
+      "name": "promo-stations-run",
+      "file": "promo-stations-run.mp4",
+      "tape": "demo/promo/stations-run.tape",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 9.88,
+      "sha256": "57ad985cd15799a3ecb0c185f614dfaecbb33a754e8b9bb610af11b7ded7d83e"
+    },
+    {
+      "name": "promo-stations-suggest",
+      "file": "promo-stations-suggest.mp4",
+      "tape": "demo/promo/stations-suggest.tape",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 7.36,
+      "sha256": "8ab56ef8c7082506750001956daa23137479555bdc2b375ea6ea5049bc836b15"
     },
     {
       "name": "validate",
@@ -55,8 +172,8 @@
       "tape": "demo/validate.tape",
       "width": 900,
       "height": 440,
-      "seconds": 15.88,
-      "sha256": "c548ce0a4a147619d98c5cc329b41b5d2d4d7ab56eced649ce21a2d57b88cfce"
+      "seconds": 15.96,
+      "sha256": "02bca88274aecf383a9bd19faae9562b876c891f5b37683e1a7e0f6471d82ccf"
     },
     {
       "name": "veridelta",
@@ -64,8 +181,8 @@
       "tape": "demo/veridelta.tape",
       "width": 900,
       "height": 1000,
-      "seconds": 24.72,
-      "sha256": "2eee5bfc56a4a4e51f277594b56f1115b50adddeffb28561c5cf70991f9f9295"
+      "seconds": 24.76,
+      "sha256": "dc6f404350da9b50b9a2d65c51e30d2e83cfc9d501dd0b6b599f1cec63475f9e"
     }
   ],
   "images": [
@@ -75,7 +192,7 @@
       "source": "docs/assets/report-light.png",
       "width": 1280,
       "height": 800,
-      "sha256": "32cc55361ced6376de7d6e6d24a52530a7b29e91b8d076766dda63d9a0c32cb0"
+      "sha256": "75af5b8b36a46ed4523bb08f85dc232d0a183a761cadcc765d6dce1b2ba166fe"
     }
   ]
 }
