@@ -6,8 +6,6 @@ Promotional videos for [Veridelta](https://github.com/Veridelta/veridelta), made
 
 | Cut | Size | Length | Scenes |
 | :--- | :--- | :--- | :--- |
-| `promo-20` | 1920 by 1080 | About 20 seconds | An ad: a question and the docs home's first sentence, the quick start's run, how to install |
-| `promo-square-20` | 1080 by 1080 | About 20 seconds | As `promo-20`, for feeds that crop wide video |
 | `promo-30` | 1920 by 1080 | About 30 seconds | The logo and summary, the quick start's files and run, how to install |
 | `promo-60` | 1920 by 1080 | Under 60 seconds | Those, plus the HTML report, comparison inside the warehouse, and the MCP server |
 | `promo-square-30` | 1080 by 1080 | About 30 seconds | As `promo-30`, for feeds that crop wide video |
