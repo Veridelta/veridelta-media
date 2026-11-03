@@ -1,0 +1,495 @@
+<!doctype html>
+<!-- The template for every shape. ad/shape.mjs writes it to composition/index.html with the
+     shape's size; edit this file, never index.html. -->
+<html lang="en" class="{{SHAPE}}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width={{WIDTH}}, height={{HEIGHT}}" />
+    <title>Veridelta in 20 seconds</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"
+      integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      @font-face {
+        font-family: "Inter";
+        font-weight: 400;
+        src: url("assets/fonts/Inter-Regular.otf") format("opentype");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 600;
+        src: url("assets/fonts/Inter-SemiBold.otf") format("opentype");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 700;
+        src: url("assets/fonts/Inter-Bold.otf") format("opentype");
+      }
+      @font-face {
+        font-family: "DejaVu Sans Mono";
+        font-weight: 400;
+        src: url("assets/fonts/DejaVuSansMono.ttf") format("truetype");
+      }
+      @font-face {
+        font-family: "DejaVu Sans Mono";
+        font-weight: 700;
+        src: url("assets/fonts/DejaVuSansMono-Bold.ttf") format("truetype");
+      }
+
+      /* The logo's colors, as Veridelta's docs and the 60-second demo use them. */
+      :root {
+        --navy: #0d2f5a;
+        --navy-deep: #08213f;
+        --orange: #de5807;
+        --orange-deep: #b24606;
+        --orange-soft: #f39a5c;
+        --blue: #2054b2;
+        --blue-soft: #8fb1f0;
+        --canvas: #f5f7fa;
+        --slate: #3f5068;
+        --code: #e8eef6;
+        --code-dim: #b4c3d6;
+        --cell: #1f4a80;
+
+        --w: {{WIDTH}}px;
+        --h: {{HEIGHT}}px;
+        /* Every shape is 1080 pixels on its short side, so one type scale fits all three; the wide
+           shape gets a little more. */
+        --hero: 112px;
+        --giant: 210px;
+        --pad: 80px;
+      }
+      html.landscape {
+        --hero: 150px;
+        --giant: 260px;
+        --pad: 140px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: var(--w);
+        height: var(--h);
+        overflow: hidden;
+        background: var(--navy);
+        font-family: "Inter", sans-serif;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      .mono {
+        font-family: "DejaVu Sans Mono", monospace;
+      }
+
+      .scene {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 36px;
+        padding: 0 var(--pad);
+        text-align: center;
+        overflow: hidden;
+      }
+      .scene + .scene {
+        opacity: 0;
+      }
+      .dark {
+        background: radial-gradient(ellipse at 50% 40%, var(--navy) 0%, var(--navy-deep) 100%);
+        color: #ffffff;
+      }
+      .light {
+        background: var(--canvas);
+        color: var(--navy);
+      }
+
+      /* The symbol's two colors along the top, over every scene, as the docs header draws them. */
+      #bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 12px;
+        z-index: 5;
+        background: linear-gradient(90deg, var(--orange) 0%, var(--orange) 45%, var(--blue) 55%, var(--blue) 100%);
+      }
+      /* Where every number comes from, on each scene but the last. */
+      .source {
+        position: absolute;
+        top: 34px;
+        right: 48px;
+        font-size: 20px;
+        text-align: right;
+      }
+      .dark .source {
+        color: var(--code-dim);
+      }
+      .light .source {
+        color: var(--slate);
+      }
+
+      .hero {
+        font-size: var(--hero);
+        font-weight: 700;
+        line-height: 1.02;
+        letter-spacing: -0.03em;
+      }
+      .kicker {
+        font-size: 44px;
+        font-weight: 600;
+        color: var(--code-dim);
+      }
+      .orange {
+        color: var(--orange-soft);
+      }
+
+      /* The hook: 124 changed rows, four stations by 31 days. */
+      #h-lines {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+      }
+      #grid {
+        display: grid;
+        grid-template-columns: repeat(31, 22px);
+        gap: 7px 6px;
+        margin-top: 20px;
+      }
+      .cell {
+        display: block;
+        width: 22px;
+        height: 34px;
+        border-radius: 5px;
+        background: var(--cell);
+      }
+
+      /* The question. */
+      #q-fix {
+        font-size: calc(var(--hero) * 1.6);
+      }
+
+      /* Veridelta. */
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
+      .logo .symbol {
+        width: 178px;
+        height: 165px;
+        background: url("assets/images/veridelta-symbol.png") center / contain no-repeat;
+      }
+      .logo .name {
+        font-size: var(--hero);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        color: var(--navy);
+      }
+      #v-rule {
+        font-size: 56px;
+        font-weight: 600;
+        line-height: 1.2;
+        max-width: 900px;
+        color: var(--navy);
+      }
+
+      /* The climb: one match rate, from 0.0% to 100.0%. */
+      #c-head {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+      #c-label {
+        font-size: 44px;
+        font-weight: 600;
+        color: var(--code-dim);
+      }
+      .badges {
+        position: relative;
+        width: 210px;
+        height: 64px;
+      }
+      .badge {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 34px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        border-radius: 12px;
+        color: #ffffff;
+      }
+      #b-failed {
+        background: var(--orange-deep);
+      }
+      #b-passed {
+        background: var(--blue);
+        opacity: 0;
+      }
+      .stack {
+        position: relative;
+        width: 100%;
+        display: grid;
+      }
+      .stack > * {
+        grid-area: 1 / 1;
+      }
+      .num {
+        font-size: var(--giant);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.04em;
+      }
+      #n3 {
+        color: var(--orange-soft);
+      }
+      #n4 {
+        color: var(--blue-soft);
+      }
+      .step {
+        font-size: 64px;
+        font-weight: 700;
+        line-height: 1.1;
+      }
+      .card {
+        background: rgba(255, 255, 255, 0.06);
+        border: 2px solid rgba(255, 255, 255, 0.14);
+        border-radius: 16px;
+        padding: 18px 30px;
+        justify-self: center;
+        text-align: left;
+      }
+      .card div {
+        font-size: 28px;
+        line-height: 44px;
+        color: var(--code);
+        white-space: pre;
+      }
+      #steps,
+      #cards {
+        min-height: 72px;
+      }
+
+      /* What arrives later starts hidden, so the first frame shows only the hook. */
+      #h-changed,
+      #q-fix,
+      #q-or,
+      #v-rule,
+      #l1, #l2, #l3, #l4,
+      #n1, #n2, #n3, #n4,
+      #k1, #k2, #k3, #k4,
+      #e-install,
+      #e-url,
+      #e-credit {
+        opacity: 0;
+      }
+
+      /* The end card. */
+      #e-install {
+        font-size: 48px;
+        font-weight: 700;
+        color: #ffffff;
+        background: var(--navy);
+        padding: 18px 36px;
+        border-radius: 16px;
+      }
+      #e-url {
+        font-size: 44px;
+        font-weight: 600;
+        color: var(--blue);
+      }
+      #e-credit {
+        position: absolute;
+        bottom: 34px;
+        left: 0;
+        right: 0;
+        font-size: 20px;
+        color: var(--slate);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="20"
+      data-width="{{WIDTH}}"
+      data-height="{{HEIGHT}}"
+    >
+      <div id="bar"></div>
+
+      <div id="s-hook" class="scene dark" data-layout-allow-overflow>
+        <div class="source mono">Veridelta 0.42.1 · weather station demo · commit a2776a9</div>
+        <div class="kicker">Ported from IDL to Python.</div>
+        <div id="h-lines">
+          <div id="h-rows" class="hero">124 rows.</div>
+          <div id="h-changed" class="hero orange">124 changed.</div>
+        </div>
+        <div id="grid"></div>
+      </div>
+
+      <div id="s-question" style="opacity: 0" class="scene dark" data-layout-allow-overflow>
+        <div class="source mono">Veridelta 0.42.1 · weather station demo · commit a2776a9</div>
+        <div id="q-fix" class="hero">Fix</div>
+        <div id="q-or" class="hero orange">or corruption?</div>
+      </div>
+
+      <div id="s-veridelta" style="opacity: 0" class="scene light" data-layout-allow-overflow>
+        <div class="source mono">Veridelta 0.42.1 · weather station demo · commit a2776a9</div>
+        <div id="v-logo" class="logo">
+          <div class="symbol"></div>
+          <div class="name">Veridelta</div>
+        </div>
+        <div id="v-rule">Nothing is forgiven unless a rule says so.</div>
+      </div>
+
+      <div id="s-climb" style="opacity: 0" class="scene dark" data-layout-allow-overflow>
+        <div class="source mono">Veridelta 0.42.1 · weather station demo · commit a2776a9</div>
+        <div id="c-head">
+          <div id="c-label">Match rate</div>
+          <div class="badges">
+            <div id="b-failed" class="badge">FAILED</div>
+            <div id="b-passed" class="badge">PASSED</div>
+          </div>
+        </div>
+        <div class="stack" id="nums">
+          <div id="n0" class="num mono">0.0%</div>
+          <div id="n1" class="num mono">71.77%</div>
+          <div id="n2" class="num mono">96.77%</div>
+          <div id="n3" class="num mono">96.77%</div>
+          <div id="n4" class="num mono">100.0%</div>
+        </div>
+        <div class="stack" id="steps">
+          <div id="l1" class="step">Rules you declare</div>
+          <div id="l2" class="step">Drift you accept</div>
+          <div id="l3" class="step orange">The real bug fails CI</div>
+          <div id="l4" class="step">Fixed. Exit code 0.</div>
+        </div>
+        <div class="stack" id="cards">
+          <div id="k0" class="card mono"><div>Status:        FAILED</div><div>Match Rate:    0.0%</div></div>
+          <div id="k1" class="card mono"><div>Status:        FAILED</div><div>Match Rate:    71.77%</div></div>
+          <div id="k2" class="card mono"><div>Match Rate:    96.77%</div><div>Accepted:      31</div></div>
+          <div id="k3" class="card mono"><div>Changed:       4</div><div>exit code: 1</div></div>
+          <div id="k4" class="card mono"><div>Status:        PASSED (Perfect Match)</div><div>exit code: 0</div></div>
+        </div>
+      </div>
+
+      <div id="s-end" style="opacity: 0" class="scene light" data-layout-allow-overflow>
+        <div id="e-logo" class="logo">
+          <div class="symbol"></div>
+          <div class="name">Veridelta</div>
+        </div>
+        <div id="e-install" class="mono">pip install veridelta</div>
+        <div id="e-url">veridelta.github.io/veridelta</div>
+        <div id="e-credit">Music: Sascha Ende, ende.app (CC BY 4.0)</div>
+      </div>
+
+      <audio id="music" data-start="0" data-duration="20" data-track-index="10" data-volume="0.5" data-fade-out="0.8" src="assets/music/happy-beats-business-moves-vol-11-by-ende-dot-app.mp3"></audio>
+      <audio id="sfx-changed" data-start="1.6" data-duration="0.183" data-track-index="11" data-volume="0.55" src="assets/sfx/impact/impactSoft_medium_001.ogg"></audio>
+      <audio id="sfx-fix" data-start="3.7" data-duration="0.14" data-track-index="12" data-volume="0.55" src="assets/sfx/impact/impactSoft_medium_003.ogg"></audio>
+      <audio id="sfx-or" data-start="4.75" data-duration="0.183" data-track-index="11" data-volume="0.55" src="assets/sfx/impact/impactSoft_medium_001.ogg"></audio>
+      <audio id="sfx-veridelta" data-start="6.34" data-duration="1.48" data-track-index="12" data-volume="0.45" src="assets/sfx/impact/impactBell_heavy_000.ogg"></audio>
+      <audio id="sfx-step1" data-start="9.96" data-duration="0.5" data-track-index="13" data-volume="0.35" src="assets/sfx/interface/switch_004.ogg"></audio>
+      <audio id="sfx-step2" data-start="11.6" data-duration="0.5" data-track-index="14" data-volume="0.35" src="assets/sfx/interface/switch_004.ogg"></audio>
+      <audio id="sfx-failed" data-start="13.18" data-duration="0.544" data-track-index="11" data-volume="0.5" src="assets/sfx/impact/impactSoft_heavy_003.ogg"></audio>
+      <audio id="sfx-passed" data-start="14.76" data-duration="0.123" data-track-index="12" data-volume="0.45" src="assets/sfx/interface/bong_001.ogg"></audio>
+      <audio id="sfx-end" data-start="16.86" data-duration="0.14" data-track-index="13" data-volume="0.55" src="assets/sfx/impact/impactSoft_medium_003.ogg"></audio>
+    </div>
+
+    <script>
+      // Times come from brag-plan.md: the music's strong cues and its beat grid carry each change.
+      const tl = gsap.timeline({ paused: true });
+
+      // How a line arrives: a slam lands big and settles, a rise comes up from below.
+      const slam = (target, at, from = 1.18) =>
+        tl.fromTo(target, { scale: from, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.32, ease: "power3.out" }, at);
+      const rise = (target, at, y = 30) =>
+        tl.fromTo(target, { y, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, at);
+      // A hard cut: one scene shows, the one before it hides, on the same frame.
+      const cut = (from, to, at) => {
+        tl.set(to, { opacity: 1 }, at);
+        tl.set(from, { opacity: 0 }, at);
+      };
+      // One state of a stack replaces another: the old one leaves upward as the new one arrives.
+      const swap = (from, to, at) => {
+        if (from) {
+          tl.to(from, { y: -40, opacity: 0, duration: 0.22, ease: "power2.in" }, at);
+        }
+        tl.fromTo(to, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.34, ease: "power3.out" }, at + 0.08);
+      };
+
+      // The 124 cells: four stations by 31 days.
+      const grid = document.getElementById("grid");
+      for (let index = 0; index < 124; index++) {
+        const cell = document.createElement("i");
+        cell.className = "cell";
+        grid.appendChild(cell);
+      }
+
+      // Every element that arrives later starts hidden, so a seek to any frame shows only what has landed.
+
+      // 1. The hook. The first frame already reads; the count lands on the first strong beat.
+      tl.fromTo("#h-rows", { scale: 1.04 }, { scale: 1, duration: 1.2, ease: "power2.out" }, 0);
+      slam("#h-changed", 1.6);
+      tl.to(".cell", { backgroundColor: "#de5807", duration: 0.25, stagger: { each: 0.006, grid: [4, 31], from: "start", axis: "x" } }, 1.6);
+
+      // 2. The question.
+      cut("#s-hook", "#s-question", 3.7);
+      slam("#q-fix", 3.7, 1.25);
+      slam("#q-or", 4.75, 1.2);
+
+      // 3. Veridelta: the light comes on, on a strong beat.
+      cut("#s-question", "#s-veridelta", 6.34);
+      slam("#v-logo", 6.34, 1.12);
+      rise("#v-rule", 7.1);
+
+      // 4. The climb: each step holds at least 1.5 seconds.
+      cut("#s-veridelta", "#s-climb", 9.5);
+      rise("#c-head", 9.5, 20);
+      slam("#n0", 9.5, 1.1);
+      rise("#k0", 9.6, 20);
+      swap("#n0", "#n1", 9.96);
+      swap("#k0", "#k1", 9.96);
+      swap(null, "#l1", 9.96);
+      swap("#n1", "#n2", 11.6);
+      swap("#k1", "#k2", 11.6);
+      swap("#l1", "#l2", 11.6);
+      // FAILED: the number turns orange and the badge punches.
+      swap("#n2", "#n3", 13.18);
+      swap("#k2", "#k3", 13.18);
+      swap("#l2", "#l3", 13.18);
+      tl.fromTo("#b-failed", { scale: 1 }, { scale: 1.18, duration: 0.14, yoyo: true, repeat: 1, ease: "power2.out", immediateRender: false }, 13.18);
+      // PASSED: the fix.
+      swap("#n3", "#n4", 14.76);
+      swap("#k3", "#k4", 14.76);
+      swap("#l3", "#l4", 14.76);
+      tl.set("#b-failed", { opacity: 0 }, 14.76);
+      slam("#b-passed", 14.76, 1.3);
+
+      // 5. The end card.
+      cut("#s-climb", "#s-end", 16.86);
+      slam("#e-logo", 16.86, 1.15);
+      rise("#e-install", 17.4);
+      rise("#e-url", 17.9, 20);
+      tl.to("#e-credit", { opacity: 1, duration: 0.4 }, 17.9);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
