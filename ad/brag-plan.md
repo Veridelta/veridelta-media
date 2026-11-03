@@ -1,6 +1,8 @@
-# Brag plan: Veridelta, the 20-second ad
+# Brag plan: Veridelta, the 24-second ad
 
 Written with [brag](https://github.com/latent-spaces/brag)'s full workflow, at commit `669ab92` (release 0.5.0), with the tone `cinematic`, music only, in three shapes. The material is Veridelta's weather station demo at commit `a2776a9`, which runs release 0.42.1: the same runs the 60-second demo in `brag/` shows.
+
+The first cut was faster: slams on every beat, a bell, five sound effects, and a match rate that changed four times in five seconds. The maintainer found it hard to read and asked for something smoother and simpler. This cut keeps one idea per screen, holds each line well past brag's reading floor, and lets the music carry it alone.
 
 ## What is this app?
 
@@ -8,94 +10,94 @@ A command line tool that compares two datasets on their primary keys and reports
 
 ## The angle
 
-A port must match, and every row differs. That is the drama. The answer is not a feature list: it is one number, the match rate, climbing as the rules explain each difference, until only the real bug is left, and then a fix makes it 100%. The viewer sees what Veridelta does in the climb, by second 15, and the name and install line close it.
+A port must match, and every row differs. Veridelta turns that into one number, the match rate: 0.0% before any rules, 100.0% once the rules are declared and the real bug is fixed. The viewer knows what Veridelta does by second 17, and the end card says where to start.
 
-## Hook (first 3.7 seconds)
+## Hook (first 2 seconds)
 
-On the first frame: "Ported from IDL to Python." over "124 rows.", with 124 cells in a grid, four stations by 31 days. On the music's first strong beat, 1.6 seconds, "124 changed." slams in and every cell turns orange.
+On the first frame: "Ported from IDL to Python." over "124 rows.", with 124 cells in a grid, four stations by 31 days. On the music's first strong beat, 1.567 seconds, "124 changed." rises in and the cells warm to orange in one slow wave.
 
 ## Key moments
 
-- The question, in two slams: "Fix" and "or corruption?"
-- The light comes on: the canvas turns light, the symbol and the name land on a strong beat, then "Nothing is forgiven unless a rule says so."
-- The climb: one giant match rate, 0.0% to 71.77% under "Rules you declare", to 96.77% under "Drift you accept" with 31 rows accepted, then "FAILED" and "The real bug fails CI", then 100.0% and "PASSED" under "Fixed. Exit code 0." Beside it, the run's own summary lines, unchanged.
+- The question, as one line: "Fix or corruption?"
+- The light comes on: the symbol and the name, then "Nothing is forgiven unless a rule says so."
+- Two runs, one number each: 0.0% and FAILED, "Without rules"; then 100.0% and PASSED, "With rules, and the bug fixed".
 
 ## Outro
 
-The symbol and the name, then `pip install veridelta`, then veridelta.github.io/veridelta.
-
-## User flow worth showing
-
-Run, rules, baseline, fix: the four runs of the weather station tapes, as their match rates.
+The symbol and the name, then `pip install veridelta`, then veridelta.github.io/veridelta, one line at a time.
 
 ## Tone
 
 - Preset: cinematic
-- Creative direction: a trailer for a data integrity tool. Short declarative lines, each landing before the next.
-- Interpretation: dark navy scenes for the problem, a flip to the light canvas when Veridelta arrives, huge type, slams on strong beats, and long enough holds to read. Sentence case, as the repository's writing rules ask; the weight comes from size and contrast.
+- Creative direction: a calm trailer for a data integrity tool. One idea per screen, big type, no slams.
+- Interpretation: dark navy for the problem and the runs, the light canvas when Veridelta arrives and at the end. Lines rise 18 pixels and fade in over 0.6 seconds; scenes dip through a 0.35-second fade out and a 0.6-second fade in. Sentence case, as the repository's writing rules ask.
 
 ## Format and duration
 
-Three shapes from one template: landscape 1920 by 1080, square 1080 by 1080, vertical 1080 by 1920. 20 seconds.
+Three shapes from one template: landscape 1920 by 1080, square 1080 by 1080, vertical 1080 by 1920. 24.2 seconds. On a narrow frame the question breaks after "Fix".
 
 ## Visual identity
 
-- Problem scenes: navy `#0d2f5a`, white text, orange `#f39a5c` for what differs, code text `#e8eef6` and `#b4c3d6`
-- Veridelta scenes: canvas `#f5f7fa`, navy text, orange `#b24606`, blue `#2054b2`
+- Problem scenes: navy `#0d2f5a`, white text, orange `#f39a5c` for what differs, light blue `#8fb1f0` for the pass
+- Veridelta scenes: canvas `#f5f7fa`, navy text, blue `#2054b2`
 - Fonts: Inter (Regular, SemiBold, Bold) and DejaVu Sans Mono, as in `public/fonts/`
 - Logo: `public/brand/veridelta-symbol.png`, shown at its own size, since it is 178 by 165 pixels (Veridelta/veridelta#426 asks for SVGs). The name is set in Inter Bold.
 
-## Share copy (draft)
+## Share copy
 
-A port must match one to one, and every row differs. Veridelta compares two datasets under rules you declare, and only the real bug fails CI.
+A port must match one to one, and every row differs. Veridelta compares two datasets under rules you declare, accepts the drift you name, and fails CI on the rest.
 
 ## Audio direction
 
-- Role: cinematic support
+- Role: cinematic support, music alone
 - Music: "Happy Beats / Business Moves, Vol. 11" by Sascha Ende, bundled with brag, CC BY 4.0. 114.84 BPM.
-- Treatment: full from the first frame, a fade in the last 0.8 seconds. The finished mix is set to -16 LUFS, as the 60-second demo's is.
-- Music cue guidance: the preset's strong cues at 1.60, 3.70, 6.34 and 12.65 seconds, and its beat grid at 9.50, 11.60, 13.18, 14.76 and 16.86 seconds, carry the scene changes and the climb's steps.
-- Audio-reactive treatment: none. The media-use skill that extracts per-frame audio is not installed here.
-- SFX: sparse. A soft impact on "124 changed.", on "Fix" and on "or corruption?", a bell when Veridelta lands, a switch on each step of the climb, a heavier impact on FAILED, a bong on PASSED, and a soft impact when the name lands at the end.
-- Restraint: no sound on every line, nothing bright or repeated quickly.
+- Treatment: full from the first frame, fading over the last 1.2 seconds. The finished mix is set to -16 LUFS, as the 60-second demo's is.
+- Sound effects: none. The music carries every change.
+
+## Beats
+
+Every change starts on a beat of the track, on the frame nearest its onset. brag's cue preset gives each beat; an onset detector (spectral flux on the decoded audio) puts each onset 18 to 32 milliseconds before the preset's time, so the changes use the measured onsets, rounded to the frame at 30 frames a second.
+
+| Change | Preset beat | Measured onset | Frame | In the finished files |
+| :--- | :--- | :--- | :--- | :--- |
+| "124 changed." rises | 1.602 s (strong) | 1.573 s | 47, 1.567 s | onset +6.5 ms after the frame |
+| Question | 5.805 s (strong) | 5.782 s | 173, 5.767 s | onset +15.1 ms |
+| Veridelta | 8.963 s (strong) | 8.940 s | 268, 8.933 s | onset +6.4 ms |
+| The rule line | 9.497 s (strong) | 9.468 s | 284, 9.467 s | onset +1.2 ms |
+| 0.0%, FAILED | 13.700 s | 13.677 s | 410, 13.667 s | onset +9.9 ms |
+| 100.0%, PASSED | 16.858 s | 16.834 s | 505, 16.833 s | onset +1.2 ms |
+| End card | 20.538 s | 20.515 s | 615, 20.5 s | onset +14.8 ms |
+| The end | 24.230 s (strong) | 24.201 s | 726, 24.2 s | |
+
+At each scene change the old scene has faded fully out and the new one has not started, so that frame is the emptiest of its neighborhood. In all three renders the emptiest frame is the change's own frame, to the frame. Every onset lands within half a frame, 16.7 milliseconds, of the change it carries.
 
 ## Storyboard
 
-### Scene 1: hook, 0 to 3.7 seconds
+Every line holds at least 1.5 seconds once it has settled, and about 0.4 seconds a word for a sentence.
 
-Navy. "Ported from IDL to Python." in small slate type, "124 rows." in white, and a grid of 124 cells below. On 1.6 seconds, "124 changed." slams in orange, and the cells turn orange left to right.
-Audio: soft impact on the slam.
-Transition: hard cut on the beat.
+### Scene 1: hook, 0 to 5.77 seconds
 
-### Scene 2: question, 3.7 to 6.34 seconds
+Navy. "Ported from IDL to Python." and "124 rows." from the first frame, with 124 cells below. "124 changed." rises in on 1.567 seconds; the cells turn orange in one wave over a second. "124 changed." holds 3.2 seconds once settled.
 
-Navy. "Fix" slams on 3.7 seconds, "or corruption?" on 4.75. Both hold to 6.34.
-Audio: soft impact on each slam.
-Transition: the canvas floods light on the beat.
+### Scene 2: question, 5.77 to 8.93 seconds
 
-### Scene 3: Veridelta, 6.34 to 9.5 seconds
+Navy. "Fix or corruption?" rises in on the beat and holds 2.1 seconds.
 
-Light canvas. The symbol and the name "Veridelta" land on 6.34, with a bell. "Nothing is forgiven unless a rule says so." rises at 7.1 and holds.
-Transition: navy again on 9.5.
+### Scene 3: Veridelta, 8.93 to 13.67 seconds
 
-### Scene 4: the climb, 9.5 to 16.86 seconds
+Light canvas. The symbol and the name rise in on 8.933 seconds. "Nothing is forgiven unless a rule says so." rises in on 9.467 seconds and holds 3.25 seconds.
 
-Navy. "Match rate" above one giant number. Each step holds at least 1.5 seconds:
+### Scene 4: the first run, 13.67 to 16.83 seconds
 
-| From | Number | Label | Summary lines, from the tape |
-| :--- | :--- | :--- | :--- |
-| 9.5 | 0.0% | | `Status:        FAILED`, `Match Rate:    0.0%` |
-| 9.96 | 71.77% | Rules you declare | `Status:        FAILED`, `Match Rate:    71.77%` |
-| 11.6 | 96.77% | Drift you accept | `Match Rate:    96.77%`, `Accepted:      31` |
-| 13.18 | 96.77%, FAILED | The real bug fails CI | `Changed:       4`, `exit code: 1` |
-| 14.76 | 100.0%, PASSED | Fixed. Exit code 0. | `Status:        PASSED (Perfect Match)`, `exit code: 0` |
+Navy. "Match rate" with a FAILED badge, 0.0% in orange, and "Without rules", together. They hold 2.2 seconds.
 
-Audio: a switch on each step, a heavier impact on FAILED, a bong on PASSED.
+### Scene 5: the last run, 16.83 to 20.5 seconds
 
-### Scene 5: outro, 16.86 to 20 seconds
+Navy. "Match rate" with a PASSED badge, 100.0% in light blue, and "With rules, and the bug fixed". They hold 2.7 seconds.
 
-Light canvas. The symbol and "Veridelta" land on 16.86, `pip install veridelta` at 17.4, and veridelta.github.io/veridelta at 17.9. Holds to 20.
-Audio: soft impact on the name, the music fades from 19.2.
+### Scene 6: end card, 20.5 to 24.2 seconds
+
+Light canvas. The symbol and the name on 20.5 seconds, `pip install veridelta` half a second later, veridelta.github.io/veridelta half a second after that, and the music credit. The address holds 2 seconds as the music fades.
 
 ## Claims and their sources
 
@@ -105,13 +107,10 @@ Audio: soft impact on the name, the music fades from 19.2.
 | "124 rows.", "124 changed.", the 124 cells | `public/transcripts/stations-run.txt`: `Source Rows:   124`, `Changed:       124`; four stations by 31 days, as the demo's data has |
 | "Fix or corruption?" | The demo's own question, `brag/brag-plan.md` |
 | "Nothing is forgiven unless a rule says so." | The docs home, https://veridelta.github.io/veridelta/ |
-| 0.0% | `stations-run.txt`: `Match Rate:    0.0%` |
-| 71.77%, "Rules you declare" | `stations-rules.txt`: `Match Rate:    71.77%`; the docs home: "under the rules you declare" |
-| 96.77%, 31 accepted, "Drift you accept" | `stations-baseline.txt`: `Match Rate:    96.77%`, `Accepted:      31`; a baseline accepts named drift, https://veridelta.github.io/veridelta/cli/#accepting-drift |
-| FAILED, 4 changed, exit code 1, "The real bug fails CI" | `stations-baseline.txt`; the docs home: "only the real bug fails CI" |
-| 100.0%, PASSED, exit code 0 | `stations-fixed.txt` |
+| 0.0%, FAILED, "Without rules" | `stations-run.txt`: the first run names files and keys, no rules: `Status:        FAILED`, `Match Rate:    0.0%` |
+| 100.0%, PASSED, "With rules, and the bug fixed" | `stations-fixed.txt`: the rules file, the baseline, and the fixed export: `Status:        PASSED (Perfect Match)`, `Match Rate:    100.0%` |
 | `pip install veridelta`, veridelta.github.io/veridelta | The docs home's install section |
 | "Veridelta 0.42.1, the weather station demo at commit a2776a9", on every scene but the last | `public/transcripts/manifest.json` |
 
-**Music mood:** cinematic, full from the start.
-**Audio summary:** one bed under the whole ad, with a few impacts where a line slams and a bell when Veridelta arrives.
+**Music mood:** cinematic, calm, full from the start.
+**Audio summary:** one bed under the whole ad, no sound effects, fading under the end card.

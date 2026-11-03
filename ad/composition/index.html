@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1920, height=1080" />
-    <title>Veridelta in 20 seconds</title>
+    <title>Veridelta in 24 seconds</title>
     <script
       src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"
       integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2"
@@ -174,9 +174,16 @@
         background: var(--cell);
       }
 
-      /* The question. */
-      #q-fix {
-        font-size: calc(var(--hero) * 1.6);
+      /* The question, one line. */
+      #q-line {
+        max-width: 900px;
+      }
+      html.landscape #q-line {
+        max-width: 1500px;
+      }
+      /* On a narrow frame the question breaks after "Fix", never inside "or corruption?". */
+      html.landscape #q-line .narrow {
+        display: none;
       }
 
       /* Veridelta. */
@@ -204,48 +211,30 @@
         color: var(--navy);
       }
 
-      /* The climb: one match rate, from 0.0% to 100.0%. */
-      #c-head {
+      /* The two runs: the first, and the last. */
+      .result-head {
         display: flex;
         align-items: center;
         gap: 24px;
       }
-      #c-label {
-        font-size: 44px;
+      .result-label {
+        font-size: 48px;
         font-weight: 600;
         color: var(--code-dim);
       }
-      .badges {
-        position: relative;
-        width: 210px;
-        height: 64px;
-      }
       .badge {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 34px;
+        font-size: 36px;
         font-weight: 700;
         letter-spacing: 2px;
-        border-radius: 12px;
         color: #ffffff;
+        padding: 10px 26px;
+        border-radius: 12px;
       }
-      #b-failed {
+      .badge.failed {
         background: var(--orange-deep);
       }
-      #b-passed {
+      .badge.passed {
         background: var(--blue);
-        opacity: 0;
-      }
-      .stack {
-        position: relative;
-        width: 100%;
-        display: grid;
-      }
-      .stack > * {
-        grid-area: 1 / 1;
       }
       .num {
         font-size: var(--giant);
@@ -253,44 +242,30 @@
         line-height: 1;
         letter-spacing: -0.04em;
       }
-      #n3 {
+      #r-before {
         color: var(--orange-soft);
       }
-      #n4 {
+      #r-after {
         color: var(--blue-soft);
       }
       .step {
         font-size: 64px;
         font-weight: 700;
-        line-height: 1.1;
-      }
-      .card {
-        background: rgba(255, 255, 255, 0.06);
-        border: 2px solid rgba(255, 255, 255, 0.14);
-        border-radius: 16px;
-        padding: 18px 30px;
-        justify-self: center;
-        text-align: left;
-      }
-      .card div {
-        font-size: 28px;
-        line-height: 44px;
-        color: var(--code);
-        white-space: pre;
-      }
-      #steps,
-      #cards {
-        min-height: 72px;
+        line-height: 1.15;
       }
 
       /* What arrives later starts hidden, so the first frame shows only the hook. */
       #h-changed,
-      #q-fix,
-      #q-or,
+      #q-line,
+      #v-logo,
       #v-rule,
-      #l1, #l2, #l3, #l4,
-      #n1, #n2, #n3, #n4,
-      #k1, #k2, #k3, #k4,
+      #s-before .result-head,
+      #r-before,
+      #r-before-line,
+      #s-after .result-head,
+      #r-after,
+      #r-after-line,
+      #e-logo,
       #e-install,
       #e-url,
       #e-credit {
@@ -326,7 +301,7 @@
       id="root"
       data-composition-id="main"
       data-start="0"
-      data-duration="20"
+      data-duration="24.2"
       data-width="1920"
       data-height="1080"
     >
@@ -344,8 +319,7 @@
 
       <div id="s-question" style="opacity: 0" class="scene dark" data-layout-allow-overflow>
         <div class="source mono">Veridelta 0.42.1 · weather station demo · commit a2776a9</div>
-        <div id="q-fix" class="hero">Fix</div>
-        <div id="q-or" class="hero orange">or corruption?</div>
+        <div id="q-line" class="hero">Fix <br class="narrow" /><span class="orange">or corruption?</span></div>
       </div>
 
       <div id="s-veridelta" style="opacity: 0" class="scene light" data-layout-allow-overflow>
@@ -357,35 +331,24 @@
         <div id="v-rule">Nothing is forgiven unless a rule says so.</div>
       </div>
 
-      <div id="s-climb" style="opacity: 0" class="scene dark" data-layout-allow-overflow>
+      <div id="s-before" style="opacity: 0" class="scene dark" data-layout-allow-overflow>
         <div class="source mono">Veridelta 0.42.1 · weather station demo · commit a2776a9</div>
-        <div id="c-head">
-          <div id="c-label">Match rate</div>
-          <div class="badges">
-            <div id="b-failed" class="badge">FAILED</div>
-            <div id="b-passed" class="badge">PASSED</div>
-          </div>
+        <div class="result-head">
+          <div class="result-label">Match rate</div>
+          <div class="badge failed">FAILED</div>
         </div>
-        <div class="stack" id="nums">
-          <div id="n0" class="num mono">0.0%</div>
-          <div id="n1" class="num mono">71.77%</div>
-          <div id="n2" class="num mono">96.77%</div>
-          <div id="n3" class="num mono">96.77%</div>
-          <div id="n4" class="num mono">100.0%</div>
+        <div id="r-before" class="num mono">0.0%</div>
+        <div id="r-before-line" class="step">Without rules</div>
+      </div>
+
+      <div id="s-after" style="opacity: 0" class="scene dark" data-layout-allow-overflow>
+        <div class="source mono">Veridelta 0.42.1 · weather station demo · commit a2776a9</div>
+        <div class="result-head">
+          <div class="result-label">Match rate</div>
+          <div class="badge passed">PASSED</div>
         </div>
-        <div class="stack" id="steps">
-          <div id="l1" class="step">Rules you declare</div>
-          <div id="l2" class="step">Drift you accept</div>
-          <div id="l3" class="step orange">The real bug fails CI</div>
-          <div id="l4" class="step">Fixed. Exit code 0.</div>
-        </div>
-        <div class="stack" id="cards">
-          <div id="k0" class="card mono"><div>Status:        FAILED</div><div>Match Rate:    0.0%</div></div>
-          <div id="k1" class="card mono"><div>Status:        FAILED</div><div>Match Rate:    71.77%</div></div>
-          <div id="k2" class="card mono"><div>Match Rate:    96.77%</div><div>Accepted:      31</div></div>
-          <div id="k3" class="card mono"><div>Changed:       4</div><div>exit code: 1</div></div>
-          <div id="k4" class="card mono"><div>Status:        PASSED (Perfect Match)</div><div>exit code: 0</div></div>
-        </div>
+        <div id="r-after" class="num mono">100.0%</div>
+        <div id="r-after-line" class="step">With rules, and the bug fixed</div>
       </div>
 
       <div id="s-end" style="opacity: 0" class="scene light" data-layout-allow-overflow>
@@ -398,38 +361,34 @@
         <div id="e-credit">Music: Sascha Ende, ende.app (CC BY 4.0)</div>
       </div>
 
-      <audio id="music" data-start="0" data-duration="20" data-track-index="10" data-volume="0.5" data-fade-out="0.8" src="assets/music/happy-beats-business-moves-vol-11-by-ende-dot-app.mp3"></audio>
-      <audio id="sfx-changed" data-start="1.6" data-duration="0.183" data-track-index="11" data-volume="0.55" src="assets/sfx/impact/impactSoft_medium_001.ogg"></audio>
-      <audio id="sfx-fix" data-start="3.7" data-duration="0.14" data-track-index="12" data-volume="0.55" src="assets/sfx/impact/impactSoft_medium_003.ogg"></audio>
-      <audio id="sfx-or" data-start="4.75" data-duration="0.183" data-track-index="11" data-volume="0.55" src="assets/sfx/impact/impactSoft_medium_001.ogg"></audio>
-      <audio id="sfx-veridelta" data-start="6.34" data-duration="1.48" data-track-index="12" data-volume="0.45" src="assets/sfx/impact/impactBell_heavy_000.ogg"></audio>
-      <audio id="sfx-step1" data-start="9.96" data-duration="0.5" data-track-index="13" data-volume="0.35" src="assets/sfx/interface/switch_004.ogg"></audio>
-      <audio id="sfx-step2" data-start="11.6" data-duration="0.5" data-track-index="14" data-volume="0.35" src="assets/sfx/interface/switch_004.ogg"></audio>
-      <audio id="sfx-failed" data-start="13.18" data-duration="0.544" data-track-index="11" data-volume="0.5" src="assets/sfx/impact/impactSoft_heavy_003.ogg"></audio>
-      <audio id="sfx-passed" data-start="14.76" data-duration="0.123" data-track-index="12" data-volume="0.45" src="assets/sfx/interface/bong_001.ogg"></audio>
-      <audio id="sfx-end" data-start="16.86" data-duration="0.14" data-track-index="13" data-volume="0.55" src="assets/sfx/impact/impactSoft_medium_003.ogg"></audio>
+      <audio id="music" data-start="0" data-duration="24.2" data-track-index="10" data-volume="0.5" data-fade-out="1.2" src="assets/music/happy-beats-business-moves-vol-11-by-ende-dot-app.mp3"></audio>
     </div>
 
     <script>
-      // Times come from brag-plan.md: the music's strong cues and its beat grid carry each change.
+      // Every change starts on a beat of the music, on the frame nearest the onset measured in the
+      // track (brag-plan.md lists them). Nothing slams: lines rise gently and hold, and scenes pass
+      // through a short dip, the old one fading out before the beat and the new one fading in on it.
+      const FPS = 30;
+      const beat = (frame) => frame / FPS;
+      const B = {
+        changed: beat(47), // 1.567 s
+        question: beat(173), // 5.767 s
+        veridelta: beat(268), // 8.933 s
+        rule: beat(284), // 9.467 s
+        before: beat(410), // 13.667 s
+        after: beat(505), // 16.833 s
+        end: beat(615), // 20.5 s
+        last: beat(726), // 24.2 s
+      };
       const tl = gsap.timeline({ paused: true });
 
-      // How a line arrives: a slam lands big and settles, a rise comes up from below.
-      const slam = (target, at, from = 1.18) =>
-        tl.fromTo(target, { scale: from, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.32, ease: "power3.out" }, at);
-      const rise = (target, at, y = 30) =>
-        tl.fromTo(target, { y, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }, at);
-      // A hard cut: one scene shows, the one before it hides, on the same frame.
-      const cut = (from, to, at) => {
-        tl.set(to, { opacity: 1 }, at);
-        tl.set(from, { opacity: 0 }, at);
-      };
-      // One state of a stack replaces another: the old one leaves upward as the new one arrives.
-      const swap = (from, to, at) => {
-        if (from) {
-          tl.to(from, { y: -40, opacity: 0, duration: 0.22, ease: "power2.in" }, at);
-        }
-        tl.fromTo(to, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.34, ease: "power3.out" }, at + 0.08);
+      // A line arrives: it rises a little and fades in, then holds.
+      const rise = (target, at, y = 18) =>
+        tl.fromTo(target, { y, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, at);
+      // A scene change: the old scene fades out just before the beat, the new one fades in on it.
+      const dip = (from, to, at) => {
+        tl.to(from, { opacity: 0, duration: 0.35, ease: "power1.in" }, at - 0.35);
+        tl.fromTo(to, { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power1.out" }, at);
       };
 
       // The 124 cells: four stations by 31 days.
@@ -440,52 +399,36 @@
         grid.appendChild(cell);
       }
 
-      // Every element that arrives later starts hidden, so a seek to any frame shows only what has landed.
+      // 1. The hook. The first frame already reads; the count arrives on the first strong beat, and
+      // the cells warm to orange in one slow wave.
+      rise("#h-changed", B.changed);
+      tl.to(".cell", { backgroundColor: "#de5807", duration: 0.6, ease: "power1.out", stagger: { each: 0.012, grid: [4, 31], from: "start", axis: "x" } }, B.changed);
 
-      // 1. The hook. The first frame already reads; the count lands on the first strong beat.
-      tl.fromTo("#h-rows", { scale: 1.04 }, { scale: 1, duration: 1.2, ease: "power2.out" }, 0);
-      slam("#h-changed", 1.6);
-      tl.to(".cell", { backgroundColor: "#de5807", duration: 0.25, stagger: { each: 0.006, grid: [4, 31], from: "start", axis: "x" } }, 1.6);
+      // 2. The question, as one line.
+      dip("#s-hook", "#s-question", B.question);
+      rise("#q-line", B.question);
 
-      // 2. The question.
-      cut("#s-hook", "#s-question", 3.7);
-      slam("#q-fix", 3.7, 1.25);
-      slam("#q-or", 4.75, 1.2);
+      // 3. Veridelta: the light comes on, and the rule follows on the next strong beat.
+      dip("#s-question", "#s-veridelta", B.veridelta);
+      rise("#v-logo", B.veridelta, 12);
+      rise("#v-rule", B.rule);
 
-      // 3. Veridelta: the light comes on, on a strong beat.
-      cut("#s-question", "#s-veridelta", 6.34);
-      slam("#v-logo", 6.34, 1.12);
-      rise("#v-rule", 7.1);
+      // 4. The first run, without rules.
+      dip("#s-veridelta", "#s-before", B.before);
+      rise(["#s-before .result-head", "#r-before"], B.before, 14);
+      rise("#r-before-line", B.before + 0.15);
 
-      // 4. The climb: each step holds at least 1.5 seconds.
-      cut("#s-veridelta", "#s-climb", 9.5);
-      rise("#c-head", 9.5, 20);
-      slam("#n0", 9.5, 1.1);
-      rise("#k0", 9.6, 20);
-      swap("#n0", "#n1", 9.96);
-      swap("#k0", "#k1", 9.96);
-      swap(null, "#l1", 9.96);
-      swap("#n1", "#n2", 11.6);
-      swap("#k1", "#k2", 11.6);
-      swap("#l1", "#l2", 11.6);
-      // FAILED: the number turns orange and the badge punches.
-      swap("#n2", "#n3", 13.18);
-      swap("#k2", "#k3", 13.18);
-      swap("#l2", "#l3", 13.18);
-      tl.fromTo("#b-failed", { scale: 1 }, { scale: 1.18, duration: 0.14, yoyo: true, repeat: 1, ease: "power2.out", immediateRender: false }, 13.18);
-      // PASSED: the fix.
-      swap("#n3", "#n4", 14.76);
-      swap("#k3", "#k4", 14.76);
-      swap("#l3", "#l4", 14.76);
-      tl.set("#b-failed", { opacity: 0 }, 14.76);
-      slam("#b-passed", 14.76, 1.3);
+      // 5. The last run: the rules, the accepted drift, and the fixed export.
+      dip("#s-before", "#s-after", B.after);
+      rise(["#s-after .result-head", "#r-after"], B.after, 14);
+      rise("#r-after-line", B.after + 0.15);
 
-      // 5. The end card.
-      cut("#s-climb", "#s-end", 16.86);
-      slam("#e-logo", 16.86, 1.15);
-      rise("#e-install", 17.4);
-      rise("#e-url", 17.9, 20);
-      tl.to("#e-credit", { opacity: 1, duration: 0.4 }, 17.9);
+      // 6. The end card, one line at a time.
+      dip("#s-after", "#s-end", B.end);
+      rise("#e-logo", B.end, 12);
+      rise("#e-install", B.end + 0.55);
+      rise("#e-url", B.end + 1.1);
+      tl.to("#e-credit", { opacity: 1, duration: 0.6 }, B.end + 1.1);
 
       window.__timelines = window.__timelines || {};
       window.__timelines["main"] = tl;

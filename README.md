@@ -14,7 +14,7 @@ Promotional videos for [Veridelta](https://github.com/Veridelta/veridelta), made
 | The demo, in [brag/](brag/README.md) | 1920 by 1080 | 60 seconds | A narrated pitch, the problem first: Maya ports a weather pipeline from IDL to Python, and every row differs. Veridelta's rules, `suggest`, and a baseline leave only the real bug, which fails CI, the fixed port passes at 100.0%, and it ends on the six tutorials |
 | `demo-120` | 1920 by 1080 | About three minutes | The walkthrough, a narrated story on two CSV files: Sam checks the rewrite of a nightly export with the first run, how Veridelta decides, `suggest`, the rules and their limits, a baseline, the report, the GitHub Action's comment on a pull request, and the fixed export passing, then where else it runs and where the project stands |
 
-The ad, in [ad/](ad/README.md), is a cinematic 20 seconds with music and no voice, in landscape, square, and vertical shapes. It is a Hyperframes project made with brag, as the demo is.
+The ad, in [ad/](ad/README.md), is a calm, cinematic 24 seconds with music and no voice, in landscape, square, and vertical shapes. It is a Hyperframes project made with brag, as the demo is.
 
 The demo is a [Hyperframes](https://hyperframes.heygen.com/) project made with [brag](https://github.com/latent-spaces/brag), not a Remotion cut. [brag/README.md](brag/README.md) says how it was made and how to render it.
 

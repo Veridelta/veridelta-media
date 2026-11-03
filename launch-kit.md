@@ -22,7 +22,7 @@ Porting a pipeline, every row differed. Float precision, a renamed column, a fix
 https://veridelta.github.io/veridelta/
 ```
 
-With the 20-second ad, `ad/ad-landscape.mp4`, `ad/ad-square.mp4`, or `ad/ad-vertical.mp4`, as `ad/share-copy.txt` has it:
+With the 24-second ad, `ad/ad-landscape.mp4`, `ad/ad-square.mp4`, or `ad/ad-vertical.mp4`, as `ad/share-copy.txt` has it:
 
 ```text
 A port must match one to one, and every row differs. Veridelta compares two datasets under rules you declare, accepts the drift you name, and fails CI on the rest.
@@ -61,9 +61,9 @@ The demo:
 
 > Maya's weather station pipeline, IDL to Python, which must match one to one. The first run fails at a match rate of 0.0%: 124 rows, 124 changed. Why does every row differ? 91.900002 became 91.9, temp became temperature_c, and S3's pressure went from 998.6 to 1010.7, a fix made on purpose. A grid of 124 changed rows asks: fix or corruption? Then the Veridelta logo: two datasets, rules you declare. Nothing is forgiven unless a rule says so. Three cards: declare the rename, let veridelta suggest explain 124 of 124 rows, and accept 31 rows with a baseline. What is left is real: four readings lost their minus sign, and the run fails with exit code 1. The fixed port passes at 100.0%, exit code 0. It ends on the logo, the summary, pip install veridelta, and six tutorials at the docs address. It is narrated, with captions.
 
-The 20-second ad:
+The 24-second ad:
 
-> Ported from IDL to Python: 124 rows, 124 changed, as a grid of 124 cells turns orange. Fix or corruption? Then the Veridelta logo: nothing is forgiven unless a rule says so. One match rate climbs: 71.77% under rules you declare, 96.77% with 31 rows accepted, then FAILED, as the real bug fails CI with exit code 1, then 100.0% and PASSED once it is fixed, exit code 0. It ends on pip install veridelta and the docs address. Music, no voice.
+> Ported from IDL to Python: 124 rows, 124 changed, as a grid of 124 cells turns orange. Fix or corruption? Then the Veridelta logo: nothing is forgiven unless a rule says so. The first run: match rate 0.0%, FAILED, without rules. The last: 100.0%, PASSED, with rules and the bug fixed. It ends on pip install veridelta and the docs address. Music, no voice.
 
 `promo-30` and `promo-square-30`:
 
@@ -84,9 +84,9 @@ The link preview card, `docs/assets/social-card.png` in the Veridelta repository
 | `brag/brag.mp4` | 1920 by 1080, 60 seconds | 16:9 | The first video anyone sees: a release, a README, a post |
 | `brag/brag-inline.mp4` | 1280 by 720, 60 seconds, under 10 MB | 16:9 | A release description, which plays a video under 10 MB inline |
 | `brag/demo.srt` | | | The demo's captions, beside the video on a release |
-| `ad/ad-landscape.mp4` | 1920 by 1080, 20 seconds | 16:9 | The ad, made with brag: a wide player, a README, YouTube |
-| `ad/ad-square.mp4` | 1080 by 1080, 20 seconds | 1:1 | The ad, for a feed that crops wide video |
-| `ad/ad-vertical.mp4` | 1080 by 1920, 20 seconds | 9:16 | The ad, for Reels, Shorts, TikTok, and phones |
+| `ad/ad-landscape.mp4` | 1920 by 1080, 24 seconds | 16:9 | The ad, made with brag: a wide player, a README, YouTube |
+| `ad/ad-square.mp4` | 1080 by 1080, 24 seconds | 1:1 | The ad, for a feed that crops wide video |
+| `ad/ad-vertical.mp4` | 1080 by 1920, 24 seconds | 9:16 | The ad, for Reels, Shorts, TikTok, and phones |
 | `ad/ad-*.jpg` | One per shape | | The ad's poster, also its first frame, for a site that takes a custom thumbnail |
 | `renders/promo-20.mp4` | 1920 by 1080, about 20 seconds | 16:9 | An ad: says what Veridelta does in the first 4 seconds and shows a run by 15 |
 | `renders/promo-square-20.mp4` | 1080 by 1080, about 20 seconds | 1:1 | The same ad, for a feed that crops wide video |
