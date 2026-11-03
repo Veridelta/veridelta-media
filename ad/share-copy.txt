@@ -1,0 +1,3 @@
+Your migration is done. Does the data match? Veridelta pairs every row by its key, your rules forgive the noise, and only the real bug fails CI.
+
+https://veridelta.github.io/veridelta/

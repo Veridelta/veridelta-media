@@ -9,6 +9,11 @@ brag/brag.jpg
 # What Hyperframes writes while it renders, and removes when it is done.
 brag/.brag.raw.hf-transaction-*/
 brag/work-*/
+ad/ad-*.mp4
+ad/ad-*.raw.mp4
+ad/ad-*.jpg
+ad/.ad-*.raw.hf-transaction-*/
+ad/work-*/
 
 # Music under a narrated cut, which its license may not let this repository share.
 public/music/

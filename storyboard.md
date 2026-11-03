@@ -6,26 +6,6 @@ Every terminal recording and the report screenshot come from Veridelta commit `5
 
 The narrated cut sets in type the transcripts of Veridelta commit `a2776a9`, whose package is v0.42.1's, and shows the HTML report of the run its last tape types and the CI guide's screenshot of the GitHub Action's pull request comment. `public/transcripts/manifest.json` holds each file's tape, its steps, and its checksum. Its voice is gemini (Orus), and its subtitles are the voice's lines, word for word.
 
-## promo-20: 20 seconds, 1920 by 1080, an ad
-
-19.7 seconds, with subtitles in `captions/promo-20.srt`.
-
-| Time | Scene | Picture | Captions | Backed by |
-| :--- | :--- | :--- | :--- | :--- |
-| 0:00.0 to 0:04.0 | hook | A card in the logo's colors: a question, and the first sentence of the docs home. | 0:00.0 Veridelta compares two datasets on their primary keys and reports every row that differs under the rules you declare. | [veridelta.github.io/veridelta/](https://veridelta.github.io/veridelta/) |
-| 0:04.0 to 0:14.7 | run | The quick start's run, recorded whole for video: `veridelta run -q`, its summary, and the exit code. | 0:04.0 veridelta run compares them: 1 row added, 1 removed, and 1 changed.<br>0:11.0 The exit code, 1, tells CI that the datasets differ. | [veridelta.github.io/veridelta/cli/#exit-codes](https://veridelta.github.io/veridelta/cli/#exit-codes) |
-| 0:14.7 to 0:19.7 | install | The wordmark, the install command, and the docs address. | 0:14.7 pip install veridelta. The docs are at veridelta.github.io/veridelta. | [veridelta.github.io/veridelta/#install](https://veridelta.github.io/veridelta/#install) |
-
-## promo-square-20: 20 seconds, 1080 by 1080, an ad for social feeds
-
-19.7 seconds, with subtitles in `captions/promo-square-20.srt`.
-
-| Time | Scene | Picture | Captions | Backed by |
-| :--- | :--- | :--- | :--- | :--- |
-| 0:00.0 to 0:04.0 | hook | A card in the logo's colors: a question, and the first sentence of the docs home. | 0:00.0 Veridelta compares two datasets on their primary keys and reports every row that differs under the rules you declare. | [veridelta.github.io/veridelta/](https://veridelta.github.io/veridelta/) |
-| 0:04.0 to 0:14.7 | run | The quick start's run, recorded whole for video: `veridelta run -q`, its summary, and the exit code. | 0:04.0 veridelta run compares them: 1 row added, 1 removed, and 1 changed.<br>0:11.0 The exit code, 1, tells CI that the datasets differ. | [veridelta.github.io/veridelta/cli/#exit-codes](https://veridelta.github.io/veridelta/cli/#exit-codes) |
-| 0:14.7 to 0:19.7 | install | The wordmark, the install command, and the docs address. | 0:14.7 pip install veridelta. The docs are at veridelta.github.io/veridelta. | [veridelta.github.io/veridelta/#install](https://veridelta.github.io/veridelta/#install) |
-
 ## promo-30: 30 seconds, 1920 by 1080
 
 28.9 seconds, with subtitles in `captions/promo-30.srt`.

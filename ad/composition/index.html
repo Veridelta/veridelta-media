@@ -1,0 +1,507 @@
+<!doctype html>
+<!-- Written by ad/shape.mjs from template.html for the landscape shape. Edit template.html. -->
+<html lang="en" class="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Does the data match?</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"
+      integrity="sha384-sG0Hv1tP1lZCk9KQmrIbY/XNwi+OY84GQqhMscbnsoBFqAz8KNCil1kvfL3Hbbk2"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      @font-face {
+        font-family: "Inter";
+        font-weight: 400;
+        src: url("assets/fonts/Inter-Regular.otf") format("opentype");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 600;
+        src: url("assets/fonts/Inter-SemiBold.otf") format("opentype");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 700;
+        src: url("assets/fonts/Inter-Bold.otf") format("opentype");
+      }
+      @font-face {
+        font-family: "DejaVu Sans Mono";
+        font-weight: 400;
+        src: url("assets/fonts/DejaVuSansMono.ttf") format("truetype");
+      }
+      @font-face {
+        font-family: "DejaVu Sans Mono";
+        font-weight: 700;
+        src: url("assets/fonts/DejaVuSansMono-Bold.ttf") format("truetype");
+      }
+
+      /* The logo's colors, as Veridelta's docs use them. */
+      :root {
+        --navy: #0d2f5a;
+        --navy-deep: #08213f;
+        --orange: #de5807;
+        --orange-deep: #b24606;
+        --orange-soft: #f39a5c;
+        --blue: #2054b2;
+        --blue-soft: #8fb1f0;
+        --canvas: #f5f7fa;
+        --slate: #3f5068;
+        --code: #e8eef6;
+        --code-dim: #b4c3d6;
+        --cell: #2b5d99;
+
+        --w: 1920px;
+        --h: 1080px;
+        /* Every shape is 1080 pixels on its short side, so one type scale fits all three. The
+           tables grow where the frame has room. */
+        --line: 76px;
+        --stage: 1.25;
+        --name: 112px;
+      }
+      html.landscape {
+        --line: 84px;
+        --stage: 1.2;
+        --name: 140px;
+      }
+      html.vertical {
+        --stage: 1.45;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: var(--w);
+        height: var(--h);
+        overflow: hidden;
+        background: var(--navy-deep);
+        font-family: "Inter", sans-serif;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      .mono {
+        font-family: "DejaVu Sans Mono", monospace;
+      }
+
+      .scene {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 64px;
+        padding: 0 80px;
+        text-align: center;
+        overflow: hidden;
+      }
+      .dark {
+        background: radial-gradient(ellipse at 50% 45%, var(--navy) 0%, var(--navy-deep) 100%);
+        color: #ffffff;
+      }
+      .light {
+        background: var(--canvas);
+        color: var(--navy);
+      }
+      html.vertical .scene {
+        gap: 110px;
+      }
+
+      /* The symbol's two colors along the top, as the docs header draws them. */
+      #bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 12px;
+        z-index: 5;
+        background: linear-gradient(90deg, var(--orange) 0%, var(--orange) 45%, var(--blue) 55%, var(--blue) 100%);
+      }
+
+      /* One line at a time above the tables; each takes the same place. */
+      .stack {
+        display: grid;
+        justify-items: center;
+        align-items: center;
+      }
+      .stack > * {
+        grid-area: 1 / 1;
+      }
+      #lines {
+        min-height: calc(var(--line) * 2.3);
+        width: 100%;
+      }
+      .line {
+        font-size: var(--line);
+        font-weight: 700;
+        line-height: 1.12;
+        letter-spacing: -0.02em;
+        max-width: 920px;
+      }
+      html.landscape .line {
+        max-width: 1500px;
+      }
+      /* On a narrow frame a line breaks where its sense does. */
+      html.landscape .line .narrow {
+        display: none;
+      }
+      .line .accent {
+        color: var(--orange-soft);
+      }
+      .line .pass {
+        color: var(--blue-soft);
+      }
+
+      /* The tables: two datasets, eight rows each, a key and three values a row. */
+      #stage-box {
+        width: calc(620px * var(--stage));
+        height: calc(400px * var(--stage));
+        position: relative;
+      }
+      #stage {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 620px;
+        height: 400px;
+        transform: scale(var(--stage));
+        transform-origin: 0 0;
+      }
+      .table {
+        position: absolute;
+        top: 0;
+        width: 260px;
+        height: 400px;
+      }
+      #t-before {
+        left: 0;
+      }
+      #t-after {
+        left: 360px;
+      }
+      .t-label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 260px;
+        font-size: 24px;
+        color: var(--code-dim);
+        text-align: left;
+        letter-spacing: 1px;
+      }
+      .row {
+        position: absolute;
+        left: 0;
+        display: flex;
+        gap: 8px;
+        height: 34px;
+      }
+      .key {
+        width: 44px;
+        height: 34px;
+        line-height: 34px;
+        font-size: 20px;
+        color: var(--code-dim);
+        text-align: center;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .cell {
+        position: relative;
+        width: 64px;
+        height: 34px;
+        border-radius: 6px;
+        background: var(--cell);
+      }
+      .glow,
+      .ok {
+        position: absolute;
+        inset: 0;
+        border-radius: 6px;
+        opacity: 0;
+      }
+      .glow {
+        background: var(--orange);
+        box-shadow: 0 0 22px 4px rgba(243, 154, 92, 0.75);
+      }
+      .ok {
+        background: var(--blue);
+        box-shadow: 0 0 22px 4px rgba(143, 177, 240, 0.6);
+      }
+
+      /* Below the tables: the rules, then the CI result, one at a time. */
+      #slot {
+        min-height: 72px;
+      }
+      #rules {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 18px;
+      }
+      .chip {
+        font-size: 28px;
+        color: var(--code);
+        padding: 12px 22px;
+        border: 2px solid rgba(255, 255, 255, 0.22);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .ci {
+        font-size: 34px;
+        font-weight: 700;
+        color: #ffffff;
+        padding: 14px 30px;
+        border-radius: 14px;
+      }
+      #ci-fail {
+        background: var(--orange-deep);
+      }
+      #ci-pass {
+        background: var(--blue);
+      }
+
+      /* The end card. */
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
+      .logo .symbol {
+        width: 178px;
+        height: 165px;
+        background: url("assets/images/veridelta-symbol.png") center / contain no-repeat;
+      }
+      .logo .name {
+        font-size: var(--name);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        color: var(--navy);
+      }
+      #e-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 36px;
+      }
+      #e-install {
+        font-size: 48px;
+        font-weight: 700;
+        color: #ffffff;
+        background: var(--navy);
+        padding: 18px 36px;
+        border-radius: 16px;
+      }
+      #e-url {
+        font-size: 44px;
+        font-weight: 600;
+        color: var(--blue);
+      }
+      #e-credit {
+        position: absolute;
+        bottom: 34px;
+        left: 0;
+        right: 0;
+        font-size: 20px;
+        color: var(--slate);
+      }
+
+      /* What arrives later starts hidden, so the first frame shows only the hook. */
+      #l2,
+      #l3,
+      #l4,
+      #l5,
+      #l6,
+      #rules,
+      #ci-fail,
+      #ci-pass,
+      #e-logo,
+      #e-install,
+      #e-url,
+      #e-credit {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="24.733"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="bar"></div>
+
+      <div id="s-data" class="scene dark" data-layout-allow-overflow>
+        <div id="lines" class="stack">
+          <div id="l-hook" class="line">
+            <div id="l1">Your migration is done.</div>
+            <div id="l2" class="accent">Does the data match?</div>
+          </div>
+          <div id="l3" class="line">Veridelta pairs every row by its key.</div>
+          <div id="l4" class="line">Your rules forgive <br class="narrow" />the noise.</div>
+          <div id="l5" class="line">The real bug <span class="accent">fails CI.</span></div>
+          <div id="l6" class="line">Fix it, and <span class="pass">CI passes.</span></div>
+        </div>
+        <div id="stage-box">
+          <!-- Rows pass each other as they pair, on purpose. -->
+          <div id="stage" data-layout-allow-overlap>
+            <div id="t-before" class="table"><div class="t-label mono">Before</div></div>
+            <div id="t-after" class="table"><div class="t-label mono">After</div></div>
+          </div>
+        </div>
+        <div id="slot" class="stack">
+          <div id="rules">
+            <div class="chip mono">absolute_tolerance: 0.01</div>
+            <div class="chip mono">case_insensitive: true</div>
+          </div>
+          <div id="ci-fail" class="ci">✕ CI · exit code 1</div>
+          <div id="ci-pass" class="ci">✓ CI · exit code 0</div>
+        </div>
+      </div>
+
+      <div id="s-end" style="opacity: 0" class="scene light" data-layout-allow-overflow>
+        <div id="e-body">
+          <div id="e-logo" class="logo">
+            <div class="symbol"></div>
+            <div class="name">Veridelta</div>
+          </div>
+          <div id="e-install" class="mono">pip install veridelta</div>
+          <div id="e-url">veridelta.github.io/veridelta</div>
+        </div>
+        <div id="e-credit">Music: Sascha Ende, ende.app (CC BY 4.0)</div>
+      </div>
+
+      <audio id="music" data-start="0" data-duration="24.733" data-track-index="10" data-volume="0.5" data-fade-out="1.2" src="assets/music/happy-beats-business-moves-vol-11-by-ende-dot-app.mp3"></audio>
+    </div>
+
+    <script>
+      // Every change starts on a beat of the music, on the frame nearest the onset measured in the
+      // track; brag-plan.md lists them. Nothing slams: lines rise gently and hold, the tables glide.
+      const FPS = 30;
+      const at = (frame) => frame / FPS;
+      const B = {
+        question: at(47), //   1.567 s
+        pair: at(173), //      5.767 s, the tables slide together
+        pairLine: at(189), //  6.3 s
+        glow: at(220), //      7.333 s, the differences light up
+        rules: at(347), //     11.567 s
+        chips: at(363), //     12.1 s
+        tolerance: at(379), // 12.633 s
+        caseRule: at(394), //  13.133 s
+        bug: at(458), //       15.267 s
+        fail: at(474), //      15.8 s
+        fix: at(568), //       18.933 s
+        pass: at(584), //      19.467 s
+        end: at(663), //       22.1 s
+        url: at(679), //       22.633 s
+      };
+      const tl = gsap.timeline({ paused: true });
+
+      // A line arrives: it rises a little and fades in, then holds.
+      const rise = (target, when, y = 18) =>
+        tl.fromTo(target, { y, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, when);
+      // A line leaves: it fades out just before the beat the next one arrives on.
+      const leave = (target, when) => tl.to(target, { opacity: 0, duration: 0.35, ease: "power1.in" }, when - 0.35);
+      // Fades start moving on their beat and settle softly, so the change shows on the beat itself.
+      const fadeIn = (target, when, duration = 0.6) =>
+        tl.fromTo(target, { opacity: 0 }, { opacity: 1, duration, ease: "power2.out" }, when);
+      const fadeOut = (target, when, duration = 0.6) => tl.to(target, { opacity: 0, duration, ease: "power2.out" }, when);
+
+      // The tables. Four rows after the change come out swapped in pairs; pairing puts each beside
+      // the row with its key. Five pairs differ: four are noise a rule explains, one is a real bug.
+      const KEYS = [1, 2, 3, 4, 5, 6, 7, 8];
+      const SHUFFLED = [1, 3, 2, 4, 5, 7, 6, 8];
+      const DIFFERS = { 2: 1, 4: 2, 5: 0, 6: 2, 7: 1 }; // key: which value differs
+      const TOLERANCE = [2, 5];
+      const CASE = [4, 7];
+      const BUG = 6;
+      const rowY = (index) => 46 + index * 44;
+      const makeRow = (table, key, index, side) => {
+        const row = document.createElement("div");
+        row.className = "row";
+        row.setAttribute("data-layout-allow-overlap", "");
+        row.id = `${side}-${key}`;
+        row.style.top = `${rowY(index)}px`;
+        row.innerHTML = `<div class="key mono">${key}</div>` + [0, 1, 2].map((value) => `<div class="cell" id="${side}-${key}-${value}"><i class="glow"></i><i class="ok"></i></div>`).join("");
+        table.appendChild(row);
+      };
+      KEYS.forEach((key, index) => makeRow(document.getElementById("t-before"), key, index, "b"));
+      SHUFFLED.forEach((key, index) => makeRow(document.getElementById("t-after"), key, index, "a"));
+
+      // 1. The hook: two tables, apart, and the question on the first strong beat.
+      // The first line stays with the question, and both leave together.
+      rise("#l2", B.question);
+
+      // 2. Pairing: the tables glide together and each row of the new data finds its key.
+      leave("#l-hook", B.pair);
+      // The new table stops 24 pixels to the right of the old one, so each pair reads as one row.
+      tl.to("#t-after", { x: -76, duration: 1.4, ease: "power2.inOut" }, B.pair);
+      tl.to("#t-before .t-label", { opacity: 0, duration: 0.5 }, B.pair);
+      tl.to("#t-after .t-label", { opacity: 0, duration: 0.5 }, B.pair);
+      // Two pairs of rows trade places. Each pair passes side by side, one a little to the left and
+      // one a little to the right, faded while they pass, so the swap reads as one soft glide.
+      SHUFFLED.forEach((key, index) => {
+        const dy = rowY(KEYS.indexOf(key)) - rowY(index);
+        if (dy === 0) {
+          return;
+        }
+        const lane = dy > 0 ? 48 : -48;
+        tl.to(`#a-${key}`, { keyframes: { x: [0, lane, lane, 0], y: [0, 0, dy, dy], opacity: [1, 0.35, 0.35, 1], ease: "none" }, duration: 1.4, ease: "power2.inOut" }, B.pair);
+      });
+      rise("#l3", B.pairLine);
+      // Matches settle quietly, their values dimmed and their keys still readable; differences glow.
+      KEYS.filter((key) => !(key in DIFFERS)).forEach((key) => {
+        tl.to([`#b-${key} .cell`, `#a-${key} .cell`], { opacity: 0.45, duration: 0.8, ease: "power2.out" }, B.glow);
+      });
+      Object.entries(DIFFERS).forEach(([key, value]) => fadeIn(`#a-${key}-${value} .glow`, B.glow, 0.8));
+
+      // 3. The rules absorb the noise, two kinds, each on a beat.
+      leave("#l3", B.rules);
+      rise("#l4", B.rules);
+      rise("#rules", B.chips, 14);
+      [[TOLERANCE, B.tolerance], [CASE, B.caseRule]].forEach(([keys, when]) => {
+        keys.forEach((key) => {
+          fadeOut(`#a-${key}-${DIFFERS[key]} .glow`, when, 0.8);
+          tl.to([`#b-${key} .cell`, `#a-${key} .cell`], { opacity: 0.45, duration: 0.8, ease: "power2.out" }, when);
+        });
+      });
+
+      // 4. One real bug is left, and CI fails on it.
+      leave(["#l4", "#rules"], B.bug);
+      rise("#l5", B.bug);
+      rise("#ci-fail", B.fail, 14);
+
+      // 5. The fix: the cell matches, the row settles, CI passes.
+      leave("#l5", B.fix);
+      rise("#l6", B.fix);
+      fadeOut(`#a-${BUG}-${DIFFERS[BUG]} .glow`, B.fix, 0.8);
+      fadeIn(`#a-${BUG}-${DIFFERS[BUG]} .ok`, B.fix, 0.8);
+      leave("#ci-fail", B.pass);
+      rise("#ci-pass", B.pass, 14);
+      fadeOut(`#a-${BUG}-${DIFFERS[BUG]} .ok`, B.pass + 0.8, 0.8);
+      tl.to([`#b-${BUG} .cell`, `#a-${BUG} .cell`], { opacity: 0.45, duration: 0.8, ease: "power2.out" }, B.pass + 0.8);
+
+      // 6. The end card, one line at a time.
+      tl.to("#s-data", { opacity: 0, duration: 0.35, ease: "power1.in" }, B.end - 0.35);
+      fadeIn("#s-end", B.end);
+      rise(["#e-logo", "#e-install"], B.end, 12);
+      rise("#e-url", B.url);
+      fadeIn("#e-credit", B.url);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
