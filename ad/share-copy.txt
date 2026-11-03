@@ -1,3 +1,3 @@
-A port must match one to one, and every row differs. Veridelta compares two datasets under rules you declare, accepts the drift you name, and fails CI on the rest.
+Your migration is done. Does the data match? Veridelta pairs every row by its key, your rules forgive the noise, and only the real bug fails CI.
 
 https://veridelta.github.io/veridelta/

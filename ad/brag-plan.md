@@ -1,8 +1,8 @@
-# Brag plan: Veridelta, the 24-second ad
+# Brag plan: Veridelta, the 25-second ad
 
-Written with [brag](https://github.com/latent-spaces/brag)'s full workflow, at commit `669ab92` (release 0.5.0), with the tone `cinematic`, music only, in three shapes. The material is Veridelta's weather station demo at commit `a2776a9`, which runs release 0.42.1: the same runs the 60-second demo in `brag/` shows.
+Written with [brag](https://github.com/latent-spaces/brag)'s full workflow, at commit `669ab92` (release 0.5.0), with the tone `cinematic`, music only, in three shapes.
 
-The first cut was faster: slams on every beat, a bell, five sound effects, and a match rate that changed four times in five seconds. The maintainer found it hard to read and asked for something smoother and simpler. This cut keeps one idea per screen, holds each line well past brag's reading floor, and lets the music carry it alone.
+The first two cuts told the 60-second demo's story, a port from one language to another, with its numbers. The maintainer asked for a story anyone in data recognizes, without a language a general audience may not know, and for something visually different from the demo and the promo cuts: no text card, no terminal, no install card sequence. This cut keeps what they liked in the second one: smooth eased motion, music alone, changes on measured beats, one idea per screen, and every line held long enough to read.
 
 ## What is this app?
 
@@ -10,107 +10,100 @@ A command line tool that compares two datasets on their primary keys and reports
 
 ## The angle
 
-A port must match, and every row differs. Veridelta turns that into one number, the match rate: 0.0% before any rules, 100.0% once the rules are declared and the real bug is fixed. The viewer knows what Veridelta does by second 17, and the end card says where to start.
+Everyone who ships data has finished a migration, a rewrite, or a pipeline change and wondered whether the data still matches. The ad shows the answer as one picture that changes: two tables, Before and After, glide together and pair their rows by key; the pairs that differ glow; the rules you declare absorb the noise until one real bug is left; CI fails on it, then passes once it is fixed. The tables are abstract, so they show no number that a run did not print. The only values on screen are two rule settings, as a configuration would write them, and CI's exit codes.
 
 ## Hook (first 2 seconds)
 
-On the first frame: "Ported from IDL to Python." over "124 rows.", with 124 cells in a grid, four stations by 31 days. On the music's first strong beat, 1.567 seconds, "124 changed." rises in and the cells warm to orange in one slow wave.
+On the first frame: "Your migration is done." over two tables, Before and After, eight rows each, a key and three values a row, with two pairs of rows in the After table out of order. On the music's first strong beat, 1.567 seconds, "Does the data match?" rises in below it.
 
 ## Key moments
 
-- The question, as one line: "Fix or corruption?"
-- The light comes on: the symbol and the name, then "Nothing is forgiven unless a rule says so."
-- Two runs, one number each: 0.0% and FAILED, "Without rules"; then 100.0% and PASSED, "With rules, and the bug fixed".
+- The tables glide together, and the rows out of order trade places, side by side, until every row sits beside the row with its key: "Veridelta pairs every row by its key." The pairs that match settle; five that differ glow orange.
+- "Your rules forgive the noise." Two rule settings appear, `absolute_tolerance: 0.01` and `case_insensitive: true`, and on two beats four of the glowing cells settle, two and two.
+- "The real bug fails CI." One cell still glows, and a red badge reads "✕ CI · exit code 1".
+- "Fix it, and CI passes." The cell turns blue and settles, and the badge turns green: "✓ CI · exit code 0".
 
 ## Outro
 
-The symbol and the name, then `pip install veridelta`, then veridelta.github.io/veridelta, one line at a time.
+A light end card: the symbol and the name with `pip install veridelta`, then veridelta.github.io/veridelta and the music credit.
 
 ## Tone
 
 - Preset: cinematic
-- Creative direction: a calm trailer for a data integrity tool. One idea per screen, big type, no slams.
-- Interpretation: dark navy for the problem and the runs, the light canvas when Veridelta arrives and at the end. Lines rise 18 pixels and fade in over 0.6 seconds; scenes dip through a 0.35-second fade out and a 0.6-second fade in. Sentence case, as the repository's writing rules ask.
+- Creative direction: a calm product film about trust in data. One picture that changes, one line at a time.
+- Interpretation: navy for the data, light for the end card. Lines rise 18 pixels and fade in over 0.6 seconds, a line leaves in 0.35 seconds before the next arrives, fades and dims start on their beat and settle softly. No slams, no shakes, no sound effects. Sentence case, as the repository's writing rules ask.
 
 ## Format and duration
 
-Three shapes from one template: landscape 1920 by 1080, square 1080 by 1080, vertical 1080 by 1920. 24.2 seconds. On a narrow frame the question breaks after "Fix".
+Three shapes from one template: landscape 1920 by 1080, square 1080 by 1080, vertical 1080 by 1920. 24.7 seconds. The tables scale with the frame: 1.2 times in landscape, 1.25 in square, 1.45 in vertical. On a narrow frame "Your rules forgive the noise." breaks after "forgive".
 
 ## Visual identity
 
-- Problem scenes: navy `#0d2f5a`, white text, orange `#f39a5c` for what differs, light blue `#8fb1f0` for the pass
-- Veridelta scenes: canvas `#f5f7fa`, navy text, blue `#2054b2`
+- Data scenes: navy `#0d2f5a` to `#08213f`, white lines, cells `#2b5d99`, orange `#de5807` and `#f39a5c` for what differs, blue `#2054b2` and `#8fb1f0` for the fix and the pass
+- End card: canvas `#f5f7fa`, navy and blue
 - Fonts: Inter (Regular, SemiBold, Bold) and DejaVu Sans Mono, as in `public/fonts/`
 - Logo: `public/brand/veridelta-symbol.png`, shown at its own size, since it is 178 by 165 pixels (Veridelta/veridelta#426 asks for SVGs). The name is set in Inter Bold.
 
 ## Share copy
 
-A port must match one to one, and every row differs. Veridelta compares two datasets under rules you declare, accepts the drift you name, and fails CI on the rest.
+Your migration is done. Does the data match? Veridelta pairs every row by its key, your rules forgive the noise, and only the real bug fails CI.
 
 ## Audio direction
 
 - Role: cinematic support, music alone
 - Music: "Happy Beats / Business Moves, Vol. 11" by Sascha Ende, bundled with brag, CC BY 4.0. 114.84 BPM.
-- Treatment: full from the first frame, fading over the last 1.2 seconds. The finished mix is set to -16 LUFS, as the 60-second demo's is.
-- Sound effects: none. The music carries every change.
+- Treatment: full from the first frame, fading over the last 1.2 seconds. The finished mix is set to -16 LUFS.
+- Sound effects: none.
 
 ## Beats
 
-Every change starts on a beat of the track, on the frame nearest its onset. brag's cue preset gives each beat; an onset detector (spectral flux on the decoded audio) puts each onset 18 to 32 milliseconds before the preset's time, so the changes use the measured onsets, rounded to the frame at 30 frames a second.
+Every change starts on a beat of the track, on the frame nearest its onset. brag's cue preset gives each beat; an onset detector (spectral flux on the decoded audio) puts each onset 18 to 35 milliseconds before the preset's time, so the changes use the measured onsets, rounded to the frame at 30 frames a second. In the finished files, the beat's onset and the frame where the picture first changes:
 
-| Change | Preset beat | Measured onset | Frame | In the finished files |
-| :--- | :--- | :--- | :--- | :--- |
-| "124 changed." rises | 1.602 s (strong) | 1.573 s | 47, 1.567 s | onset +6.5 ms after the frame |
-| Question | 5.805 s (strong) | 5.782 s | 173, 5.767 s | onset +15.1 ms |
-| Veridelta | 8.963 s (strong) | 8.940 s | 268, 8.933 s | onset +6.4 ms |
-| The rule line | 9.497 s (strong) | 9.468 s | 284, 9.467 s | onset +1.2 ms |
-| 0.0%, FAILED | 13.700 s | 13.677 s | 410, 13.667 s | onset +9.9 ms |
-| 100.0%, PASSED | 16.858 s | 16.834 s | 505, 16.833 s | onset +1.2 ms |
-| End card | 20.538 s | 20.515 s | 615, 20.5 s | onset +14.8 ms |
-| The end | 24.230 s (strong) | 24.201 s | 726, 24.2 s | |
+| Change | Frame | Onset, from the frame | Picture first changes |
+| :--- | :--- | :--- | :--- |
+| "Does the data match?" | 47, 1.567 s (strong) | +6.5 ms | frame 48 |
+| The tables glide together | 173, 5.767 s (strong) | +15.1 ms | frame 173 |
+| "Veridelta pairs every row by its key." | 189, 6.3 s (strong) | +10.0 ms | frame 189 |
+| The differences glow | 220, 7.333 s | +15.8 ms | frame 221 |
+| "Your rules forgive the noise." | 347, 11.567 s (strong) | +8.4 ms | frame 347 |
+| The two rules | 363, 12.1 s (strong) | -2.4 ms | frame 364 |
+| The tolerance absorbs two | 379, 12.633 s (strong) | -7.4 ms | frame 380 |
+| The case rule absorbs two | 394, 13.133 s | +15.0 ms | frame 394 to 395 |
+| "The real bug fails CI." | 458, 15.267 s | -5.4 ms | frame 458 |
+| exit code 1 | 474, 15.8 s | -16.2 ms | frame 475 |
+| "Fix it, and CI passes." | 568, 18.933 s | +2.6 ms | frame 568 |
+| exit code 0 | 584, 19.467 s (strong) | -2.6 ms | frame 584 |
+| End card | 663, 22.1 s | -6.2 ms | frame 663 |
+| The address | 679, 22.633 s (strong) | -11.3 ms | frame 679 |
 
-At each scene change the old scene has faded fully out and the new one has not started, so that frame is the emptiest of its neighborhood. In all three renders the emptiest frame is the change's own frame, to the frame. Every onset lands within half a frame, 16.7 milliseconds, of the change it carries.
+Every onset lands within half a frame, 16.7 milliseconds, of its change. A fade from nothing shows on the frame after the one it starts on, which is why some changes first appear a frame late; none later. The measurements are the same in all three shapes.
 
 ## Storyboard
 
 Every line holds at least 1.5 seconds once it has settled, and about 0.4 seconds a word for a sentence.
 
-### Scene 1: hook, 0 to 5.77 seconds
-
-Navy. "Ported from IDL to Python." and "124 rows." from the first frame, with 124 cells below. "124 changed." rises in on 1.567 seconds; the cells turn orange in one wave over a second. "124 changed." holds 3.2 seconds once settled.
-
-### Scene 2: question, 5.77 to 8.93 seconds
-
-Navy. "Fix or corruption?" rises in on the beat and holds 2.1 seconds.
-
-### Scene 3: Veridelta, 8.93 to 13.67 seconds
-
-Light canvas. The symbol and the name rise in on 8.933 seconds. "Nothing is forgiven unless a rule says so." rises in on 9.467 seconds and holds 3.25 seconds.
-
-### Scene 4: the first run, 13.67 to 16.83 seconds
-
-Navy. "Match rate" with a FAILED badge, 0.0% in orange, and "Without rules", together. They hold 2.2 seconds.
-
-### Scene 5: the last run, 16.83 to 20.5 seconds
-
-Navy. "Match rate" with a PASSED badge, 100.0% in light blue, and "With rules, and the bug fixed". They hold 2.7 seconds.
-
-### Scene 6: end card, 20.5 to 24.2 seconds
-
-Light canvas. The symbol and the name on 20.5 seconds, `pip install veridelta` half a second later, veridelta.github.io/veridelta half a second after that, and the music credit. The address holds 2 seconds as the music fades.
+| Seconds | Screen | On screen | Line held |
+| :--- | :--- | :--- | :--- |
+| 0 to 5.77 | The question | "Your migration is done." and the two tables from the first frame; "Does the data match?" rises in at 1.567 | 3.25 s |
+| 5.77 to 11.57 | Pairing | The tables glide together and two pairs of rows trade places; "Veridelta pairs every row by its key."; the five pairs that differ glow at 7.333 | 4.3 s |
+| 11.57 to 15.27 | Rules | "Your rules forgive the noise."; `absolute_tolerance: 0.01` and `case_insensitive: true`; four glows settle at 12.633 and 13.133 | 2.75 s |
+| 15.27 to 18.93 | The bug | "The real bug fails CI."; one cell still glows; "✕ CI · exit code 1" | 2.7 s |
+| 18.93 to 22.1 | The fix | "Fix it, and CI passes."; the cell turns blue and settles; "✓ CI · exit code 0" | 2.2 s |
+| 22.1 to 24.73 | End card | The symbol and the name with `pip install veridelta`; veridelta.github.io/veridelta and the music credit at 22.633 | 1.5 s |
 
 ## Claims and their sources
 
 | Claim | Source |
 | :--- | :--- |
-| "Ported from IDL to Python." | The weather station demo: `stations_idl.csv` and `stations_python.csv`, in Veridelta's `demo/`, as `brag/brag-plan.md` tells it |
-| "124 rows.", "124 changed.", the 124 cells | `public/transcripts/stations-run.txt`: `Source Rows:   124`, `Changed:       124`; four stations by 31 days, as the demo's data has |
-| "Fix or corruption?" | The demo's own question, `brag/brag-plan.md` |
-| "Nothing is forgiven unless a rule says so." | The docs home, https://veridelta.github.io/veridelta/ |
-| 0.0%, FAILED, "Without rules" | `stations-run.txt`: the first run names files and keys, no rules: `Status:        FAILED`, `Match Rate:    0.0%` |
-| 100.0%, PASSED, "With rules, and the bug fixed" | `stations-fixed.txt`: the rules file, the baseline, and the fixed export: `Status:        PASSED (Perfect Match)`, `Match Rate:    100.0%` |
+| "Your migration is done. Does the data match?" | The docs home: "Use it to verify a migration, a pipeline change, or a model's new evaluation run", https://veridelta.github.io/veridelta/ |
+| "Veridelta pairs every row by its key.", rows pairing by key | The docs home: "compares two datasets on their primary keys and reports every row that differs" |
+| "Your rules forgive the noise.", rows a rule absorbs | The docs home: "Nothing is forgiven unless a rule says so."; the rules page, https://veridelta.github.io/veridelta/rules/ |
+| `absolute_tolerance: 0.01`, `case_insensitive: true` | Rule fields on the rules page, written as a configuration file writes them |
+| "The real bug fails CI.", exit code 1 | The docs home: "only the real bug fails CI", and "the exit code tells CI whether the datasets match"; the command line page's exit codes, https://veridelta.github.io/veridelta/cli/#exit-codes |
+| "Fix it, and CI passes.", exit code 0 | The command line page's exit codes |
 | `pip install veridelta`, veridelta.github.io/veridelta | The docs home's install section |
-| "Veridelta 0.42.1, the weather station demo at commit a2776a9", on every scene but the last | `public/transcripts/manifest.json` |
+
+The tables, their eight rows, and which cells differ are a picture, not a run: they carry no number.
 
 **Music mood:** cinematic, calm, full from the start.
 **Audio summary:** one bed under the whole ad, no sound effects, fading under the end card.

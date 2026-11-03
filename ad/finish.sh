@@ -11,7 +11,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 HF="npx --yes hyperframes@0.8.143"
-# The hook, settled: "124 changed." has landed and every cell is orange.
+# The hook, settled: "Your migration is done." and "Does the data match?" over the two tables.
 POSTER_AT=3.3
 shapes=("$@")
 if [ ${#shapes[@]} -eq 0 ]; then
