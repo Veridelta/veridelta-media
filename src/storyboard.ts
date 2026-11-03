@@ -127,6 +127,29 @@ const report: Scene = {
   backedBy: `${DOCS}results/#html-report`,
 };
 
+// The ad's opening: a question a viewer may have, and the docs home's first sentence as the answer.
+const hook: Scene = {
+  id: "hook",
+  description: "A card in the logo's colors: a question, and the first sentence of the docs home.",
+  picture: {
+    kind: "card",
+    heading: "Veridelta",
+    lines: [
+      "Do your two datasets still match?",
+      "It compares them on their primary keys and reports every row that differs.",
+    ],
+  },
+  seconds: 4,
+  captions: [
+    {
+      from: 0,
+      to: 4,
+      text: "Veridelta compares two datasets on their primary keys and reports every row that differs under the rules you declare.",
+    },
+  ],
+  backedBy: DOCS,
+};
+
 const warehouse: Scene = {
   id: "warehouse",
   description: "A card in the logo's colors, with two sentences from the README.",
@@ -493,6 +516,20 @@ const demo: Scene[] = [
 ];
 
 export const cuts: Cut[] = [
+  {
+    id: "promo-20",
+    title: "20 seconds, 1920 by 1080, an ad",
+    width: 1920,
+    height: 1080,
+    scenes: [hook, run, install(5)],
+  },
+  {
+    id: "promo-square-20",
+    title: "20 seconds, 1080 by 1080, an ad for social feeds",
+    width: 1080,
+    height: 1080,
+    scenes: [hook, run, install(5)],
+  },
   {
     id: "promo-30",
     title: "30 seconds, 1920 by 1080",

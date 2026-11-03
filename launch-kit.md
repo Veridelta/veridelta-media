@@ -72,6 +72,8 @@ The link preview card, `docs/assets/social-card.png` in the Veridelta repository
 | `brag/brag.mp4` | 1920 by 1080, 60 seconds | 16:9 | The first video anyone sees: a release, a README, a post |
 | `brag/brag-inline.mp4` | 1280 by 720, 60 seconds, under 10 MB | 16:9 | A release description, which plays a video under 10 MB inline |
 | `brag/demo.srt` | | | The demo's captions, beside the video on a release |
+| `renders/promo-20.mp4` | 1920 by 1080, about 20 seconds | 16:9 | An ad: says what Veridelta does in the first 4 seconds and shows a run by 15 |
+| `renders/promo-square-20.mp4` | 1080 by 1080, about 20 seconds | 1:1 | The same ad, for a feed that crops wide video |
 | `renders/promo-30.mp4` | 1920 by 1080, about 30 seconds | 16:9 | A post with a wide player, or a page |
 | `renders/promo-60.mp4` | 1920 by 1080, under 60 seconds | 16:9 | A launch post, or the README of a talk |
 | `renders/promo-square-30.mp4` | 1080 by 1080, about 30 seconds | 1:1 | A feed that crops wide video |
